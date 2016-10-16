@@ -1,7 +1,6 @@
 package com.buffet.activities;
 
 import android.content.res.Configuration;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -15,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import adapters.ViewPagerAdapter;
+import com.buffet.adapters.ViewPagerAdapter;
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
 public class MainActivity extends AppCompatActivity {
