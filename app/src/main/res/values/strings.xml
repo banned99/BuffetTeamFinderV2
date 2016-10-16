@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BuffetTeamFinderV2</string>
+    <string name="txt_yo_yo">yoyo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
