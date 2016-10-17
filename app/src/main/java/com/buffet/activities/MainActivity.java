@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         initInstance();
 
-        // testdsdsds
-        // yaya tes
 
     }
 
