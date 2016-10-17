@@ -1,6 +1,7 @@
 package com.buffet.activities;
 
 import android.content.res.Configuration;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         nestedScrollView = (NestedScrollView) findViewById(R.id.nest_scroll_view);
         nestedScrollView.setFillViewport(true);
+
+
 
 
         // Bottombar
@@ -135,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
