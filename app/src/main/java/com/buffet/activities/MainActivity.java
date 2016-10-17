@@ -15,15 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.buffet.adapters.ViewPagerAdapter;
-import com.buffet.fragments.MapFragment;
-import com.buffet.fragments.NotiFragment;
-import com.buffet.fragments.PromotionFragment;
-import com.buffet.fragments.SearchFragment;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.BottomBarBadge;
-import com.roughike.bottombar.BottomBarFragment;
-import com.roughike.bottombar.OnTabSelectedListener;
-
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,10 +22,13 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
     CoordinatorLayout rootLayout;
+    TabLayout tabLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
+    ViewPager viewPager;
+    ViewPagerAdapter adapter;
+    TabLayout.Tab newPro, categories, topTen, aToZ;
     NestedScrollView nestedScrollView;
-    BottomBar bottomBar;
 
 
     @Override
@@ -42,11 +36,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initInstance();
+    }
+
+    private void initInstance() {
+
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_main_root_layout);
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitleMarginTop(43);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, R.string.app_name, R.string.app_name);
@@ -58,54 +58,66 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
         collapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
 
+        // Tab
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+
+        newPro = tabLayout.newTab();
+        categories = tabLayout.newTab();
+        topTen = tabLayout.newTab();
+        aToZ = tabLayout.newTab();
+
+        tabLayout.addTab(aToZ);
+        tabLayout.addTab(topTen);
+        tabLayout.addTab(categories);
+        tabLayout.addTab(newPro);
+
         nestedScrollView = (NestedScrollView) findViewById(R.id.nest_scroll_view);
         nestedScrollView.setFillViewport(true);
 
+        // ViewPager
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager, false);
 
-        // Bottombar
-        bottomBar = BottomBar.attach(this, savedInstanceState);
-        bottomBar.setMinimumHeight(50);
+        newPro.setText("new");
+        categories.setText("categories");
+        topTen.setText("top 10");
+        aToZ.setText("a-z");
 
-        bottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-                new BottomBarFragment(PromotionFragment.newInstance(), R.mipmap.ic_launcher, "Promotion"),
-                new BottomBarFragment(SearchFragment.newInstance(), R.mipmap.ic_launcher, "Search"),
-                new BottomBarFragment(MapFragment.newInstance(), R.mipmap.ic_launcher, "Here"),
-                new BottomBarFragment(NotiFragment.newInstance(), R.mipmap.ic_launcher, "Notification")
-        );
-
-        // Setting colors for different tabs when there's more than three of them.
-        bottomBar.mapColorForTab(0, "#3B494C");
-        bottomBar.mapColorForTab(1, "#00796B");
-        bottomBar.mapColorForTab(2, "#7B1FA2");
-        bottomBar.mapColorForTab(3, "#FF5252");
-
-        bottomBar.setOnItemSelectedListener(new OnTabSelectedListener() {
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onItemSelected(int position) {
-                switch (position) {
-                    case 0:
-                        // Item 1 Selected
-                }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                Change Icon
+//                switch (position) {
+//                    case 0: {
+//                        homeTab.setIcon(R.drawable.home_tab_white);
+//                        profileTab.setIcon(R.drawable.profile_tab);
+//                        break;
+//                    }
+//                    case 1: {
+//                        profileTab.setIcon(R.drawable.profile_tab_white);
+//                        homeTab.setIcon(R.drawable.home_tab);
+//                        break;
+//                    }
+//                }
+//
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
-        // Make a Badge for the first tab, with red background color and a value of "4".
-        BottomBarBadge unreadMessages = bottomBar.makeBadgeForTabAt(3, "#E91E63", 4);
 
-        // Control the badge's visibility
-        unreadMessages.show();
-        //unreadMessages.hide();
-
-        // Change the displayed count for this badge.
-        //unreadMessages.setCount(4);
-
-        // Change the show / hide animation duration.
-        unreadMessages.setAnimationDuration(200);
-
-        // If you want the badge be shown always after unselecting the tab that contains it.
-        //unreadMessages.setAutoShowAfterUnSelection(true);
     }
-
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
