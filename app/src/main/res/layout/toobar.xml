@@ -3,18 +3,15 @@
     android:id="@+id/appbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="256dp"
+    android:layout_height="wrap_content"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.CollapsingToolbarLayout
         android:id="@+id/collapsingToolbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:fitsSystemWindows="true"
+        android:layout_height="200dp"
         app:contentScrim="?attr/colorPrimary"
-        app:expandedTitleMarginBottom="80dp"
-        app:collapsedTitleGravity="top"
         app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
@@ -31,21 +28,11 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="104dp"
-            android:gravity="top"
-            android:minHeight="56dp"
-
+            android:layout_height="?attr/actionBarSize"
+            android:minHeight="?attr/actionBarSize"
             app:layout_collapseMode="pin"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="bottom"
-            app:tabMode="fixed"
-            app:tabGravity="fill"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     </android.support.design.widget.CollapsingToolbarLayout>
 

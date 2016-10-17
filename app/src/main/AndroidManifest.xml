@@ -15,9 +15,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.buffet.activities.SearchActivity" />
-        <activity android:name="com.buffet.activities.ViewMapActivity" />
-        <activity android:name="com.buffet.activities.ViewNotiActivity" />
         <activity android:name="com.buffet.activities.EditProfileActivity"></activity>
     </application>
 
