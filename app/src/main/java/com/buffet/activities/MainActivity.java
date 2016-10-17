@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         // test
         // yaya test
+
     }
 
     private void initInstance() {
