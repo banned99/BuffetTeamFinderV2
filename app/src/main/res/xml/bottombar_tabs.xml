@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/promotion_tab"
+        icon="@drawable/ic_restaurants"
+        title="Promotion"
+        />
+    <tab
+        id="@+id/search_tab"
+        icon="@drawable/ic_recents"
+        title="Search"
+        />
+    <tab
+        id="@+id/map_tab"
+        icon="@drawable/ic_nearby"
+        title="Map"
+        />
+
+    <tab
+        id="@+id/notification_tab"
+        icon="@drawable/ic_favorites"
+        title="notification"
+        />
+</tabs>

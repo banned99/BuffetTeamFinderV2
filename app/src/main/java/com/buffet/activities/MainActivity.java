@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                     PromotionFragment promotionFragment = PromotionFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, promotionFragment);
-                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
 
@@ -85,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                     SearchFragment searchFragment = SearchFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, searchFragment);
-                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
 
@@ -93,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                     MapFragment mapFragment = MapFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, mapFragment);
-                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
 
@@ -104,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                     NotiFragment notiFragment = NotiFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, notiFragment);
-                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
             }
