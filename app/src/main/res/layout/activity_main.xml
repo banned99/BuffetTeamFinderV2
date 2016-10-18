@@ -40,6 +40,15 @@
 
 
         </android.support.v4.widget.NestedScrollView>
+
+        <com.roughike.bottombar.BottomBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            app:bb_tabXmlResource="@xml/bottombar_tabs"
+            app:bb_behavior="shy"
+            />
     </android.support.design.widget.CoordinatorLayout>
     
     <android.support.design.widget.NavigationView
@@ -51,4 +60,7 @@
         app:itemIconTint="#333"
         app:itemTextColor="#333"
         app:menu="@menu/navigation_drawer_items" />
+
+
+
 </android.support.v4.widget.DrawerLayout>

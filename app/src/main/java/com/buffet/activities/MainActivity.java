@@ -1,10 +1,12 @@
 package com.buffet.activities;
 
 import android.content.res.Configuration;
+import android.support.annotation.IdRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.buffet.adapters.ViewPagerAdapter;
 import com.buffet.fragments.MapFragment;
@@ -21,9 +24,9 @@ import com.buffet.fragments.NotiFragment;
 import com.buffet.fragments.PromotionFragment;
 import com.buffet.fragments.SearchFragment;
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.BottomBarBadge;
-import com.roughike.bottombar.BottomBarFragment;
-import com.roughike.bottombar.OnTabSelectedListener;
+import com.roughike.bottombar.BottomBarTab;
+import com.roughike.bottombar.OnTabSelectListener;
+
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -64,49 +67,56 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         // Bottombar
-        bottomBar = BottomBar.attach(this, savedInstanceState);
-        bottomBar.setMinimumHeight(50);
-
-        bottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-                new BottomBarFragment(PromotionFragment.newInstance(), R.mipmap.ic_launcher, "Promotion"),
-                new BottomBarFragment(SearchFragment.newInstance(), R.mipmap.ic_launcher, "Search"),
-                new BottomBarFragment(MapFragment.newInstance(), R.mipmap.ic_launcher, "Here"),
-                new BottomBarFragment(NotiFragment.newInstance(), R.mipmap.ic_launcher, "Notification")
-        );
-
-        // Setting colors for different tabs when there's more than three of them.
-        bottomBar.mapColorForTab(0, "#3B494C");
-        bottomBar.mapColorForTab(1, "#00796B");
-        bottomBar.mapColorForTab(2, "#7B1FA2");
-        bottomBar.mapColorForTab(3, "#FF5252");
-
-        bottomBar.setOnItemSelectedListener(new OnTabSelectedListener() {
+        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
-            public void onItemSelected(int position) {
-                switch (position) {
-                    case 0:
-                        // Item 1 Selected
+            public void onTabSelected(@IdRes int tabId) {
+
+                if (tabId == R.id.promotion_tab) {
+                    PromotionFragment promotionFragment = PromotionFragment.newInstance();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, promotionFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+
+                if (tabId == R.id.search_tab) {
+                    SearchFragment searchFragment = SearchFragment.newInstance();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, searchFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+
+                if (tabId == R.id.map_tab) {
+                    MapFragment mapFragment = MapFragment.newInstance();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, mapFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+
+                if (tabId == R.id.notification_tab) {
+                    BottomBarTab notification = bottomBar.getTabWithId(R.id.notification_tab);
+                    notification.removeBadge();
+
+                    NotiFragment notiFragment = NotiFragment.newInstance();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, notiFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             }
         });
 
-        // Make a Badge for the first tab, with red background color and a value of "4".
-        BottomBarBadge unreadMessages = bottomBar.makeBadgeForTabAt(3, "#E91E63", 4);
+        // Add Badge to BottomBar
+        BottomBarTab notification = bottomBar.getTabWithId(R.id.notification_tab);
+        notification.setBadgeCount(99);
 
-        // Control the badge's visibility
-        unreadMessages.show();
-        //unreadMessages.hide();
+        // Remove Badge
+//        notification.removeBadge();
 
-        // Change the displayed count for this badge.
-        //unreadMessages.setCount(4);
-
-        // Change the show / hide animation duration.
-        unreadMessages.setAnimationDuration(200);
-
-        // If you want the badge be shown always after unselecting the tab that contains it.
-        //unreadMessages.setAutoShowAfterUnSelection(true);
     }
 
 
@@ -147,5 +157,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // When pressed back button, switch to promotion tab
+    @Override
+    public void onBackPressed() {
+        if (bottomBar.getCurrentTabPosition() != 0) {
+            bottomBar.selectTabAtPosition(0);
+        } else super.onBackPressed();
     }
 }
