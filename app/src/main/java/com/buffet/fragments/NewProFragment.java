@@ -3,9 +3,13 @@ package com.buffet.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.buffet.adapters.NewPromotionRecyclerAdapter;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -55,6 +59,13 @@ public class NewProFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_new, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.new_promotion_list);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+
+        recyclerView.setAdapter(new NewPromotionRecyclerAdapter());
+
         return rootView;
     }
 
