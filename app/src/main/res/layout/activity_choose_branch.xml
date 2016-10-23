@@ -15,7 +15,6 @@
 
         <include layout="@layout/toobar"/>
 
-
             <LinearLayout
                 android:id="@+id/lin"
                 android:layout_width="match_parent"
@@ -35,7 +34,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/branch_container"
-                    android:layout_gravity="clip_vertical"
                     />
 
             </LinearLayout>
