@@ -83,16 +83,8 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
             }
         });
 
-        // Fab button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabBtn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getSupportFragmentManager();
-                CreateDealDialog createDealDialog = new CreateDealDialog();
-                createDealDialog.show(manager, "dialog");
-            }
-        });
+
+
 
         // Deal Fragment
         ChooseDealFragment chooseDealFragment = ChooseDealFragment.newInstance();
