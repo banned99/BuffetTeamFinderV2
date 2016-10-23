@@ -1,5 +1,6 @@
 package com.buffet.fragments;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.buffet.adapters.NewPromotionRecyclerAdapter;
-import com.buffet.models.Promotion;
+
+import com.buffet.adapters.DealRecyclerAdapter;
+import com.buffet.models.Deal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,23 +22,23 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NewProFragment.OnFragmentInteractionListener} interface
+ * {@link ChooseDealFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NewProFragment#newInstance} factory method to
+ * Use the {@link ChooseDealFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewProFragment extends Fragment {
+public class ChooseDealFragment extends Fragment {
 
-    private NewPromotionRecyclerAdapter adapter;
+    private DealRecyclerAdapter adapter;
     private OnFragmentInteractionListener mListener;
 
-    public NewProFragment() {
+    public ChooseDealFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static NewProFragment newInstance() {
-        NewProFragment fragment = new NewProFragment();
+    public static ChooseDealFragment newInstance() {
+        ChooseDealFragment fragment = new ChooseDealFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -45,46 +47,37 @@ public class NewProFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_new, container, false);
-
-        adapter = new NewPromotionRecyclerAdapter(getActivity(), getData());
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.new_promotion_list);
+        View rootView = inflater.inflate(R.layout.fragment_choose_deal, container, false);
+        // Deal Recycler
+        adapter = new DealRecyclerAdapter(getActivity(), getData());
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.deal_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         recyclerView.setAdapter(adapter);
-
         return rootView;
     }
 
-    public static List<Promotion> getData() {
-        List<Promotion> promotions = new ArrayList<>();
-        int[] promotion_id = {1,2,3,4,5,6,7,8};
-        int[] images = {R.drawable.promo_1, R.drawable.promo_2, R.drawable.promo_3, R.drawable.promo_4, R.drawable.promo_5, R.drawable.promo_6, R.drawable.promo_7, R.drawable.promo_8};
-        String[] name = {"Promotion_1", "Promotion_2", "Promotion_3", "Promotion_4", "Promotion_5", "Promotion_6", "Promotion_7", "Promotion_8"};
-        double[] price = {35.25, 53.66, 552.3, 255.4, 6.777, 7.44, 24.55, 600.43};
-        int[] max_person = {4, 4, 3, 5, 4, 2, 4, 3};
+    public static List<Deal> getData() {
+        List<Deal> deals = new ArrayList<>();
+        int[] deal_id = {1,2,3,4,5};
+        String[] name= {"b1", "b2", "b3", "b4", "b5"};
 
-        for (int i = 0; i<name.length && i<images.length; i++) {
+        for (int i = 0; i<deal_id.length && i<name.length; i++) {
 
-            Promotion current = new Promotion();
-            current.setPromotionID(promotion_id[i]);
-            current.setImage(images[i]);
-            current.setPromotionName(name[i]);
-            current.setPrice(price[i]);
-            current.setMax_person(max_person[i]);
-            promotions.add(current);
-
+            Deal current = new Deal();
+            current.setDealId(deal_id[i]);
+            current.setDealName(name[i]);
+            deals.add(current);
         }
 
-        return promotions;
+        return deals;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -114,7 +107,7 @@ public class NewProFragment extends Fragment {
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other com.buffet.fragments contained in that
+     * to the activity and potentially other fragments contained in that
      * activity.
      * <p>
      * See the Android Training lesson <a href=

@@ -15,12 +15,12 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/promotionLabel"
+        android:id="@+id/branchLabel"
         android:layout_gravity="center_horizontal"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         card_view:srcCompat="@drawable/promo_1"
-        android:id="@+id/promotionImage" />
+        android:id="@+id/branchImage" />
 </android.support.v7.widget.CardView>

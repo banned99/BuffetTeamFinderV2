@@ -30,6 +30,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCAzi3p1wT_WlDZ03ewmS7-Dh6ncFyWVgg" />
 
+        <activity android:name="com.buffet.activities.ChooseBranchActivity" />
+        <activity android:name="com.buffet.activities.ChooseDealActivity"></activity>
     </application>
 
 </manifest>

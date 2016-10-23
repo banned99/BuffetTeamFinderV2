@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,11 +15,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.buffet.fragments.ChooseDealFragment;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
-
-public class EditProfileActivity extends AppCompatActivity {
+public class ChooseDealActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -30,15 +33,21 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
-        rootLayout = (CoordinatorLayout) findViewById(R.id.activity_edit_profile_root_layout);
+        setContentView(R.layout.activity_choose_deal);
+
+        Bundle bundle = getIntent().getExtras();
+        int id = bundle.getInt("branch_id");
+
+        Toast.makeText(this, ""+ id, Toast.LENGTH_LONG).show();
+
+        rootLayout = (CoordinatorLayout) findViewById(R.id.activity_choose_deal_root_layout);
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_edit_profile);
-        drawerToggle = new ActionBarDrawerToggle(EditProfileActivity.this, drawerLayout, R.string.app_name, R.string.app_name);
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_choose_deal);
+        drawerToggle = new ActionBarDrawerToggle(ChooseDealActivity.this, drawerLayout, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -62,8 +71,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         Snackbar.make(navigationView, "Favorite Deal", Snackbar.LENGTH_SHORT).show();
                         break;
                     case R.id.edit_profile:
-                        Intent navIntent = new Intent(getApplicationContext(), EditProfileActivity.class);
-                        startActivity(navIntent);
+                        Intent editProfileIntent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                        startActivity(editProfileIntent);
                         break;
                     case R.id.logout:
                         Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
@@ -73,6 +82,11 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Deal Fragment
+        ChooseDealFragment chooseDealFragment = ChooseDealFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.deal_container, chooseDealFragment);
+        transaction.commit();
     }
 
     @Override
@@ -121,6 +135,4 @@ public class EditProfileActivity extends AppCompatActivity {
 //            bottomBar.selectTabAtPosition(0);
 //        } else super.onBackPressed();
 //    }
-
 }
-

@@ -2,7 +2,7 @@
 <tabs>
     <tab
         id="@+id/promotion_tab"
-        icon="@drawable/ic_restaurants"
+        icon="@drawable/ic_promotion"
         title="Promotion"
         inActiveColor="@color/colorPrimaryLight"
         activeColor="#FFFFFF"
@@ -10,7 +10,7 @@
         />
     <tab
         id="@+id/search_tab"
-        icon="@drawable/ic_recents"
+        icon="@drawable/ic_search"
         title="Search"
         inActiveColor="@color/colorPrimaryLight"
         activeColor="#FFFFFF"
@@ -18,7 +18,7 @@
         />
     <tab
         id="@+id/map_tab"
-        icon="@drawable/ic_nearby"
+        icon="@drawable/ic_map"
         title="Map"
         inActiveColor="@color/colorPrimaryLight"
         activeColor="#FFFFFF"
@@ -27,8 +27,8 @@
 
     <tab
         id="@+id/notification_tab"
-        icon="@drawable/ic_favorites"
-        title="notification"
+        icon="@drawable/ic_notifications"
+        title="Notification"
         inActiveColor="@color/colorPrimaryLight"
         activeColor="#FFFFFF"
         barColorWhenSelected="@color/colorPrimary"

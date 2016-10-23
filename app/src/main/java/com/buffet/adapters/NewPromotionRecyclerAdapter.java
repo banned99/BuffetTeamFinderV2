@@ -1,6 +1,7 @@
 package com.buffet.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.buffet.activities.ChooseBranchActivity;
 import com.buffet.models.Promotion;
 
 import java.util.Collections;
@@ -49,6 +51,10 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
                 String name = holder.promotionLabel.getText().toString();
                 System.out.println("name = " + name + " id = " + promotion_id);
                 Toast.makeText(v.getContext(),name,Toast.LENGTH_LONG);
+
+                Intent chooseProIntent = new Intent(v.getContext(), ChooseBranchActivity.class);
+                chooseProIntent.putExtra("promotion_id", promotion_id);
+                v.getContext().startActivity(chooseProIntent);
             }
         });
 
@@ -71,14 +77,6 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
             promotionLabel = (TextView) itemView.findViewById(R.id.promotionLabel);
             promotionImage = (ImageView) itemView.findViewById(R.id.promotionImage);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Toast.makeText(view.getContext(), promotions.get(), Toast.LENGTH_LONG);
-////                    Intent intent = new Intent(view.getContext(), ChooseDealActivity.class);
-////                    view.getContext().startActivity(intent);
-//                }
-//            });
 
         }
     }
