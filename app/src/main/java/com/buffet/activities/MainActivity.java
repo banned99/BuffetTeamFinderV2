@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Bottombar
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {

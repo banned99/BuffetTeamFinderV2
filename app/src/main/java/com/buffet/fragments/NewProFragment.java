@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.buffet.adapters.NewPromotionRecyclerAdapter;
+import com.buffet.models.Promotion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -22,15 +26,8 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
  * create an instance of this fragment.
  */
 public class NewProFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private NewPromotionRecyclerAdapter adapter;
     private OnFragmentInteractionListener mListener;
 
     public NewProFragment() {
@@ -48,10 +45,7 @@ public class NewProFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -60,13 +54,32 @@ public class NewProFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_new, container, false);
 
+        adapter = new NewPromotionRecyclerAdapter(getActivity(), getData());
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.new_promotion_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
-        recyclerView.setAdapter(new NewPromotionRecyclerAdapter());
+        recyclerView.setAdapter(adapter);
 
         return rootView;
+    }
+
+    public static List<Promotion> getData() {
+        List<Promotion> promotions = new ArrayList<>();
+        int[] id = {1,2,3,4,5,6,7,8};
+        int[] images = {R.drawable.promo_1, R.drawable.promo_2, R.drawable.promo_3, R.drawable.promo_4, R.drawable.promo_5, R.drawable.promo_6, R.drawable.promo_7, R.drawable.promo_8};
+        String[] names = {"Promotion_1", "Promotion_2", "Promotion_3", "Promotion_4", "Promotion_5", "Promotion_6", "Promotion_7", "Promotion_8"};
+        for (int i = 0; i<names.length && i<images.length; i++) {
+
+            Promotion current = new Promotion();
+            current.setImage(images[i]);
+            current.setPromotionName(names[i]);
+            current.setPromotionID(id[i]);
+            promotions.add(current);
+
+        }
+
+        return promotions;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

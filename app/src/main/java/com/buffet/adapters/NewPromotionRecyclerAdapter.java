@@ -1,12 +1,18 @@
 package com.buffet.adapters;
 
-import android.content.Intent;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.buffet.models.Promotion;
+
+import java.util.Collections;
+import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -15,48 +21,43 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
  */
 
 public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromotionRecyclerAdapter.ViewHolder>{
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.new_promotion_recycler_child, parent, false));
+
+    private LayoutInflater inflater;
+    List<Promotion> promotions = Collections.emptyList();
+
+    public NewPromotionRecyclerAdapter(Context context, List<Promotion> promotions) {
+        inflater = LayoutInflater.from(context);
+        this.promotions = promotions;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_promotion_recycler_child, parent, false);
+        return new ViewHolder(view);
+    }
 
-        holder.promotionLabel.setText("Promotion " + Integer.toString(position+1));
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        switch (position+1) {
-            case 1:
-                holder.promotionImage.setImageResource(R.drawable.promo_1);
-                break;
-            case 2:
-                holder.promotionImage.setImageResource(R.drawable.promo_2);
-                break;
-            case 3:
-                holder.promotionImage.setImageResource(R.drawable.promo_3);
-                break;
-            case 4:
-                holder.promotionImage.setImageResource(R.drawable.promo_4);
-                break;
-            case 5:
-                holder.promotionImage.setImageResource(R.drawable.promo_5);
-                break;
-            case 6:
-                holder.promotionImage.setImageResource(R.drawable.promo_6);
-                break;
-            case 7:
-                holder.promotionImage.setImageResource(R.drawable.promo_7);
-                break;
-            case 8:
-                holder.promotionImage.setImageResource(R.drawable.promo_8);
-                break;
-        }
+        final Promotion current = promotions.get(position);
+        final int promotion_id = current.getPromotionID();
+        holder.promotionLabel.setText(current.getPromotionName());
+        holder.promotionImage.setImageResource(current.getImage());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = holder.promotionLabel.getText().toString();
+                System.out.println("name = " + name + " id = " + promotion_id);
+                Toast.makeText(v.getContext(),name,Toast.LENGTH_LONG);
+            }
+        });
+
     }
 
 
     @Override
     public int getItemCount() {
-        return 8;
+        return promotions.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -73,8 +74,9 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
-//                    Intent intent = new Intent(view.getContext(), ChooseDealActivity.class);
-//                    view.getContext().startActivity(intent);
+//                    Toast.makeText(view.getContext(), promotions.get(), Toast.LENGTH_LONG);
+////                    Intent intent = new Intent(view.getContext(), ChooseDealActivity.class);
+////                    view.getContext().startActivity(intent);
 //                }
 //            });
 
