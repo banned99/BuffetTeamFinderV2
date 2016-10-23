@@ -47,7 +47,19 @@
 
         </com.buffet.custom.CustomNestedScrollView>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            app:borderWidth="0dp"
+            app:fabSize="normal"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
     </android.support.design.widget.CoordinatorLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"

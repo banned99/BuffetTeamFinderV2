@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -15,13 +17,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.buffet.dialogs.CreateDealDialog;
 import com.buffet.fragments.ChooseDealFragment;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
-public class ChooseDealActivity extends AppCompatActivity {
+public class ChooseDealActivity extends AppCompatActivity implements CreateDealDialog.Communicator{
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -82,6 +86,17 @@ public class ChooseDealActivity extends AppCompatActivity {
             }
         });
 
+        // Fab button
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabBtn);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getSupportFragmentManager();
+                CreateDealDialog createDealDialog = new CreateDealDialog();
+                createDealDialog.show(manager, "dialog");
+            }
+        });
+
         // Deal Fragment
         ChooseDealFragment chooseDealFragment = ChooseDealFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -135,4 +150,15 @@ public class ChooseDealActivity extends AppCompatActivity {
 //            bottomBar.selectTabAtPosition(0);
 //        } else super.onBackPressed();
 //    }
+
+    // Get data from create deal form
+    @Override
+    public void onDialogMessage(String restaurant, String branch, String time, String promotion, int amount) {
+
+        Toast.makeText(this, restaurant + "\n" + branch + "\n" + time + "\n" + promotion + "\n" + Integer.toString(amount) + "\n", Toast.LENGTH_LONG).show();
+    }
+
+    public void onDialogMessage(int available, String restaurant, String time, String name){
+        Toast.makeText(this, available + "\n" + restaurant + "\n" + time + "\n" + name, Toast.LENGTH_LONG).show();
+    }
 }
