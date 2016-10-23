@@ -3,16 +3,21 @@
 
     <group android:checkableBehavior="all">
         <item
-            android:id="@+id/navItem1"
+            android:id="@+id/my_deal"
             android:icon="@mipmap/ic_launcher"
             android:title="my deal"/>
         <item
-            android:id="@+id/navItem2"
+            android:id="@+id/favorite_deal"
             android:icon="@mipmap/ic_launcher"
             android:title="my favorite deal"/>
 
         <item
-            android:id="@+id/navItem3"
+            android:id="@+id/edit_profile"
+            android:icon="@mipmap/ic_launcher"
+            android:title="edit profile"/>
+
+        <item
+            android:id="@+id/logout"
             android:icon="@mipmap/ic_launcher"
             android:title="log out"/>
     </group>

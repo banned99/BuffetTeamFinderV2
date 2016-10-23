@@ -4,21 +4,33 @@
         id="@+id/promotion_tab"
         icon="@drawable/ic_restaurants"
         title="Promotion"
+        inActiveColor="@color/colorPrimaryLight"
+        activeColor="#FFFFFF"
+        barColorWhenSelected="@color/colorPrimary"
         />
     <tab
         id="@+id/search_tab"
         icon="@drawable/ic_recents"
         title="Search"
+        inActiveColor="@color/colorPrimaryLight"
+        activeColor="#FFFFFF"
+        barColorWhenSelected="@color/colorPrimary"
         />
     <tab
         id="@+id/map_tab"
         icon="@drawable/ic_nearby"
         title="Map"
+        inActiveColor="@color/colorPrimaryLight"
+        activeColor="#FFFFFF"
+        barColorWhenSelected="@color/colorPrimary"
         />
 
     <tab
         id="@+id/notification_tab"
         icon="@drawable/ic_favorites"
         title="notification"
+        inActiveColor="@color/colorPrimaryLight"
+        activeColor="#FFFFFF"
+        barColorWhenSelected="@color/colorPrimary"
         />
 </tabs>

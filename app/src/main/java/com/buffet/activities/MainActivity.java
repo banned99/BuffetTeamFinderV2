@@ -1,10 +1,14 @@
 package com.buffet.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -13,9 +17,13 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buffet.adapters.ViewPagerAdapter;
@@ -28,6 +36,8 @@ import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 
+import org.w3c.dom.Text;
+
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     NestedScrollView nestedScrollView;
     BottomBar bottomBar;
+    NavigationView navigationView;
+
 
 
     @Override
@@ -69,11 +81,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Bottombar
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
 
                 if (tabId == R.id.promotion_tab) {
+                    ChangeStyleBottomBarLabel(0);
                     PromotionFragment promotionFragment = PromotionFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, promotionFragment);
@@ -81,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (tabId == R.id.search_tab) {
+                    ChangeStyleBottomBarLabel(1);
                     SearchFragment searchFragment = SearchFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, searchFragment);
@@ -88,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (tabId == R.id.map_tab) {
+                    ChangeStyleBottomBarLabel(2);
                     MapFragment mapFragment = MapFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, mapFragment);
@@ -95,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (tabId == R.id.notification_tab) {
+                    ChangeStyleBottomBarLabel(3);
                     BottomBarTab notification = bottomBar.getTabWithId(R.id.notification_tab);
                     notification.removeBadge();
 
@@ -112,6 +129,32 @@ public class MainActivity extends AppCompatActivity {
 
         // Remove Badge
 //        notification.removeBadge();
+
+        // Navigation Drawer
+        navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id) {
+                    case R.id.my_deal:
+                        Snackbar.make(navigationView, "My Deal", Snackbar.LENGTH_SHORT).show();
+                        break;
+                    case R.id.favorite_deal:
+                        Snackbar.make(navigationView, "Favorite Deal", Snackbar.LENGTH_SHORT).show();
+                        break;
+                    case R.id.edit_profile:
+                        Intent navIntent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                        startActivity(navIntent);
+                        break;
+                    case R.id.logout:
+                        Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -161,5 +204,35 @@ public class MainActivity extends AppCompatActivity {
         if (bottomBar.getCurrentTabPosition() != 0) {
             bottomBar.selectTabAtPosition(0);
         } else super.onBackPressed();
+    }
+
+    // When Tab is selected , label will show
+    public void ChangeStyleBottomBarLabel(int index) {
+
+        final ViewGroup mItemContainer = (ViewGroup) findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_item_container);
+
+        for (int i = 0; i < mItemContainer.getChildCount(); i++) {
+            View viewItem = mItemContainer.getChildAt(i);
+            if (i == index){
+                //TITLE
+                TextView titleTab = (TextView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_title);
+                titleTab.setVisibility(View.VISIBLE);
+                //ICON
+                AppCompatImageView icon = (AppCompatImageView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_icon);
+                icon.setY(6);
+                //hack for fix the color set in setActiveTabColor
+                icon.setColorFilter(titleTab.getCurrentTextColor());
+            } else {
+                //TITLE
+                TextView titleTab = (TextView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_title);
+                titleTab.setVisibility(View.GONE);
+                //ICON
+                AppCompatImageView icon = (AppCompatImageView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_icon);
+                icon.setY(19);
+                //hack for fix the color set in setActiveTabColor
+                icon.setColorFilter(titleTab.getCurrentTextColor());
+            }
+        }
+
     }
 }

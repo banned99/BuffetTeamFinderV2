@@ -10,4 +10,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="BB_BottomBarItem_TitleStyle." parent="BB_BottomBarItem_TitleStyle">
+        <item name="android:visibility">gone</item>
+    </style>
+
 </resources>

@@ -47,6 +47,7 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom"
             app:bb_tabXmlResource="@xml/bottombar_tabs"
+            app:bb_inActiveTabAlpha="0.6"
             />
     </android.support.design.widget.CoordinatorLayout>
     
