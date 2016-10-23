@@ -57,9 +57,6 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        nestedScrollView = (NestedScrollView) findViewById(R.id.nest_scroll_view);
-        nestedScrollView.setFillViewport(true);
-
         // Navigation Drawer
         navigationView = (NavigationView) findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

@@ -15,18 +15,13 @@
 
         <include layout="@layout/toobar"/>
 
-        <com.buffet.custom.CustomNestedScrollView
-            android:id="@+id/nest_scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
 
             <LinearLayout
                 android:id="@+id/lin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -38,14 +33,13 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="450dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/branch_container"
+                    android:layout_gravity="clip_vertical"
                     />
 
             </LinearLayout>
 
-
-        </com.buffet.custom.CustomNestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>
 
