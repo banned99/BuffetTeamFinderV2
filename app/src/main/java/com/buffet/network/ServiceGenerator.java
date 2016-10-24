@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
  */
 
 public class ServiceGenerator {
-    public static final String API_BASE_URL = "http://10.37.15.24/";
+    public static final String API_BASE_URL = "http://172.16.3.87/";
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private static Retrofit.Builder builder =
             new Retrofit.Builder()

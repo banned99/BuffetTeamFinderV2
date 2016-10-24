@@ -14,6 +14,7 @@ import com.buffet.adapters.ViewPagerAdapter;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -162,6 +163,5 @@ public class PromotionFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 
 }

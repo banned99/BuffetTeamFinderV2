@@ -42,8 +42,8 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Promotion current = promotions.get(position);
-        final int promotion_id = current.getPromotionID();
-        holder.promotionLabel.setText(current.getPromotionName());
+        final int promotion_id = current.getProId();
+        holder.promotionLabel.setText(current.getProName());
         holder.promotionImage.setImageResource(current.getImage());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

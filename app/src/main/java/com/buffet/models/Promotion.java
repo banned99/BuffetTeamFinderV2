@@ -1,74 +1,155 @@
 package com.buffet.models;
 
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by YaYaTripleSix on 23-Oct-16.
  */
 
 public class Promotion {
+    @SerializedName("pro_id")
+    @Expose
+    private Integer proId;
+    @SerializedName("pro_name")
+    @Expose
+    private String proName;
+    @SerializedName("price")
+    @Expose
+    private Double price;
+    @SerializedName("date_start")
+    @Expose
+    private String dateStart;
+    @SerializedName("expire")
+    @Expose
+    private String expire;
+    @SerializedName("max_person")
+    @Expose
+    private Integer maxPerson;
 
-    private int promotionID;
-    private int maxPerson;
-    private String promotionName;
-    private double price;
-    private Date dateStart;
-    private Date expire;
     private int image;
 
-    public int getPromotionID() {
-        return promotionID;
+    /**
+     *
+     * @return
+     * The proId
+     */
+    public Integer getProId() {
+        return proId;
     }
 
-    public void setPromotionID(int promotionID) {
-        this.promotionID = promotionID;
+    /**
+     *
+     * @param proId
+     * The pro_id
+     */
+    public void setProId(Integer proId) {
+        this.proId = proId;
     }
 
-    public String getPromotionName() {
-        return promotionName;
+    /**
+     *
+     * @return
+     * The proName
+     */
+    public String getProName() {
+        return proName;
     }
 
-    public void setPromotionName(String promotionName) {
-        this.promotionName = promotionName;
+    /**
+     *
+     * @param proName
+     * The pro_name
+     */
+    public void setProName(String proName) {
+        this.proName = proName;
     }
 
-    public int getMaxPerson() {
-        return maxPerson;
-    }
-
-    public void setMaxPerson(int maxPerson) {
-        this.maxPerson = maxPerson;
-    }
-
-    public double getPrice() {
+    /**
+     *
+     * @return
+     * The price
+     */
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    /**
+     *
+     * @param price
+     * The price
+     */
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Date getDateStart() {
+    /**
+     *
+     * @return
+     * The dateStart
+     */
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    /**
+     *
+     * @param dateStart
+     * The date_start
+     */
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getExpire() {
+    /**
+     *
+     * @return
+     * The expire
+     */
+    public String getExpire() {
         return expire;
     }
 
-    public void setExpire(Date expire) {
+    /**
+     *
+     * @param expire
+     * The expire
+     */
+    public void setExpire(String expire) {
         this.expire = expire;
     }
 
-    public int getImage() {
-        return image;
+    /**
+     *
+     * @return
+     * The maxPerson
+     */
+    public Integer getMaxPerson() {
+        return maxPerson;
+    }
+
+    /**
+     *
+     * @param maxPerson
+     * The max_person
+     */
+    public void setMaxPerson(Integer maxPerson) {
+        this.maxPerson = maxPerson;
     }
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public int getImage() {
+        return image;
     }
 }

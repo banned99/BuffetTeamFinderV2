@@ -11,11 +11,18 @@ import android.view.ViewGroup;
 
 import com.buffet.adapters.NewPromotionRecyclerAdapter;
 import com.buffet.models.Promotion;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.network.ServiceGenerator.createService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +35,8 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
 public class NewProFragment extends Fragment {
 
     private NewPromotionRecyclerAdapter adapter;
+    private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
-
     public NewProFragment() {
         // Required empty public constructor
     }
@@ -45,7 +52,6 @@ public class NewProFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -53,38 +59,47 @@ public class NewProFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_new, container, false);
-
-        adapter = new NewPromotionRecyclerAdapter(getActivity(), getData());
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.new_promotion_list);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.new_promotion_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
-        recyclerView.setAdapter(adapter);
+        getPromotionData();
 
         return rootView;
     }
 
-    public static List<Promotion> getData() {
-        List<Promotion> promotions = new ArrayList<>();
-        int[] promotion_id = {1,2,3,4,5,6,7,8};
-        int[] images = {R.drawable.promo_1, R.drawable.promo_2, R.drawable.promo_3, R.drawable.promo_4, R.drawable.promo_5, R.drawable.promo_6, R.drawable.promo_7, R.drawable.promo_8};
-        String[] name = {"Promotion_1", "Promotion_2", "Promotion_3", "Promotion_4", "Promotion_5", "Promotion_6", "Promotion_7", "Promotion_8"};
-        double[] price = {35.25, 53.66, 552.3, 255.4, 6.777, 7.44, 24.55, 600.43};
-        int[] max_person = {4, 4, 3, 5, 4, 2, 4, 3};
-
-        for (int i = 0; i<name.length && i<images.length; i++) {
-
-            Promotion current = new Promotion();
-            current.setPromotionID(promotion_id[i]);
-            current.setImage(images[i]);
-            current.setPromotionName(name[i]);
-            current.setPrice(price[i]);
-            current.setMaxPerson(max_person[i]);
-            promotions.add(current);
-
-        }
-
-        return promotions;
+    public void getPromotionData() {
+        ServiceAction service = createService(ServiceAction.class);
+        Call<ServerResponse> call = service.getPromotion();
+        call.enqueue(new Callback<ServerResponse>(){
+            @Override
+            public void onResponse(Response<ServerResponse> response){
+                ServerResponse model = response.body();
+                List<Promotion> promotions = new ArrayList<>();
+                int[] images = {R.drawable.promo_1};
+                if(model == null){
+                    System.out.println("PROMOTION IS NULL");
+                } else {
+                    System.out.println("Result : " + model.getResult()
+                                    + "\nMessage : " + model.getMessage());
+                    for (int i = 0; i< model.getPromotion().size(); i++) {
+                        Promotion current = new Promotion();
+                        current.setProId(model.getPromotion().get(i).getProId());
+                        current.setImage(images[i]);
+                        current.setProName(model.getPromotion().get(i).getProName());
+                        current.setPrice(model.getPromotion().get(i).getPrice());
+                        current.setMaxPerson(model.getPromotion().get(i).getMaxPerson());
+                        promotions.add(current);
+                    }
+                    adapter = new NewPromotionRecyclerAdapter(getActivity(), promotions);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
