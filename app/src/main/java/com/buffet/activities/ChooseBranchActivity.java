@@ -6,27 +6,19 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 
-import com.buffet.adapters.BranchRecyclerAdapter;
 import com.buffet.fragments.ChooseBranchFragment;
-import com.buffet.models.Branch;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -79,8 +71,8 @@ public class ChooseBranchActivity extends AppCompatActivity {
                     case R.id.favorite_deal:
                         Snackbar.make(navigationView, "Favorite Deal", Snackbar.LENGTH_SHORT).show();
                         break;
-                    case R.id.edit_profile:
-                        Intent editProfileIntent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                    case R.id.view_profile:
+                        Intent editProfileIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
                         startActivity(editProfileIntent);
                         break;
                     case R.id.logout:

@@ -12,9 +12,9 @@
             android:title="my favorite deal"/>
 
         <item
-            android:id="@+id/edit_profile"
+            android:id="@+id/view_profile"
             android:icon="@mipmap/ic_launcher"
-            android:title="edit profile"/>
+            android:title="view profile"/>
 
         <item
             android:id="@+id/logout"

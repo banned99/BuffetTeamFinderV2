@@ -29,8 +29,6 @@ import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 
-import org.w3c.dom.Text;
-
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -132,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.favorite_deal:
                         Snackbar.make(navigationView, "Favorite Deal", Snackbar.LENGTH_SHORT).show();
                         break;
-                    case R.id.edit_profile:
-                        Intent navIntent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                    case R.id.view_profile:
+                        Intent navIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
                         startActivity(navIntent);
                         break;
                     case R.id.logout:

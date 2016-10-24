@@ -98,7 +98,6 @@ public class ChooseDealFragment extends Fragment {
 
             Deal current = new Deal();
             current.setDealId(deal_id[i]);
-            current.setDealName(name[i]);
             deals.add(current);
         }
 

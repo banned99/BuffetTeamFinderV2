@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -17,7 +15,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.buffet.dialogs.CreateDealDialog;
@@ -71,8 +68,8 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
                     case R.id.favorite_deal:
                         Snackbar.make(navigationView, "Favorite Deal", Snackbar.LENGTH_SHORT).show();
                         break;
-                    case R.id.edit_profile:
-                        Intent editProfileIntent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                    case R.id.view_profile:
+                        Intent editProfileIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
                         startActivity(editProfileIntent);
                         break;
                     case R.id.logout:

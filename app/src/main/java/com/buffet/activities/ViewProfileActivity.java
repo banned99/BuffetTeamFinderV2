@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
 
-public class EditProfileActivity extends AppCompatActivity {
+public class ViewProfileActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -30,15 +30,15 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
-        rootLayout = (CoordinatorLayout) findViewById(R.id.activity_edit_profile_root_layout);
+        setContentView(R.layout.activity_view_profile);
+        rootLayout = (CoordinatorLayout) findViewById(R.id.activity_view_profile_root_layout);
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_edit_profile);
-        drawerToggle = new ActionBarDrawerToggle(EditProfileActivity.this, drawerLayout, R.string.app_name, R.string.app_name);
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_view_profile);
+        drawerToggle = new ActionBarDrawerToggle(ViewProfileActivity.this, drawerLayout, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -61,8 +61,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     case R.id.favorite_deal:
                         Snackbar.make(navigationView, "Favorite Deal", Snackbar.LENGTH_SHORT).show();
                         break;
-                    case R.id.edit_profile:
-                        Intent navIntent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                    case R.id.view_profile:
+                        Intent navIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
                         startActivity(navIntent);
                         break;
                     case R.id.logout:
