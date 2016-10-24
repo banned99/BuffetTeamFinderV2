@@ -79,7 +79,7 @@ public class NewProFragment extends Fragment {
             current.setImage(images[i]);
             current.setPromotionName(name[i]);
             current.setPrice(price[i]);
-            current.setMax_person(max_person[i]);
+            current.setMaxPerson(max_person[i]);
             promotions.add(current);
 
         }

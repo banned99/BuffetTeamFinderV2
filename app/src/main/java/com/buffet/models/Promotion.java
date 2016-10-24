@@ -9,10 +9,10 @@ import java.util.Date;
 public class Promotion {
 
     private int promotionID;
-    private int max_person;
+    private int maxPerson;
     private String promotionName;
     private double price;
-    private Date date_start;
+    private Date dateStart;
     private Date expire;
     private int image;
 
@@ -32,12 +32,12 @@ public class Promotion {
         this.promotionName = promotionName;
     }
 
-    public int getMax_person() {
-        return max_person;
+    public int getMaxPerson() {
+        return maxPerson;
     }
 
-    public void setMax_person(int max_person) {
-        this.max_person = max_person;
+    public void setMaxPerson(int maxPerson) {
+        this.maxPerson = maxPerson;
     }
 
     public double getPrice() {
@@ -48,12 +48,12 @@ public class Promotion {
         this.price = price;
     }
 
-    public Date getDate_start() {
-        return date_start;
+    public Date getDateStart() {
+        return dateStart;
     }
 
-    public void setDate_start(Date date_start) {
-        this.date_start = date_start;
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
     }
 
     public Date getExpire() {
