@@ -10,5 +10,5 @@ import retrofit2.http.GET;
  */
 
 public interface ServiceAction {
-    @GET("buffet/promotion.php") Call<ServerResponse> getPromotion();
+    @GET("promotion.php") Call<ServerResponse> getPromotion();
 }

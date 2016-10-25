@@ -34,7 +34,8 @@ public class Promotion {
     @SerializedName("max_person")
     @Expose
     private Integer maxPerson;
-
+    @SerializedName("image")
+    @Expose
     private int image;
 
     /**
