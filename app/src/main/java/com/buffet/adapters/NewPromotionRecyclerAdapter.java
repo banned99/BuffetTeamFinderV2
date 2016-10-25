@@ -15,6 +15,8 @@ import com.buffet.activities.ChooseBranchActivity;
 import com.buffet.models.Promotion;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -47,17 +49,31 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
 
         final Promotion current = promotions.get(position);
         final int promotion_id = current.getProId();
-        holder.promotionLabel.setText(current.getProName());
-        Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/images/"+current.getImage()).resize(1200, 650).into(holder.promotionImage);
+        final String promotion_name = current.getProName();
+        final Double promotion_price = current.getPrice();
+        final String promotion_date_start = current.getDateStart();
+        final String promotion_expire = current.getExpire();
+        final int promotion_max_person = current.getMaxPerson();
+        final String promotion_image = current.getImage();
+
+        holder.promotionLabel.setText(promotion_name);
+        holder.promotionPrice.setText("ราคา " + Double.toString(promotion_price) + " บาท");
+        holder.promotionMax.setText("จำนวน " + Integer.toString(promotion_max_person) + " คน");
+        holder.promotionExpire.setText("ถึง " + promotion_expire);
+        Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/images/"+promotion_image).resize(1200, 650).into(holder.promotionImage);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = holder.promotionLabel.getText().toString();
                 System.out.println("name = " + name + " id = " + promotion_id);
-                Toast.makeText(v.getContext(),name,Toast.LENGTH_LONG);
 
                 Intent chooseProIntent = new Intent(v.getContext(), ChooseBranchActivity.class);
                 chooseProIntent.putExtra("promotion_id", promotion_id);
+                chooseProIntent.putExtra("promotion_name", promotion_name);
+                chooseProIntent.putExtra("promotion_price", promotion_price);
+                chooseProIntent.putExtra("promotion_date_start", promotion_date_start);
+                chooseProIntent.putExtra("promotion_expire", promotion_expire);
+                chooseProIntent.putExtra("promotion_max_person", promotion_max_person);
                 v.getContext().startActivity(chooseProIntent);
             }
         });
@@ -73,14 +89,20 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView promotionLabel;
+        TextView promotionPrice;
+        TextView promotionMax;
+        TextView promotionExpire;
         ImageView promotionImage;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             promotionLabel = (TextView) itemView.findViewById(R.id.promotionLabel);
+            promotionPrice = (TextView) itemView.findViewById(R.id.promotionPrice);
+            promotionMax = (TextView) itemView.findViewById(R.id.promotionMax);
+            promotionExpire = (TextView) itemView.findViewById(R.id.promotionExpire);
             promotionImage = (ImageView) itemView.findViewById(R.id.promotionImage);
-
 
         }
     }

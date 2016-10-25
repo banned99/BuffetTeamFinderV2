@@ -19,7 +19,8 @@
             android:id="@+id/nest_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
 
 
             <LinearLayout
@@ -46,6 +47,7 @@
             android:layout_gravity="bottom"
             app:bb_tabXmlResource="@xml/bottombar_tabs"
             app:bb_inActiveTabAlpha="0.6"
+            app:bb_behavior="shifting|shy"
             />
     </android.support.design.widget.CoordinatorLayout>
     

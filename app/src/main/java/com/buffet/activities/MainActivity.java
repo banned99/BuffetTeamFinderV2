@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(@IdRes int tabId) {
 
                 if (tabId == R.id.promotion_tab) {
-                    ChangeStyleBottomBarLabel(0);
+//                    ChangeStyleBottomBarLabel(0);
                     PromotionFragment promotionFragment = PromotionFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, promotionFragment);
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (tabId == R.id.search_tab) {
-                    ChangeStyleBottomBarLabel(1);
+//                    ChangeStyleBottomBarLabel(1);
                     SearchFragment searchFragment = SearchFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, searchFragment);
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (tabId == R.id.map_tab) {
-                    ChangeStyleBottomBarLabel(2);
+//                    ChangeStyleBottomBarLabel(2);
                     MapFragment mapFragment = MapFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, mapFragment);
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (tabId == R.id.notification_tab) {
-                    ChangeStyleBottomBarLabel(3);
+//                    ChangeStyleBottomBarLabel(3);
                     BottomBarTab notification = bottomBar.getTabWithId(R.id.notification_tab);
                     notification.removeBadge();
 
@@ -193,32 +193,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // When Tab is selected , label will show
-    public void ChangeStyleBottomBarLabel(int index) {
+//    public void ChangeStyleBottomBarLabel(int index) {
+//
+//        final ViewGroup mItemContainer = (ViewGroup) findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_item_container);
+//
+//        for (int i = 0; i < mItemContainer.getChildCount(); i++) {
+//            View viewItem = mItemContainer.getChildAt(i);
+//            if (i == index){
+//                //TITLE
+//                TextView titleTab = (TextView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_title);
+//                titleTab.setVisibility(View.VISIBLE);
+//                //ICON
+//                AppCompatImageView icon = (AppCompatImageView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_icon);
+//                icon.setY(6);
+//                //hack for fix the color set in setActiveTabColor
+//                icon.setColorFilter(titleTab.getCurrentTextColor());
+//            } else {
+//                //TITLE
+//                TextView titleTab = (TextView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_title);
+//                titleTab.setVisibility(View.GONE);
+//                //ICON
+//                AppCompatImageView icon = (AppCompatImageView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_icon);
+//                icon.setY(19);
+//                //hack for fix the color set in setActiveTabColor
+//                icon.setColorFilter(titleTab.getCurrentTextColor());
+//            }
+//        }
 
-        final ViewGroup mItemContainer = (ViewGroup) findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_item_container);
-
-        for (int i = 0; i < mItemContainer.getChildCount(); i++) {
-            View viewItem = mItemContainer.getChildAt(i);
-            if (i == index){
-                //TITLE
-                TextView titleTab = (TextView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_title);
-                titleTab.setVisibility(View.VISIBLE);
-                //ICON
-                AppCompatImageView icon = (AppCompatImageView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_icon);
-                icon.setY(6);
-                //hack for fix the color set in setActiveTabColor
-                icon.setColorFilter(titleTab.getCurrentTextColor());
-            } else {
-                //TITLE
-                TextView titleTab = (TextView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_title);
-                titleTab.setVisibility(View.GONE);
-                //ICON
-                AppCompatImageView icon = (AppCompatImageView) viewItem.findViewById(com.roughike.bottombar.R.id.bb_bottom_bar_icon);
-                icon.setY(19);
-                //hack for fix the color set in setActiveTabColor
-                icon.setColorFilter(titleTab.getCurrentTextColor());
-            }
-        }
-
-    }
+//    }
 }

@@ -11,16 +11,65 @@
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/promotionLabel"
-        android:layout_gravity="center_horizontal"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        card_view:srcCompat="@drawable/promo_1"
-        android:id="@+id/promotionImage" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="ProName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/promotionLabel"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="start"/>
+
+            <TextView
+                android:text="price: 290"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/promotionPrice"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Max 5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/promotionMax"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:text="expire: 2/2/2017"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/promotionExpire" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:srcCompat="@drawable/promo_1"
+            android:id="@+id/promotionImage" />
+
+    </LinearLayout>
+
+
+
+
+
+
 </android.support.v7.widget.CardView>
