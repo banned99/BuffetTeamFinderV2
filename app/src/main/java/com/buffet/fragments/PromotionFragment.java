@@ -87,7 +87,7 @@ public class PromotionFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager, false);
 
         newPro.setText("new");
-        categories.setText("categories");
+        categories.setText("category");
         topTen.setText("top 10");
         aToZ.setText("a-z");
 

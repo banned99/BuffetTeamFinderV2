@@ -29,6 +29,7 @@ dependencies {
     })
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'

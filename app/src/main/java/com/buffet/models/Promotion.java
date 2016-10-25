@@ -1,5 +1,7 @@
 package com.buffet.models;
 
+import android.graphics.Bitmap;
+
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -36,7 +38,7 @@ public class Promotion {
     private Integer maxPerson;
     @SerializedName("image")
     @Expose
-    private int image;
+    private String image;
 
     /**
      *
@@ -146,11 +148,11 @@ public class Promotion {
         this.maxPerson = maxPerson;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 }

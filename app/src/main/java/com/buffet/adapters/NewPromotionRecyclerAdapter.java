@@ -2,6 +2,7 @@ package com.buffet.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,14 @@ import android.widget.Toast;
 
 import com.buffet.activities.ChooseBranchActivity;
 import com.buffet.models.Promotion;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by NattKS on 10/19/2016.
@@ -44,7 +48,7 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
         final Promotion current = promotions.get(position);
         final int promotion_id = current.getProId();
         holder.promotionLabel.setText(current.getProName());
-        holder.promotionImage.setImageResource(current.getImage());
+        Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/images/"+current.getImage()).resize(1200, 650).into(holder.promotionImage);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

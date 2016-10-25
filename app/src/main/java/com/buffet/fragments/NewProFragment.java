@@ -76,7 +76,6 @@ public class NewProFragment extends Fragment {
             public void onResponse(Response<ServerResponse> response){
                 ServerResponse model = response.body();
                 List<Promotion> promotions = new ArrayList<>();
-                int[] images = {R.drawable.promo_1};
                 if(model == null){
                     System.out.println("PROMOTION IS NULL");
                 } else {
@@ -85,7 +84,7 @@ public class NewProFragment extends Fragment {
                     for (int i = 0; i< model.getPromotion().size(); i++) {
                         Promotion current = new Promotion();
                         current.setProId(model.getPromotion().get(i).getProId());
-                        current.setImage(images[i]);
+                        current.setImage(model.getPromotion().get(i).getImage());
                         current.setProName(model.getPromotion().get(i).getProName());
                         current.setPrice(model.getPromotion().get(i).getPrice());
                         current.setMaxPerson(model.getPromotion().get(i).getMaxPerson());
