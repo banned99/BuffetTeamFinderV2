@@ -16,11 +16,19 @@ import android.view.ViewGroup;
 import com.buffet.adapters.DealRecyclerAdapter;
 import com.buffet.dialogs.CreateDealDialog;
 import com.buffet.models.Deal;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.network.ServiceGenerator.createService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +41,7 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
 public class ChooseDealFragment extends Fragment {
 
     private DealRecyclerAdapter adapter;
+    private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
 
     public ChooseDealFragment() {
@@ -58,12 +67,13 @@ public class ChooseDealFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_choose_deal, container, false);
         // Deal Recycler
-        adapter = new DealRecyclerAdapter(getActivity(), getData());
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.deal_list);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.deal_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
-        recyclerView.setAdapter(adapter);
+        Bundle bundle = this.getArguments();
+        getData(bundle.getInt("branch_id"));
 
         // Fab button
         final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fabBtn);
@@ -89,19 +99,42 @@ public class ChooseDealFragment extends Fragment {
         return rootView;
     }
 
-    public static List<Deal> getData() {
-        List<Deal> deals = new ArrayList<>();
-        int[] deal_id = {1,2,3,4,5};
-        String[] name= {"b1", "b2", "b3", "b4", "b5"};
+    public void getData(int branch_id) {
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("getdeal");
+        request.setBranchId(branch_id);
+        Call<ServerResponse> call = service.getDeal(request);
+        call.enqueue(new Callback<ServerResponse>(){
+            @Override
+            public void onResponse(Response<ServerResponse> response) {
+                ServerResponse model = response.body();
+                List<Deal> deals = new ArrayList<>();
+                if(model.getResult().equals("failure")){
+                    System.out.println("DEAL IS NULL");
+                } else {
+                    System.out.println("Result : " + model.getResult()
+                            + "\nMessage : " + model.getMessage());
+                    for (int i = 0; i < model.getDeal().size(); i++) {
+                        Deal current = new Deal();
+                        current.setDealId(model.getDeal().get(i).getDealId());
+                        current.setDealOwner(model.getDeal().get(i).getDealOwner());
+                        current.setCurrentPerson(model.getDeal().get(i).getCurrentPerson());
+                        current.setDate(model.getDeal().get(i).getDate());
+                        current.setTime(model.getDeal().get(i).getTime());
+                        deals.add(current);
+                    }
+                }
+                adapter = new DealRecyclerAdapter(getActivity(), deals);
+                recyclerView.setAdapter(adapter);
+            }
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
-        for (int i = 0; i<deal_id.length && i<name.length; i++) {
 
-            Deal current = new Deal();
-            current.setDealId(deal_id[i]);
-            deals.add(current);
-        }
-
-        return deals;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -90,6 +90,7 @@ public class ChooseBranchActivity extends AppCompatActivity {
 
         // Branch Fragment
         ChooseBranchFragment chooseBranchFragment = ChooseBranchFragment.newInstance();
+        chooseBranchFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.branch_container, chooseBranchFragment);
         transaction.commit();

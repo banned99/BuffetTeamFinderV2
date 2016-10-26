@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.buffet.custom.CustomNestedScrollView;
 import com.buffet.fragments.MapFragment;
 import com.buffet.fragments.NotiFragment;
 import com.buffet.fragments.PromotionFragment;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle drawerToggle;
     CoordinatorLayout rootLayout;
     Toolbar toolbar;
-    NestedScrollView nestedScrollView;
+    CustomNestedScrollView nestedScrollView;
     BottomBar bottomBar;
     NavigationView navigationView;
 
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        nestedScrollView = (NestedScrollView) findViewById(R.id.nest_scroll_view);
+        nestedScrollView = (CustomNestedScrollView) findViewById(R.id.nest_scroll_view);
         nestedScrollView.setFillViewport(true);
 
 

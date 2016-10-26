@@ -82,9 +82,9 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
 
 
 
-
         // Deal Fragment
         ChooseDealFragment chooseDealFragment = ChooseDealFragment.newInstance();
+        chooseDealFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.deal_container, chooseDealFragment);
         transaction.commit();

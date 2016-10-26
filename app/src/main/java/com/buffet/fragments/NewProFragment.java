@@ -76,7 +76,7 @@ public class NewProFragment extends Fragment {
             public void onResponse(Response<ServerResponse> response){
                 ServerResponse model = response.body();
                 List<Promotion> promotions = new ArrayList<>();
-                if(model == null){
+                if(model.getResult().equals("failure")){
                     System.out.println("PROMOTION IS NULL");
                 } else {
                     System.out.println("Result : " + model.getResult()
@@ -87,12 +87,14 @@ public class NewProFragment extends Fragment {
                         current.setImage(model.getPromotion().get(i).getImage());
                         current.setProName(model.getPromotion().get(i).getProName());
                         current.setPrice(model.getPromotion().get(i).getPrice());
+                        current.setDateStart(model.getPromotion().get(i).getDateStart());
+                        current.setExpire(model.getPromotion().get(i).getExpire());
                         current.setMaxPerson(model.getPromotion().get(i).getMaxPerson());
                         promotions.add(current);
                     }
-                    adapter = new NewPromotionRecyclerAdapter(getActivity(), promotions);
-                    recyclerView.setAdapter(adapter);
                 }
+                adapter = new NewPromotionRecyclerAdapter(getActivity(), promotions);
+                recyclerView.setAdapter(adapter);
             }
             @Override
             public void onFailure(Throwable t) {

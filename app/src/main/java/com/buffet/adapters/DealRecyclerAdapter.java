@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.buffet.activities.ChooseDealActivity;
@@ -45,7 +46,20 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
 
         Deal current = deals.get(position);
         final int deal_id = current.getDealId();
-//        holder.dealLabel.setText(current.getDealName());
+        final String owner_name = current.getDealOwner();
+        final String date = current.getDate();
+        final String time = current.getTime();
+        final int current_person = current.getCurrentPerson();
+
+        holder.owner_name.setText("Deal Owner  "+owner_name);
+        holder.eat_time.setText("วัน เวลา " + date + " " + time);
+        holder.current_person.setText("ตอนนี้มี " + current_person + "คน" );
+        holder.join_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -63,12 +77,21 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-//        TextView dealLabel;
+
+        TextView owner_name;
+        TextView eat_time;
+        TextView current_person;
+        Button join_button;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-//            dealLabel = (TextView) itemView.findViewById(R.id.dealLabel);
+            owner_name = (TextView) itemView.findViewById(R.id.deal_owner);
+            eat_time = (TextView) itemView.findViewById(R.id.eat_time);
+            current_person = (TextView) itemView.findViewById(R.id.current_person);
+            join_button = (Button) itemView.findViewById(R.id.join_button);
+
         }
     }
 }

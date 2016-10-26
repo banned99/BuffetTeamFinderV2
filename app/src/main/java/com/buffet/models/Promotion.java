@@ -1,17 +1,7 @@
 package com.buffet.models;
 
-import android.graphics.Bitmap;
-
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Created by YaYaTripleSix on 23-Oct-16.
@@ -20,7 +10,7 @@ import java.util.TimeZone;
 public class Promotion {
     @SerializedName("pro_id")
     @Expose
-    private Integer proId;
+    private int proId;
     @SerializedName("pro_name")
     @Expose
     private String proName;
@@ -35,7 +25,7 @@ public class Promotion {
     private String expire;
     @SerializedName("max_person")
     @Expose
-    private Integer maxPerson;
+    private int maxPerson;
     @SerializedName("image")
     @Expose
     private String image;
@@ -45,7 +35,7 @@ public class Promotion {
      * @return
      * The proId
      */
-    public Integer getProId() {
+    public int getProId() {
         return proId;
     }
 
@@ -54,7 +44,7 @@ public class Promotion {
      * @param proId
      * The pro_id
      */
-    public void setProId(Integer proId) {
+    public void setProId(int proId) {
         this.proId = proId;
     }
 
@@ -135,7 +125,7 @@ public class Promotion {
      * @return
      * The maxPerson
      */
-    public Integer getMaxPerson() {
+    public int getMaxPerson() {
         return maxPerson;
     }
 
@@ -144,7 +134,7 @@ public class Promotion {
      * @param maxPerson
      * The max_person
      */
-    public void setMaxPerson(Integer maxPerson) {
+    public void setMaxPerson(int maxPerson) {
         this.maxPerson = maxPerson;
     }
 

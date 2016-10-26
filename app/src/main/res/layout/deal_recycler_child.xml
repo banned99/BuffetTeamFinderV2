@@ -12,126 +12,35 @@
     android:layout_marginBottom="10dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:text="Restaurant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/restaurantText"
-                android:layout_weight="1" />
-
-            <TextView
-                android:text="restaurantName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/restaurantName"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:text="Distance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/distanceText"
-                android:layout_weight="1" />
-
-            <TextView
-                android:text="300"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/distance"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:text="Name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/name_text"
-                android:layout_weight="1" />
-
-            <TextView
-                android:text="Supawan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/name"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:text="Time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/time_text"
-                android:layout_weight="1" />
-
-            <TextView
-                android:text="14:00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/time"
-                android:layout_weight="1" />
-
-
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            card_view:srcCompat="@drawable/ic_promotion"
-            android:maxHeight="40dp"
-            android:maxWidth="40dp"
-            android:id="@+id/imageView"
-            android:layout_weight="1" />
+            android:id="@+id/deal_owner"
+            android:text="Owner Name"/>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eat_time"
+            android:text="Date Time"/>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="113dp"
-                android:layout_height="match_parent"></LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_person"
+            android:text="Current"/>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="116dp"
-                android:layout_height="match_parent"></LinearLayout>
-
-            <Button
-                android:text="Join"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/joinDeal" />
-        </LinearLayout>
-
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/join_button"
+            android:layout_gravity="bottom|right"
+            android:text="join"
+            />
     </LinearLayout>
+
 </android.support.v7.widget.CardView>

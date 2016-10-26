@@ -10,13 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.buffet.activities.ChooseBranchActivity;
 import com.buffet.adapters.BranchRecyclerAdapter;
 import com.buffet.models.Branch;
+import com.buffet.models.Promotion;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.network.ServiceGenerator.createService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +40,7 @@ public class ChooseBranchFragment extends Fragment {
 
 
     private BranchRecyclerAdapter adapter;
+    private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
 
     public ChooseBranchFragment() {
@@ -58,29 +69,49 @@ public class ChooseBranchFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_choose_branch, container, false);
         // Branch Recycler
-        adapter = new BranchRecyclerAdapter(getActivity(), getData());
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.branch_list);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.branch_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
-        recyclerView.setAdapter(adapter);
+        Bundle bundle = this.getArguments();
+        getData(bundle.getInt("promotion_id"));
+
         return rootView;
     }
 
-    public static List<Branch> getData() {
-        List<Branch> branches = new ArrayList<>();
-        int[] branch_id = {1,2,3,4,5};
-        String[] name= {"b1", "b2", "b3", "b4", "b5"};
-
-        for (int i = 0; i<branch_id.length && i<name.length; i++) {
-
-            Branch current = new Branch();
-            current.setBranchId(branch_id[i]);
-            current.setBranchName(name[i]);
-            branches.add(current);
-        }
-
-        return branches;
+    public void getData(int pro_id) {
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("getbranch");
+        request.setPromotionId(pro_id);
+        Call<ServerResponse> call = service.getBranch(request);
+        call.enqueue(new Callback<ServerResponse>() {
+             @Override
+             public void onResponse(Response<ServerResponse> response){
+                 List<Branch> branches = new ArrayList<>();
+                 ServerResponse model = response.body();
+                 if(model.getResult().equals("failure")){
+                     System.out.println("BRANCH IS NULL");
+                 } else {
+                     System.out.println("Result : " + model.getResult()
+                             + "\nMessage : " + model.getMessage());
+                     for (int i = 0; i<model.getBranch().size(); i++) {
+                         Branch current = new Branch();
+                         current.setBranchId(model.getBranch().get(i).getBranchId());
+                         current.setBranchName(model.getBranch().get(i).getBranchName());
+                         current.setLatitude(model.getBranch().get(i).getLatitude());
+                         current.setLongitude(model.getBranch().get(i).getLongitude());
+                         branches.add(current);
+                     }
+                 }
+                 adapter = new BranchRecyclerAdapter(getActivity(), branches);
+                 recyclerView.setAdapter(adapter);
+             }
+             @Override
+             public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
