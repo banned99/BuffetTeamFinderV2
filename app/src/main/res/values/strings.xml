@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">BuffetTeamFinderV2</string>
+    <string name="app_name">Buffet Team Finder</string>
     <string name="txt_yo_yo">yoyo</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_settings">LogOut</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="app_id">316489208729677</string>
 </resources>
