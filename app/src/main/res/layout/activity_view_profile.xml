@@ -38,10 +38,11 @@
                     android:background="@drawable/nav_header"
                     android:layout_weight="0.08">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/promo_1"
                         android:layout_gravity="center_horizontal"
                         />
 

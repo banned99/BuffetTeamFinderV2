@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -26,6 +28,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
+    Button viewProfileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +61,10 @@ public class ViewProfileActivity extends AppCompatActivity {
                     case R.id.my_deal:
                         Snackbar.make(navigationView, "My Deal", Snackbar.LENGTH_SHORT).show();
                         break;
-                    case R.id.favorite_deal:
-                        Snackbar.make(navigationView, "Favorite Deal", Snackbar.LENGTH_SHORT).show();
-                        break;
-                    case R.id.view_profile:
-                        Intent navIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
-                        startActivity(navIntent);
-                        break;
+//                    case R.id.view_profile:
+//                        Intent navIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
+//                        startActivity(navIntent);
+//                        break;
                     case R.id.logout:
                         Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
                         break;
@@ -72,6 +72,17 @@ public class ViewProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
+        viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
+//
+        viewProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawers();
+                Intent navIntent = new Intent(v.getContext().getApplicationContext(), ViewProfileActivity.class);
+                startActivity(navIntent);
+            }
+        });
+
 
     }
 
@@ -90,7 +101,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

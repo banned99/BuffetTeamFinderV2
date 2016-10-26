@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -31,6 +33,7 @@ public class ChooseBranchActivity extends AppCompatActivity {
     Toolbar toolbar;
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
+    Button viewProfileButton;
 
 
     @Override
@@ -72,13 +75,10 @@ public class ChooseBranchActivity extends AppCompatActivity {
                     case R.id.my_deal:
                         Snackbar.make(navigationView, "My Deal", Snackbar.LENGTH_SHORT).show();
                         break;
-                    case R.id.favorite_deal:
-                        Snackbar.make(navigationView, "Favorite Deal", Snackbar.LENGTH_SHORT).show();
-                        break;
-                    case R.id.view_profile:
-                        Intent editProfileIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
-                        startActivityForResult(editProfileIntent, 0);
-                        break;
+//                    case R.id.view_profile:
+//                        Intent editProfileIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
+//                        startActivityForResult(editProfileIntent, 0);
+//                        break;
                     case R.id.logout:
                         Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
                         break;
@@ -86,6 +86,17 @@ public class ChooseBranchActivity extends AppCompatActivity {
                 return false;
             }
         });
+        viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
+//
+        viewProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawers();
+                Intent navIntent = new Intent(v.getContext().getApplicationContext(), ViewProfileActivity.class);
+                startActivity(navIntent);
+            }
+        });
+
 
 
         // Branch Fragment
@@ -114,7 +125,7 @@ public class ChooseBranchActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

@@ -73,9 +73,7 @@ public class PromotionFragment extends Fragment {
         newPro = tabLayout.newTab();
         categories = tabLayout.newTab();
         topTen = tabLayout.newTab();
-        aToZ = tabLayout.newTab();
 
-        tabLayout.addTab(aToZ);
         tabLayout.addTab(topTen);
         tabLayout.addTab(categories);
         tabLayout.addTab(newPro);
@@ -89,7 +87,6 @@ public class PromotionFragment extends Fragment {
         newPro.setText("new");
         categories.setText("category");
         topTen.setText("top 10");
-        aToZ.setText("a-z");
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

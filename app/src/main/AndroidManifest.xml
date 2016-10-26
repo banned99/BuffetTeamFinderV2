@@ -15,11 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.buffet.activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.buffet.activities.ViewProfileActivity" />
 
@@ -31,7 +27,14 @@
             android:value="AIzaSyCAzi3p1wT_WlDZ03ewmS7-Dh6ncFyWVgg" />
 
         <activity android:name="com.buffet.activities.ChooseBranchActivity" />
-        <activity android:name="com.buffet.activities.ChooseDealActivity"></activity>
+        <activity android:name="com.buffet.activities.ChooseDealActivity" />
+        <activity android:name="com.buffet.activities.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
