@@ -65,7 +65,7 @@ public class ChooseDealFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_choose_deal, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_choose_deal, container, false);
         // Deal Recycler
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.deal_list);

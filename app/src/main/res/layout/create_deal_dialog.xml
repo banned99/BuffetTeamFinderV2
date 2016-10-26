@@ -12,64 +12,67 @@
         android:layout_centerHorizontal="true">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/new_restaurant"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Restaurant"/>
+                android:text="Date"
+                android:layout_weight="1"
+                android:id="@+id/date_choose"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/choose_date_button"
+                android:text="choose date"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:layout_weight="1"
+                android:id="@+id/time_choose"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/choose_time_button"
+                android:text="choose time"
+                />
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="10dp"
+            android:layout_weight="0.57">
 
-            <EditText
-                android:id="@+id/new_branch"
+            <TextView
+                android:text="Max Person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Branch"/>
+                android:id="@+id/textView" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/spinner" />
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/new_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Time"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/new_promotion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Promotion"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/new_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Amount"/>
-        </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>

@@ -42,6 +42,7 @@ public class ChooseBranchFragment extends Fragment {
     private BranchRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
+    public static int max_person;
 
     public ChooseBranchFragment() {
         // Required empty public constructor
@@ -75,6 +76,7 @@ public class ChooseBranchFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         getData(bundle.getInt("promotion_id"));
+        max_person = bundle.getInt("promotion_max_person");
 
         return rootView;
     }

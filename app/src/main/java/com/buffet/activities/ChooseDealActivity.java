@@ -28,7 +28,6 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
     ActionBarDrawerToggle drawerToggle;
     CoordinatorLayout rootLayout;
     Toolbar toolbar;
-    NestedScrollView nestedScrollView;
     NavigationView navigationView;
 
     @Override
@@ -139,12 +138,10 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
 
     // Get data from create deal form
     @Override
-    public void onDialogMessage(String restaurant, String branch, String time, String promotion, int amount) {
+    public void onDialogMessage() {
 
-        Toast.makeText(this, restaurant + "\n" + branch + "\n" + time + "\n" + promotion + "\n" + Integer.toString(amount) + "\n", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, , Toast.LENGTH_LONG).show();
     }
 
-    public void onDialogMessage(int available, String restaurant, String time, String name){
-        Toast.makeText(this, available + "\n" + restaurant + "\n" + time + "\n" + name, Toast.LENGTH_LONG).show();
-    }
+
 }

@@ -5,12 +5,26 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+
+import com.buffet.activities.ChooseBranchActivity;
+import com.buffet.fragments.ChooseBranchFragment;
+
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -18,10 +32,11 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
  * Created by YaYaTripleSix on 23-Oct-16.
  */
 
-public class CreateDealDialog extends DialogFragment {
+public class CreateDealDialog extends DialogFragment{
 
     Communicator communicator;
-    EditText restaurant, branch, time, promotion, amount;
+    public static TextView TIME, DATE;
+    View view;
 
     @Override
     public void onAttach(Context context) {
@@ -32,22 +47,52 @@ public class CreateDealDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+        ArrayList<String> options = new ArrayList<String>();
+        for (int i = 0; i < ChooseBranchFragment.max_person; i++){
+            options.add(""+i);
+        }
 
         setCancelable(false);
 
-        View view = inflater.inflate(R.layout.create_deal_dialog, null);
-        restaurant = (EditText) view.findViewById(R.id.new_restaurant);
-        branch = (EditText) view.findViewById(R.id.new_branch);
-        time = (EditText) view.findViewById(R.id.new_time);
-        promotion = (EditText) view.findViewById(R.id.new_promotion);
-        amount = (EditText) view.findViewById(R.id.new_amount);
+        view = inflater.inflate(R.layout.create_deal_dialog, null);
+
+        DATE = (TextView) view.findViewById(R.id.date_choose);
+        TIME = (TextView) view.findViewById(R.id.time_choose);
+
+        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), R.layout.support_simple_spinner_dropdown_item, options);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        Button dateButton = (Button) view.findViewById(R.id.choose_date_button);
+        Button timeButton = (Button) view.findViewById(R.id.choose_time_button);
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                DialogFragment dialogFragment = new DatePickerFragment();
+                dialogFragment.show(manager, "date");
+            }
+        });
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                DialogFragment dialogFragment = new TimePickerFragment();
+                dialogFragment.show(manager, "time");
+            }
+        });
+
 
         builder.setTitle("New Deal");
         builder.setView(view)
                 .setPositiveButton("OK", null)
                 .setNegativeButton("CANCEL", null);
+
 
         return builder.create();
     }
@@ -70,15 +115,17 @@ public class CreateDealDialog extends DialogFragment {
 
     private void performOkButtonAction() {
         try {
-            communicator.onDialogMessage(restaurant.getText().toString(), branch.getText().toString(), time.getText().toString(), promotion.getText().toString(), Integer.parseInt(amount.getText().toString()));
+            communicator.onDialogMessage();
             dismiss();
 
         } catch (Exception e) {
             Toast.makeText(getActivity().getApplicationContext(), "Please fill all the blanks", Toast.LENGTH_LONG).show();
         }
     }
+
+
     public interface Communicator {
-        void onDialogMessage(String restaurant, String branch, String time, String promotion, int amount);
+        void onDialogMessage();
     }
 }
 

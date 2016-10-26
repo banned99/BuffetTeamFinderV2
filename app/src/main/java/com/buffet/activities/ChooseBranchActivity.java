@@ -77,7 +77,7 @@ public class ChooseBranchActivity extends AppCompatActivity {
                         break;
                     case R.id.view_profile:
                         Intent editProfileIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
-                        startActivity(editProfileIntent);
+                        startActivityForResult(editProfileIntent, 0);
                         break;
                     case R.id.logout:
                         Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
