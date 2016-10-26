@@ -14,9 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.buffet.activities.MainActivity">
-
-        </activity>
+        <activity android:name="com.buffet.activities.MainActivity"></activity>
         <activity android:name="com.buffet.activities.ViewProfileActivity" />
 
         <meta-data
@@ -35,7 +33,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.buffet.activities.LoginActivity"
+        <activity
+            android:name="com.buffet.activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -52,8 +51,8 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
+        <activity android:name="com.buffet.activities.RegisterActivity"></activity>
     </application>
 
 </manifest>

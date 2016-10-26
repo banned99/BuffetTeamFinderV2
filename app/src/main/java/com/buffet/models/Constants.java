@@ -6,8 +6,6 @@ package com.buffet.models;
 
 public class Constants {
     public static final String BASE_URL = "http://api.tunacon.com/";
-    public static final String REGISTER_OPERATION = "register";
-    public static final String LOGIN_OPERATION = "login";
 
     public static final String SUCCESS = "success";
     public static final String FAILURE = "failure";
