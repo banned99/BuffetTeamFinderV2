@@ -1,7 +1,6 @@
 package com.buffet.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -30,16 +29,12 @@ import com.buffet.fragments.MapFragment;
 import com.buffet.fragments.NotiFragment;
 import com.buffet.fragments.PromotionFragment;
 import com.buffet.fragments.SearchFragment;
-import com.buffet.models.Constants;
-import com.facebook.login.LoginManager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
-
-import static com.buffet.activities.LoginActivity.pref;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,12 +47,11 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Button viewProfileButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //pref = getPreferences(0);
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_main_root_layout);
 
@@ -151,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
 //                        break;
                     case R.id.logout:
                         Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
-                        logout();
                         break;
                 }
                 return false;
@@ -171,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
@@ -217,25 +211,6 @@ public class MainActivity extends AppCompatActivity {
         if (bottomBar.getCurrentTabPosition() != 0) {
             bottomBar.selectTabAtPosition(0);
         } else super.onBackPressed();
-    }
-
-    private void goToLogin(){
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-        finish();
-    }
-
-    private void logout() {
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(Constants.IS_LOGGED_IN,false);
-        editor.putString(Constants.EMAIL,"");
-        editor.putString(Constants.NAME,"");
-        editor.putString(Constants.TEL, "");
-        editor.putString(Constants.MEMBER_ID,"");
-        editor.apply();
-        LoginManager.getInstance().logOut();
-        goToLogin();
-        finish();
     }
 
     // When Tab is selected , label will show

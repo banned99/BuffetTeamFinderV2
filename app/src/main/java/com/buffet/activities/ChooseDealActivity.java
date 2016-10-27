@@ -50,8 +50,13 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_choose_deal);
-        drawerToggle = new ActionBarDrawerToggle(ChooseDealActivity.this, drawerLayout, R.string.app_name, R.string.app_name);
+        drawerToggle = new ActionBarDrawerToggle(ChooseDealActivity.this, drawerLayout, R.string.choose_deal, R.string.choose_deal);
         drawerLayout.setDrawerListener(drawerToggle);
+
+        drawerToggle.setDrawerIndicatorEnabled(false);
+        drawerToggle.setHomeAsUpIndicator(R.drawable.back_button);
+        drawerLayout.addDrawerListener(drawerToggle);
+        getSupportActionBar().setTitle(R.string.choose_deal);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -121,22 +126,31 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item))
-            return true;
 
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
+//        if (drawerToggle.onOptionsItemSelected(item))
+//            return true;
+//
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
     }
 
     // When pressed back button, switch to promotion tab

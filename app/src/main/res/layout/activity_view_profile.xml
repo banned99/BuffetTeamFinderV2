@@ -42,7 +42,7 @@
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_margin="10dp"
-                        android:src="@drawable/promo_1"
+                        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
                         android:layout_gravity="center_horizontal"
                         />
 
@@ -65,22 +65,23 @@
                     android:layout_gravity="center_horizontal"
                     >
 
-
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Name"/>
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/edit_name"
+                            android:hint="Name"
                             android:text="Natthanan Kunchokwanit"/>
+                        </android.support.design.widget.TextInputLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -88,16 +89,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Email"/>
-
+                            >
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:hint="Email"
                             android:id="@+id/edit_email"
                             android:text="natthanank14@gmail.com"/>
+                        </android.support.design.widget.TextInputLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -105,16 +108,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tel.   "/>
-
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/edit_tel"
+                            android:hint="Tel."
                             android:text="0890587473"/>
+                        </android.support.design.widget.TextInputLayout>
+
                     </LinearLayout>
                 </LinearLayout>
 
