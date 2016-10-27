@@ -22,13 +22,6 @@
                 android:orientation="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Choose the branch"
-                    android:textSize="24dp"
-                    android:layout_margin="10dp"/>
-
 
                 <FrameLayout
                     android:layout_width="match_parent"

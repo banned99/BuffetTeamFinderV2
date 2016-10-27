@@ -12,10 +12,11 @@
 
     <TextView
         android:text="TextView"
+        android:textSize="18dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/branchLabel"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"/>
+        android:layout_gravity="start"
+        android:textAlignment="textStart"/>
 
 </android.support.v7.widget.CardView>

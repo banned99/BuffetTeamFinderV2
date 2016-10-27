@@ -55,8 +55,6 @@ public class CreateDealDialog extends DialogFragment{
             options.add(""+i);
         }
 
-        setCancelable(false);
-
         view = inflater.inflate(R.layout.create_deal_dialog, null);
 
         DATE = (TextView) view.findViewById(R.id.date_choose);
