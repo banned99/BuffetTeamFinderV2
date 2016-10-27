@@ -34,7 +34,7 @@ public class ChooseBranchActivity extends AppCompatActivity {
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
     Button viewProfileButton;
-
+    public static int promotion_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class ChooseBranchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_branch);
 
         Bundle bundle = getIntent().getExtras();
-        int promotion_id = bundle.getInt("promotion_id");
+        promotion_id = bundle.getInt("promotion_id");
         String promotion_name = bundle.getString("promotion_name");
         Double promotion_price = bundle.getDouble("promotion_price");
         String promotion_date_start = bundle.getString("promotion_date_start");

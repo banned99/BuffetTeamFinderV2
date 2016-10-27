@@ -28,6 +28,8 @@ import java.util.Arrays;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
+import static ggwp.caliver.banned.buffetteamfinderv2.R.id.spinner;
+
 /**
  * Created by YaYaTripleSix on 23-Oct-16.
  */
@@ -36,6 +38,7 @@ public class CreateDealDialog extends DialogFragment{
 
     Communicator communicator;
     public static TextView TIME, DATE;
+    public static Spinner spinner;
     View view;
 
     @Override
@@ -51,18 +54,17 @@ public class CreateDealDialog extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         ArrayList<String> options = new ArrayList<String>();
-        for (int i = 0; i < ChooseBranchFragment.max_person; i++){
+        for (int i = 1; i < ChooseBranchFragment.max_person+1; i++){
             options.add(""+i);
         }
 
-        setCancelable(false);
 
         view = inflater.inflate(R.layout.create_deal_dialog, null);
 
         DATE = (TextView) view.findViewById(R.id.date_choose);
         TIME = (TextView) view.findViewById(R.id.time_choose);
 
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
+        spinner = (Spinner) view.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), R.layout.support_simple_spinner_dropdown_item, options);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -115,7 +117,7 @@ public class CreateDealDialog extends DialogFragment{
 
     private void performOkButtonAction() {
         try {
-            communicator.onDialogMessage();
+            communicator.onDialogMessage(TIME.getText().toString(), DATE.getText().toString(), spinner.getSelectedItem().toString());
             dismiss();
 
         } catch (Exception e) {
@@ -125,7 +127,7 @@ public class CreateDealDialog extends DialogFragment{
 
 
     public interface Communicator {
-        void onDialogMessage();
+        void onDialogMessage(String time, String date, String max_ppl);
     }
 }
 

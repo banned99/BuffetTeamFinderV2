@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     ProfilePictureView profile;
     private ProfileTracker mProfileTracker;
     private AppCompatButton btn_login;
-    private EditText et_email,et_password;
+    private EditText et_email, et_password;
     private TextView tv_register;
     private ProgressBar progress;
     public static SharedPreferences pref;
@@ -68,18 +68,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         pref = getPreferences(0);
-        btn_login = (AppCompatButton)findViewById(R.id.btn_login);
-        tv_register = (TextView)findViewById(R.id.tv_register);
-        et_email = (EditText)findViewById(R.id.et_email);
-        et_password = (EditText)findViewById(R.id.et_password);
-        progress = (ProgressBar)findViewById(R.id.progress);
+        btn_login = (AppCompatButton) findViewById(R.id.btn_login);
+        tv_register = (TextView) findViewById(R.id.tv_register);
+        et_email = (EditText) findViewById(R.id.et_email);
+        et_password = (EditText) findViewById(R.id.et_password);
+        progress = (ProgressBar) findViewById(R.id.progress);
         // Click Login
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = et_email.getText().toString();
                 String password = et_password.getText().toString();
-                if(!email.isEmpty() && !password.isEmpty()) {
+                if (!email.isEmpty() && !password.isEmpty()) {
                     loginProcess(email, password);
                 } else {
                     Snackbar.make(v, "Fields are empty !", Snackbar.LENGTH_LONG).show();
@@ -98,23 +98,25 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 //        accessToken = AccessToken.getCurrentAccessToken();
 
-        LoginButton loginButton = (LoginButton)findViewById(R.id.login_button);
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
 //        profile = (ProfilePictureView)findViewById(R.id.picture);
         loginButton.setReadPermissions("public_profile email");
 
-        if(AccessToken.getCurrentAccessToken() != null){
+        if (AccessToken.getCurrentAccessToken() != null) {
             RequestData();
         }
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                if(AccessToken.getCurrentAccessToken() != null){
+                if (AccessToken.getCurrentAccessToken() != null) {
                     RequestData();
                 }
             }
+
             @Override
-            public void onCancel() { }
+            public void onCancel() {
+            }
 
             @Override
             public void onError(FacebookException exception) {
@@ -127,12 +129,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void RequestData(){
+    public void RequestData() {
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
-            public void onCompleted(JSONObject object,GraphResponse response) {
+            public void onCompleted(JSONObject object, GraphResponse response) {
                 json = response.getJSONObject();
-                if(Profile.getCurrentProfile() == null) {
+                if (Profile.getCurrentProfile() == null) {
                     mProfileTracker = new ProfileTracker() {
                         @Override
                         protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
@@ -160,13 +162,13 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void nextActivity(JSONObject profile){
-        if(profile != null){
+    private void nextActivity(JSONObject profile) {
+        if (profile != null) {
             try {
                 String name = profile.getString("name");
                 String email = profile.getString("email");
                 String fbid = profile.getString("id");
-                System.out.println("fbid: "+ fbid);
+                System.out.println("fbid: " + fbid);
                 fbProcess(name, email, fbid);
                 getUserData(email);
                 goToMain();
@@ -178,19 +180,19 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void goToMain(){
+    private void goToMain() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }
 
-    private void goToRegister(){
+    private void goToRegister() {
         Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
         finish();
     }
 
-    private void loginProcess(String email,String password){
+    private void loginProcess(String email, String password) {
         ServiceAction service = createService(ServiceAction.class);
         ServerRequest request = new ServerRequest();
         User user = new User();
@@ -201,12 +203,12 @@ public class LoginActivity extends AppCompatActivity {
         Call<ServerResponse> call = service.accountProcess(request);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Response<ServerResponse> response){
+            public void onResponse(Response<ServerResponse> response) {
                 ServerResponse model = response.body();
                 System.out.println("loginProcess: onResponse"
                         + "\nResult : " + model.getResult()
                         + "\nMessage : " + model.getMessage());
-                if(model.getResult().equals(Constants.SUCCESS)){
+                if (model.getResult().equals(Constants.SUCCESS)) {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean(Constants.IS_LOGGED_IN, true);
                     editor.putString(Constants.NAME, model.getUser().getName());
@@ -217,6 +219,7 @@ public class LoginActivity extends AppCompatActivity {
                     goToMain();
                 }
             }
+
             @Override
             public void onFailure(Throwable t) {
                 t.printStackTrace();
@@ -224,7 +227,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void fbProcess(String name, String email, String fbid){
+    private void fbProcess(String name, String email, String fbid) {
         ServiceAction service = createService(ServiceAction.class);
         ServerRequest request = new ServerRequest();
         request.setOperation("fbProcess");
@@ -234,12 +237,12 @@ public class LoginActivity extends AppCompatActivity {
         fbuser.setEmail(email);
         request.setUser(fbuser);
         Call<ServerResponse> call = service.accountProcess(request);
-        call.enqueue(new Callback<ServerResponse>(){
+        call.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Response<ServerResponse> response) {
                 ServerResponse model = response.body();
-                System.out.println("fbProcess: onResponse"+
-                    "\nResult : " + model.getResult()
+                System.out.println("fbProcess: onResponse" +
+                        "\nResult : " + model.getResult()
                         + "\nMessage : " + model.getMessage());
             }
 
@@ -251,21 +254,21 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void getUserData(String email){
+    private void getUserData(String email) {
         ServiceAction service = createService(ServiceAction.class);
         ServerRequest request = new ServerRequest();
         request.setOperation("getUserData");
-        User fbuser = new User();
-        fbuser.setEmail(email);
-        request.setUser(fbuser);
+        User user = new User();
+        user.setEmail(email);
+        request.setUser(user);
         Call<ServerResponse> call = service.accountProcess(request);
-        call.enqueue(new Callback<ServerResponse>(){
+        call.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Response<ServerResponse> response) {
                 ServerResponse model = response.body();
-                System.out.println("getUserData: onResponse"+ "\nResult : " + model.getResult()
+                System.out.println("getUserData: onResponse" + "\nResult : " + model.getResult()
                         + "\nMessage : " + model.getMessage());
-                if(model.getResult().equals(Constants.SUCCESS)){
+                if (model.getResult().equals(Constants.SUCCESS)) {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean(Constants.IS_LOGGED_IN, true);
                     editor.putString(Constants.NAME, model.getUser().getName());
@@ -279,45 +282,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Throwable t) {
+                System.out.println("Debugging......");
                 t.printStackTrace();
             }
         });
 
     }
-//
-//    private void getFbDataFromDB(JSONObject profile){
-//        ServiceAction service = createService(ServiceAction.class);
-//        ServerRequest request = new ServerRequest();
-//        request.setOperation("getUserData");
-//        User fbuser = new User();
-//        try {
-//            fbuser.setEmail(profile.getString("email"));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        request.setUser(fbuser);
-//        Call<ServerResponse> call = service.getUserData(request);
-//        call.enqueue(new Callback<ServerResponse>(){
-//            Intent fbdata = new Intent(LoginActivity.this, MainActivity.class);
-//            @Override
-//            public void onResponse(Response<ServerResponse> response) {
-//                ServerResponse model = response.body();
-//                if(model.getResult().equals("success")){
-//                    fbdata.putExtra("name", model.getUser().getName());
-//                    fbdata.putExtra("email", model.getUser().getEmail());
-//                    fbdata.putExtra("tel", model.getUser().getTel());
-////                    if(profile.has("picture")){
-////                        fbdata.putExtra("imageUrl", profile.getJSONObject("picture").getJSONObject("data").getString("url"));
-////                    }
-//                    fbdata.putExtra("memid", model.getUser().getMember_id());
-//                    startActivity(fbdata);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
-//    } 
 }

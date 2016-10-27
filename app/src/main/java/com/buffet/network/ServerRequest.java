@@ -1,6 +1,7 @@
 package com.buffet.network;
 
 import com.buffet.models.Branch;
+import com.buffet.models.Deal;
 import com.buffet.models.Promotion;
 import com.buffet.models.User;
 
@@ -13,6 +14,7 @@ public class ServerRequest {
     private int pro_id;
     private int branch_id;
     private User user;
+    private Deal deal;
 
     public void setOperation(String operation) {
         this.operation = operation;
@@ -25,6 +27,8 @@ public class ServerRequest {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setDeal(Deal deal){ this.deal = deal;}
 
     public void setBranchId(int branch_id){
         this.branch_id = branch_id;

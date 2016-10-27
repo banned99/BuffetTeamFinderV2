@@ -21,8 +21,22 @@ import android.widget.Toast;
 
 import com.buffet.dialogs.CreateDealDialog;
 import com.buffet.fragments.ChooseDealFragment;
+import com.buffet.models.Constants;
+import com.buffet.models.Deal;
+import com.buffet.models.Promotion;
+import com.buffet.models.User;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.activities.ChooseBranchActivity.promotion_id;
+import static com.buffet.activities.LoginActivity.pref;
+import static com.buffet.network.ServiceGenerator.createService;
 
 public class ChooseDealActivity extends AppCompatActivity implements CreateDealDialog.Communicator{
 
@@ -32,6 +46,7 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
     Toolbar toolbar;
     NavigationView navigationView;
     Button viewProfileButton;
+    public int branch_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +54,9 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
         setContentView(R.layout.activity_choose_deal);
 
         Bundle bundle = getIntent().getExtras();
-        int id = bundle.getInt("branch_id");
+        branch_id = bundle.getInt("branch_id");
 
-        Toast.makeText(this, ""+ id, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "p:"+ promotion_id+"b:"+branch_id, Toast.LENGTH_LONG).show();
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_choose_deal_root_layout);
 
@@ -163,10 +178,41 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
 
     // Get data from create deal form
     @Override
-    public void onDialogMessage() {
-
-//        Toast.makeText(this, , Toast.LENGTH_LONG).show();
+    public void onDialogMessage(String time, String date, String max_ppl) {
+        addDeal(date, time, max_ppl, promotion_id, branch_id);
+        Toast.makeText(this, date + " " + time + " " + max_ppl, Toast.LENGTH_SHORT).show();
     }
 
+    private void addDeal(String date, String time, String current_person, int pro_id, int branch_id) {
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("adddeal");
+        Deal deals = new Deal();
 
+        deals.setDate(date);
+        deals.setTime(time);
+        deals.setDealOwner(pref.getString(Constants.NAME, ""));
+
+        deals.setCurrentPerson(Integer.parseInt(current_person));
+        request.setDeal(deals);
+        request.setPromotionId(pro_id);
+        request.setBranchId(branch_id);
+
+        Call<ServerResponse> call = service.getDeal(request);
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Response<ServerResponse> response) {
+                ServerResponse model = response.body();
+                System.out.println("addDeal: onResponse" +
+                        "\nResult : " + model.getResult()
+                        + "\nMessage : " + model.getMessage());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
 }

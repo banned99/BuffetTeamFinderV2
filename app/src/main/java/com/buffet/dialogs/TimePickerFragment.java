@@ -41,8 +41,9 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
         TimePickerFragment.HOUR = hourOfDay;
         TimePickerFragment.MINUTE = minute;
-        CreateDealDialog.TIME.setText(""+HOUR+":"+MINUTE);
-        Toast.makeText(view.getContext().getApplicationContext(), "Hour: " + hourOfDay + "\nminute: " +minute, Toast.LENGTH_LONG).show();
+        String minutee = String.format("%1$02d", minute);
+        CreateDealDialog.TIME.setText(""+HOUR+":"+minutee);
+        Toast.makeText(view.getContext().getApplicationContext(), "Hour: " + hourOfDay + "\nminute: " +minutee, Toast.LENGTH_LONG).show();
 
     }
 }
