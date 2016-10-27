@@ -151,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
 //                        startActivity(navIntent);
 //                        break;
                     case R.id.logout:
-                        Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
                         logout();
+                        Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         viewProfileName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username_label);
         viewProfileName.setText(pref.getString(Constants.NAME,""));
         viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
-//
+
         viewProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {

@@ -35,14 +35,14 @@
                     android:id="@+id/image_zone"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@drawable/nav_header"
+                    android:background="@drawable/button_1"
                     android:layout_weight="0.08">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_margin="10dp"
-                        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                        android:src="@drawable/hmong"
                         android:layout_gravity="center_horizontal"
                         />
 
@@ -51,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Edit profile photo"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_gravity="bottom|center_horizontal"
                         android:background="@android:color/transparent" />
                 </LinearLayout>

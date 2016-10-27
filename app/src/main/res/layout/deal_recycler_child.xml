@@ -20,24 +20,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/deal_owner"
-            android:text="Owner Name"
-            android:textSize="18dp"
+            android:text="Owner Name : "
+            android:textSize="18sp"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eat_date"
+            android:text="Date :"
+            android:textSize="18sp"
             android:padding="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/eat_time"
-            android:text="Date Time"
-            android:textSize="18dp"
+            android:text="Time :"
+            android:textSize="18sp"
             android:padding="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/current_person"
-            android:text="Current"
-            android:textSize="18dp"
+            android:text="Current : "
+            android:textSize="18sp"
             android:padding="5dp"/>
 
         <Button

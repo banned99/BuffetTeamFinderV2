@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.buffet.activities.ChooseDealActivity;
+import com.buffet.fragments.ChooseBranchFragment;
 import com.buffet.models.Deal;
 
 import org.w3c.dom.Text;
@@ -51,9 +52,10 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
         final String time = current.getTime();
         final int current_person = current.getCurrentPerson();
 
-        holder.owner_name.setText("Deal Owner  "+owner_name);
-        holder.eat_time.setText("วัน เวลา " + date + " " + time);
-        holder.current_person.setText("ตอนนี้มี " + current_person + "คน" );
+        holder.owner_name.setText("Deal Owner : "+owner_name);
+        holder.eat_date.setText("Date : " + date);
+        holder.eat_time.setText("Time : " + time);
+        holder.current_person.setText("Available Seat : " + (ChooseBranchFragment.max_person - current_person));
         holder.join_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +81,7 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
 
 
         TextView owner_name;
-        TextView eat_time;
+        TextView eat_time, eat_date;
         TextView current_person;
         Button join_button;
 
@@ -91,6 +93,7 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
             eat_time = (TextView) itemView.findViewById(R.id.eat_time);
             current_person = (TextView) itemView.findViewById(R.id.current_person);
             join_button = (Button) itemView.findViewById(R.id.join_button);
+            eat_date = (TextView) itemView.findViewById(R.id.eat_date);
 
         }
     }

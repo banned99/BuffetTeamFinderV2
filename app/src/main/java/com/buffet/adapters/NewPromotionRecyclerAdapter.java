@@ -2,6 +2,7 @@ package com.buffet.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
         final String promotion_image = current.getImage();
 
         holder.promotionLabel.setText(promotion_name);
+
         holder.promotionPrice.setText("ราคา " + Double.toString(promotion_price) + " บาท");
         holder.promotionMax.setText("จำนวน " + Integer.toString(promotion_max_person) + " คน");
         holder.promotionExpire.setText("ถึง " + promotion_expire);
