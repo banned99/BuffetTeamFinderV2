@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_email,et_password;
     private TextView tv_register;
     private ProgressBar progress;
-    private SharedPreferences pref;
+    public static SharedPreferences pref;
 
 
     @Override
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        pref = this.getPreferences(0);
+        pref = getPreferences(0);
         btn_login = (AppCompatButton)findViewById(R.id.btn_login);
         tv_register = (TextView)findViewById(R.id.tv_register);
         et_email = (EditText)findViewById(R.id.et_email);
@@ -166,12 +166,10 @@ public class LoginActivity extends AppCompatActivity {
                 String name = profile.getString("name");
                 String email = profile.getString("email");
                 String fbid = profile.getString("id");
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putBoolean(Constants.IS_LOGGED_IN, true);
-                editor.putString(Constants.NAME, name);
-                editor.putString(Constants.EMAIL, email);
-                editor.apply();
-                fbProcess(name , email, fbid);
+                System.out.println("fbid: "+ fbid);
+                fbProcess(name, email, fbid);
+                getUserData(email);
+                goToMain();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -205,7 +203,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<ServerResponse> response){
                 ServerResponse model = response.body();
-                System.out.println("Result : " + model.getResult()
+                System.out.println("loginProcess: onResponse"
+                        + "\nResult : " + model.getResult()
                         + "\nMessage : " + model.getMessage());
                 if(model.getResult().equals(Constants.SUCCESS)){
                     SharedPreferences.Editor editor = pref.edit();
@@ -236,11 +235,46 @@ public class LoginActivity extends AppCompatActivity {
         request.setUser(fbuser);
         Call<ServerResponse> call = service.accountProcess(request);
         call.enqueue(new Callback<ServerResponse>(){
-            Intent fbdata = new Intent(LoginActivity.this, MainActivity.class);
             @Override
             public void onResponse(Response<ServerResponse> response) {
                 ServerResponse model = response.body();
+                System.out.println("fbProcess: onResponse"+
+                    "\nResult : " + model.getResult()
+                        + "\nMessage : " + model.getMessage());
+            }
 
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
+
+    private void getUserData(String email){
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("getUserData");
+        User fbuser = new User();
+        fbuser.setEmail(email);
+        request.setUser(fbuser);
+        Call<ServerResponse> call = service.accountProcess(request);
+        call.enqueue(new Callback<ServerResponse>(){
+            @Override
+            public void onResponse(Response<ServerResponse> response) {
+                ServerResponse model = response.body();
+                System.out.println("getUserData: onResponse"+ "\nResult : " + model.getResult()
+                        + "\nMessage : " + model.getMessage());
+                if(model.getResult().equals(Constants.SUCCESS)){
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putBoolean(Constants.IS_LOGGED_IN, true);
+                    editor.putString(Constants.NAME, model.getUser().getName());
+                    editor.putString(Constants.EMAIL, model.getUser().getEmail());
+                    editor.putString(Constants.TEL, model.getUser().getTel());
+                    editor.putString(Constants.MEMBER_ID, model.getUser().getMember_id());
+                    editor.apply();
+                    goToMain();
+                }
             }
 
             @Override
