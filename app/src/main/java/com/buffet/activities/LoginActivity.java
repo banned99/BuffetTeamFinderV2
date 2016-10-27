@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_email,et_password;
     private TextView tv_register;
     private ProgressBar progress;
-    private SharedPreferences pref;
+    public static SharedPreferences pref;
 
 
     @Override

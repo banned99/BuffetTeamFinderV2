@@ -57,46 +57,49 @@ public class ChooseBranchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_choose_branch);
-        drawerToggle = new ActionBarDrawerToggle(ChooseBranchActivity.this, drawerLayout, R.string.app_name, R.string.app_name);
-        drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle = new ActionBarDrawerToggle(ChooseBranchActivity.this, drawerLayout, R.string.choose_branch, R.string.choose_branch);
+        drawerToggle.setDrawerIndicatorEnabled(false);
+        drawerToggle.setHomeAsUpIndicator(R.drawable.back_button);
+        drawerLayout.addDrawerListener(drawerToggle);
+        getSupportActionBar().setTitle(R.string.choose_branch);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        // Navigation Drawer
-        navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-
-                switch (id) {
-                    case R.id.my_deal:
-                        Snackbar.make(navigationView, "My Deal", Snackbar.LENGTH_SHORT).show();
-                        break;
-//                    case R.id.view_profile:
-//                        Intent editProfileIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
-//                        startActivityForResult(editProfileIntent, 0);
-//                        break;
-                    case R.id.logout:
-                        Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
-                        break;
-                }
-                return false;
-            }
-        });
-        viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
 //
-        viewProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawers();
-
-                Intent navIntent = new Intent(v.getContext().getApplicationContext(), ViewProfileActivity.class);
-                startActivity(navIntent);
-            }
-        });
+//
+//        // Navigation Drawer
+//        navigationView = (NavigationView) findViewById(R.id.navigation);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                int id = item.getItemId();
+//
+//                switch (id) {
+//                    case R.id.my_deal:
+//                        Snackbar.make(navigationView, "My Deal", Snackbar.LENGTH_SHORT).show();
+//                        break;
+////                    case R.id.view_profile:
+////                        Intent editProfileIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
+////                        startActivityForResult(editProfileIntent, 0);
+////                        break;
+//                    case R.id.logout:
+//                        Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+//        viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
+////
+//        viewProfileButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerLayout.closeDrawers();
+//
+//                Intent navIntent = new Intent(v.getContext().getApplicationContext(), ViewProfileActivity.class);
+//                startActivity(navIntent);
+//            }
+//        });
 
 
 
@@ -126,28 +129,37 @@ public class ChooseBranchActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item))
-            return true;
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    // app icon in action bar clicked; go home
+                    onBackPressed();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+
+//        if (drawerToggle.onOptionsItemSelected(item))
+//            return true;
 
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+//        int id = item.getItemId();
 
 
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
     }
 
     // When pressed back button, switch to promotion tab

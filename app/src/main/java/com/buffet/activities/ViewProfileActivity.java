@@ -16,8 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.buffet.models.Constants;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+
+import static com.buffet.activities.LoginActivity.pref;
 
 
 public class ViewProfileActivity extends AppCompatActivity {
@@ -29,6 +34,8 @@ public class ViewProfileActivity extends AppCompatActivity {
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
     Button viewProfileButton;
+    EditText username, email, tel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +48,12 @@ public class ViewProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_view_profile);
-        drawerToggle = new ActionBarDrawerToggle(ViewProfileActivity.this, drawerLayout, R.string.app_name, R.string.app_name);
+        drawerToggle = new ActionBarDrawerToggle(ViewProfileActivity.this, drawerLayout, R.string.profile, R.string.profile);
         drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.setDrawerIndicatorEnabled(false);
+        drawerToggle.setHomeAsUpIndicator(R.drawable.back_button);
+        drawerLayout.addDrawerListener(drawerToggle);
+        getSupportActionBar().setTitle(R.string.profile);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -83,6 +94,13 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
+        username = (EditText) findViewById(R.id.edit_name);
+        username.setText(pref.getString(Constants.NAME, ""));
+        email = (EditText) findViewById(R.id.edit_email);
+        email.setText(pref.getString(Constants.EMAIL, ""));
+        tel = (EditText) findViewById(R.id.edit_tel);
+        tel.setText(pref.getString(Constants.TEL, ""));
+
 
     }
 
@@ -107,23 +125,34 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item))
-            return true;
 
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
+//        if (drawerToggle.onOptionsItemSelected(item))
+//            return true;
+//
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
     }
+
 
     // When pressed back button, switch to promotion tab
 //    @Override

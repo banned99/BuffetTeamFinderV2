@@ -1,6 +1,7 @@
 package com.buffet.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -29,12 +30,15 @@ import com.buffet.fragments.MapFragment;
 import com.buffet.fragments.NotiFragment;
 import com.buffet.fragments.PromotionFragment;
 import com.buffet.fragments.SearchFragment;
+import com.buffet.models.Constants;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+
+import static com.buffet.activities.LoginActivity.pref;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
     BottomBar bottomBar;
     NavigationView navigationView;
     Button viewProfileButton;
-
+    TextView userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_main_root_layout);
 
@@ -162,6 +168,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        userName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username_label);
+        System.out.println("test " + pref.getString(Constants.NAME, ""));
+        userName.setText(pref.getString(Constants.NAME, ""));
+
 
     }
 

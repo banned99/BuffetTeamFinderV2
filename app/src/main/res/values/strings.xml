@@ -7,4 +7,7 @@
     <string name="action_settings">LogOut</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="app_id">316489208729677</string>
+    <string name="choose_branch">Choose Branch</string>
+    <string name="profile">Profile</string>
+    <string name="choose_deal">Choose Deal</string>
 </resources>
