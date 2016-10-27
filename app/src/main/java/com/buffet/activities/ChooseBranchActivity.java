@@ -48,7 +48,7 @@ public class ChooseBranchActivity extends AppCompatActivity {
         String promotion_date_start = bundle.getString("promotion_date_start");
         String promotion_expire = bundle.getString("promotion_expire");
         int promotion_max_person = bundle.getInt("promotion_max_person");
-        Toast.makeText(this, "id: "+ promotion_id+"\nname:"+promotion_name+"\nprice:"+promotion_price+"\ndate_start:"+promotion_date_start+"\nexpire"+ promotion_expire+"\nmax_person"+promotion_max_person, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "id: "+ promotion_id+"\nname:"+promotion_name+"\nprice:"+promotion_price+"\ndate_start:"+promotion_date_start+"\nexpire"+ promotion_expire+"\nmax_person"+promotion_max_person, Toast.LENGTH_LONG).show();
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_choose_branch_root_layout);
 

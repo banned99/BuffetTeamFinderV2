@@ -56,7 +56,7 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
         Bundle bundle = getIntent().getExtras();
         branch_id = bundle.getInt("branch_id");
 
-        Toast.makeText(this, "p:"+ promotion_id+"b:"+branch_id, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "p:"+ promotion_id+"b:"+branch_id, Toast.LENGTH_LONG).show();
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_choose_deal_root_layout);
 
@@ -180,7 +180,9 @@ public class ChooseDealActivity extends AppCompatActivity implements CreateDealD
     @Override
     public void onDialogMessage(String time, String date, String max_ppl) {
         addDeal(date, time, max_ppl, promotion_id, branch_id);
-        Toast.makeText(this, date + " " + time + " " + max_ppl, Toast.LENGTH_SHORT).show();
+        finish();
+        startActivity(getIntent());
+//        Toast.makeText(this, date + " " + time + " " + max_ppl, Toast.LENGTH_SHORT).show();
     }
 
     private void addDeal(String date, String time, String current_person, int pro_id, int branch_id) {
