@@ -1,6 +1,7 @@
 package com.buffet.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -29,12 +30,16 @@ import com.buffet.fragments.MapFragment;
 import com.buffet.fragments.NotiFragment;
 import com.buffet.fragments.PromotionFragment;
 import com.buffet.fragments.SearchFragment;
+import com.buffet.models.Constants;
+import com.facebook.login.LoginManager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+
+import static com.buffet.activities.LoginActivity.pref;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     BottomBar bottomBar;
     NavigationView navigationView;
     Button viewProfileButton;
+    TextView view;
 
 
     @Override
@@ -144,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
 //                        startActivity(navIntent);
 //                        break;
                     case R.id.logout:
+                        logout();
                         Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
                         break;
                 }
@@ -151,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
-//
+
         viewProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,6 +172,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void goToLogin(){
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
@@ -242,4 +255,16 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 //    }
+private void logout() {
+    SharedPreferences.Editor editor = pref.edit();
+    editor.putBoolean(Constants.IS_LOGGED_IN,false);
+    editor.putString(Constants.EMAIL,"");
+    editor.putString(Constants.NAME,"");
+    editor.putString(Constants.TEL, "");
+    editor.putString(Constants.MEMBER_ID,"");
+    editor.apply();
+    LoginManager.getInstance().logOut();
+    goToLogin();
+    finish();
+}
 }
