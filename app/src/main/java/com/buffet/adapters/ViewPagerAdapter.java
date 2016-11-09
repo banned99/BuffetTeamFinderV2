@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.buffet.fragments.CategoryFragment;
+import com.buffet.fragments.CategoryRootFragment;
 import com.buffet.fragments.NewProFragment;
 import com.buffet.fragments.TopProFragment;
 
@@ -23,7 +24,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         if(position == 0) {
             return NewProFragment.newInstance();
         } else if (position == 1) {
-            return CategoryFragment.newInstance();
+            return CategoryRootFragment.newInstance();
         } else if (position == 2) {
             return TopProFragment.newInstance();
         }

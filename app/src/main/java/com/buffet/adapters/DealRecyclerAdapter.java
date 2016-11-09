@@ -1,19 +1,17 @@
 package com.buffet.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.buffet.activities.ChooseDealActivity;
-import com.buffet.fragments.ChooseBranchFragment;
+import com.buffet.activities.ChooseBranchActivity;
 import com.buffet.models.Deal;
-
-import org.w3c.dom.Text;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,10 +50,29 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
         final String time = current.getTime();
         final int current_person = current.getCurrentPerson();
 
+        ImageView img_black, img_gray;
+
         holder.owner_name.setText("Deal Owner : "+owner_name);
         holder.eat_date.setText("Date : " + date);
         holder.eat_time.setText("Time : " + time);
-        holder.current_person.setText("Available Seat : " + (ChooseBranchFragment.max_person - current_person));
+
+        holder.linearLayout.removeAllViews();
+
+        for (int i = 1; i<= current_person; i++) {
+            img_black = new ImageView(inflater.getContext());
+            img_black.setImageResource(R.drawable.person);
+            img_black.setLayoutParams(new ViewGroup.LayoutParams(20,20));
+            holder.linearLayout.addView(img_black);
+        }
+
+        for (int i = 1; i<= ChooseBranchActivity.promotion_max_person - current_person; i++) {
+            img_gray = new ImageView(inflater.getContext());
+            img_gray.setImageResource(R.drawable.person_gray);
+            img_gray.setLayoutParams(new ViewGroup.LayoutParams(20,20));
+            holder.linearLayout.addView(img_gray);
+        }
+
+
         holder.join_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,15 +102,19 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
         TextView current_person;
         Button join_button;
 
+        LinearLayout linearLayout;
+
+
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             owner_name = (TextView) itemView.findViewById(R.id.deal_owner);
             eat_time = (TextView) itemView.findViewById(R.id.eat_time);
-            current_person = (TextView) itemView.findViewById(R.id.current_person);
             join_button = (Button) itemView.findViewById(R.id.join_button);
             eat_date = (TextView) itemView.findViewById(R.id.eat_date);
+
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.deal_member_img);
 
         }
     }

@@ -7,7 +7,13 @@
     <string name="action_settings">LogOut</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="app_id">316489208729677</string>
-    <string name="choose_branch">Choose Branch</string>
     <string name="profile">Profile</string>
     <string name="choose_deal">Choose Deal</string>
+
+    <string name="description">There are several types of promotions. Above the line promotions include advertising, press releases, consumer promotions (schemes, discounts, contests), while below the line include trade discounts, freebies, incentive trips, awards and so on. Sales promotion is a part of the overall promotion effort.
+
+There are also:
+1. Personal selling: one of the most effective ways of customer relationship. Such selling works best when a good working relationship has been built up over a period of time.
+This can also be expensive and time consuming, but is best for high value or premium products. </string>
+    <string name="join_events">join events</string>
 </resources>

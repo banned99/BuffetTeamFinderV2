@@ -1,11 +1,10 @@
 package com.buffet.activities;
 
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -16,16 +15,37 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
-import com.buffet.fragments.ChooseBranchFragment;
+import com.buffet.dialogs.CreateDealDialog;
+import com.buffet.fragments.ChooseDealFragment;
+import com.buffet.models.Branch;
+import com.buffet.models.Constants;
+import com.buffet.models.Deal;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
+import com.satsuware.usefulviews.LabelledSpinner;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.activities.LoginActivity.pref;
+import static com.buffet.network.ServiceGenerator.createService;
 
 
-public class ChooseBranchActivity extends AppCompatActivity {
+public class ChooseBranchActivity extends AppCompatActivity implements CreateDealDialog.Communicator{
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -34,20 +54,36 @@ public class ChooseBranchActivity extends AppCompatActivity {
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
     Button viewProfileButton;
+    LabelledSpinner branch_spin, current_spin;
+    TextView promotionLabel;
+    TextView promotionPrice;
+    TextView promotionMax;
+    TextView promotionExpire;
+    TextView promotionDescription;
+    ImageView promotionImage;
+    ImageButton expandButton;
+
+    List<Branch> branches;
+
+    ArrayList<String> branch = new ArrayList<>();
+
     public static int promotion_id;
+    public static int branch_id;
+    public static int promotion_max_person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_branch);
 
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
         promotion_id = bundle.getInt("promotion_id");
         String promotion_name = bundle.getString("promotion_name");
         Double promotion_price = bundle.getDouble("promotion_price");
         String promotion_date_start = bundle.getString("promotion_date_start");
         String promotion_expire = bundle.getString("promotion_expire");
-        int promotion_max_person = bundle.getInt("promotion_max_person");
+        String promotion_image = bundle.getString("promotion_image");
+        promotion_max_person = bundle.getInt("promotion_max_person");
 //        Toast.makeText(this, "id: "+ promotion_id+"\nname:"+promotion_name+"\nprice:"+promotion_price+"\ndate_start:"+promotion_date_start+"\nexpire"+ promotion_expire+"\nmax_person"+promotion_max_person, Toast.LENGTH_LONG).show();
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_choose_branch_root_layout);
@@ -57,58 +93,87 @@ public class ChooseBranchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_choose_branch);
-        drawerToggle = new ActionBarDrawerToggle(ChooseBranchActivity.this, drawerLayout, R.string.choose_branch, R.string.choose_branch);
+        drawerToggle = new ActionBarDrawerToggle(ChooseBranchActivity.this, drawerLayout, R.string.join_events, R.string.join_events);
         drawerToggle.setDrawerIndicatorEnabled(false);
         drawerToggle.setHomeAsUpIndicator(R.drawable.back_button);
         drawerLayout.addDrawerListener(drawerToggle);
-        getSupportActionBar().setTitle(R.string.choose_branch);
+        getSupportActionBar().setTitle(R.string.join_events);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//
-//
-//        // Navigation Drawer
-//        navigationView = (NavigationView) findViewById(R.id.navigation);
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                int id = item.getItemId();
-//
-//                switch (id) {
-//                    case R.id.my_deal:
-//                        Snackbar.make(navigationView, "My Deal", Snackbar.LENGTH_SHORT).show();
-//                        break;
-////                    case R.id.view_profile:
-////                        Intent editProfileIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);
-////                        startActivityForResult(editProfileIntent, 0);
-////                        break;
-//                    case R.id.logout:
-//                        Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
-//        viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
-////
-//        viewProfileButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                drawerLayout.closeDrawers();
-//
-//                Intent navIntent = new Intent(v.getContext().getApplicationContext(), ViewProfileActivity.class);
-//                startActivity(navIntent);
-//            }
-//        });
+
+        promotionLabel = (TextView) findViewById(R.id.promotionLabel);
+        promotionPrice = (TextView) findViewById(R.id.promotionPrice);
+        promotionMax = (TextView) findViewById(R.id.promotionMax);
+        promotionExpire = (TextView) findViewById(R.id.promotionExpire);
+        promotionImage = (ImageView) findViewById(R.id.promotionImage);
+
+        promotionLabel.setText(promotion_name);
+
+        promotionPrice.setText("ราคา " + Double.toString(promotion_price) + " บาท");
+        promotionMax.setText("จำนวน " + Integer.toString(promotion_max_person) + " คน");
+        promotionExpire.setText("ถึง " + promotion_expire);
+        Picasso.with(getApplicationContext()).load("http://api.tunacon.com/images/"+promotion_image).resize(1200, 650).into(promotionImage);
+
+        branch_spin = (LabelledSpinner) findViewById(R.id.branch_spinner);
+
+        getData(promotion_id);
+
+        branch_spin.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
+            @Override
+            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
+                branch_id =  branches.get(position).getBranchId();
+                bundle.putInt("branch_id", branch_id);
+                ChooseDealFragment chooseDealFragment = ChooseDealFragment.newInstance();
+                chooseDealFragment.setArguments(bundle);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.branch_container, chooseDealFragment);
+                transaction.commit();
+            }
+
+            @Override
+            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
+
+            }
+        });
 
 
+        nestedScrollView = (NestedScrollView) findViewById(R.id.nest);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabBtn);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getSupportFragmentManager();
+                CreateDealDialog createDealDialog = new CreateDealDialog();
+                createDealDialog.show(manager, "dialog");
+            }
+        });
+        // fab will hide when scroll down
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY && fab.isShown())
+                {
+                    fab.hide();
+                } else fab.show();
+            }
+        });
 
-        // Branch Fragment
-        ChooseBranchFragment chooseBranchFragment = ChooseBranchFragment.newInstance();
-        chooseBranchFragment.setArguments(bundle);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.branch_container, chooseBranchFragment);
-        transaction.commit();
+        promotionDescription = (TextView) findViewById(R.id.promotion_description);
+        expandButton = (ImageButton) findViewById(R.id.expand_button);
+        expandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (promotionDescription.getVisibility() == View.GONE) {
+                    expandButton.setImageResource(R.drawable.up_arrow);
+                    promotionDescription.setVisibility(View.VISIBLE);
+                } else {
+                    expandButton.setImageResource(R.drawable.down_arrow);
+                    promotionDescription.setVisibility(View.GONE);
+                }
+            }
+        });
+
 
     }
 
@@ -170,4 +235,81 @@ public class ChooseBranchActivity extends AppCompatActivity {
 //        } else super.onBackPressed();
 //    }
 
+
+    public void getData(int pro_id) {
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("getbranch");
+        request.setPromotionId(pro_id);
+        Call<ServerResponse> call = service.getBranch(request);
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Response<ServerResponse> response){
+                branches = new ArrayList<>();
+                ServerResponse model = response.body();
+                if(model.getResult().equals("failure")){
+                    System.out.println("BRANCH IS NULL");
+                } else {
+                    System.out.println("Result : " + model.getResult()
+                            + "\nMessage : " + model.getMessage());
+                    for (int i = 0; i<model.getBranch().size(); i++) {
+                        Branch current = new Branch();
+                        current.setBranchId(model.getBranch().get(i).getBranchId());
+                        current.setBranchName(model.getBranch().get(i).getBranchName());
+                        current.setLatitude(model.getBranch().get(i).getLatitude());
+                        current.setLongitude(model.getBranch().get(i).getLongitude());
+                        branches.add(current);
+
+                        branch.add(current.getBranchName()+"");
+                    }
+
+                }
+
+                branch_spin.setItemsArray(branch);
+            }
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void onDialogMessage(String time, String date, String max_ppl) {
+        addDeal(date, time, max_ppl, promotion_id, branch_id);
+        finish();
+        startActivity(getIntent());
+    }
+    private void addDeal(String date, String time, String current_person, int pro_id, int branch_id) {
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("adddeal");
+        Deal deals = new Deal();
+
+        deals.setDate(date);
+        deals.setTime(time);
+        deals.setDealOwner(pref.getString(Constants.NAME, ""));
+
+        deals.setCurrentPerson(Integer.parseInt(current_person));
+        request.setDeal(deals);
+        request.setPromotionId(pro_id);
+        request.setBranchId(branch_id);
+
+        Call<ServerResponse> call = service.getDeal(request);
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Response<ServerResponse> response) {
+                ServerResponse model = response.body();
+                System.out.println("addDeal: onResponse" +
+                        "\nResult : " + model.getResult()
+                        + "\nMessage : " + model.getMessage());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
 }

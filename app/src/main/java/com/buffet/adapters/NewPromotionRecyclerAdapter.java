@@ -34,6 +34,7 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
     private LayoutInflater inflater;
     List<Promotion> promotions = Collections.emptyList();
 
+
     public NewPromotionRecyclerAdapter(Context context, List<Promotion> promotions) {
         inflater = LayoutInflater.from(context);
         this.promotions = promotions;
@@ -76,6 +77,7 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
                 chooseProIntent.putExtra("promotion_date_start", promotion_date_start);
                 chooseProIntent.putExtra("promotion_expire", promotion_expire);
                 chooseProIntent.putExtra("promotion_max_person", promotion_max_person);
+                chooseProIntent.putExtra("promotion_image", promotion_image);
                 v.getContext().startActivity(chooseProIntent);
             }
         });

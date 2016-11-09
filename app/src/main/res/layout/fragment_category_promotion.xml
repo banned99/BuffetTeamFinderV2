@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.buffet.fragments.ChooseDealFragment">
+    tools:context="com.buffet.fragments.CategoryPromotionFragment"
+    android:background="#445566">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/deal_list"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment"
+        android:id="@+id/test"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

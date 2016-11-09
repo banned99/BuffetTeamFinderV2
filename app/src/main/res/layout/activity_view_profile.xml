@@ -17,7 +17,7 @@
 
         <include layout="@layout/toobar"/>
 
-        <com.buffet.custom.CustomNestedScrollView
+        <com.buffet.customs.CustomNestedScrollView
             android:id="@+id/nest_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -142,7 +142,7 @@
             </LinearLayout>
 
 
-        </com.buffet.custom.CustomNestedScrollView>
+        </com.buffet.customs.CustomNestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>
 

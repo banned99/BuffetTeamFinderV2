@@ -5,30 +5,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.buffet.activities.ChooseBranchActivity;
-import com.buffet.fragments.ChooseBranchFragment;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
-
-import static ggwp.caliver.banned.buffetteamfinderv2.R.id.spinner;
 
 /**
  * Created by YaYaTripleSix on 23-Oct-16.
@@ -54,7 +46,7 @@ public class CreateDealDialog extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         ArrayList<String> options = new ArrayList<String>();
-        for (int i = 1; i < ChooseBranchFragment.max_person+1; i++){
+        for (int i = 1; i < ChooseBranchActivity.promotion_max_person+1; i++){
             options.add(""+i);
         }
 

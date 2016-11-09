@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.buffet.activities.ChooseDealActivity;
 import com.buffet.models.Branch;
 
 import java.util.Collections;
@@ -46,9 +44,9 @@ public class BranchRecyclerAdapter extends RecyclerView.Adapter<BranchRecyclerAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent chooseBranchIntent = new Intent(v.getContext(), ChooseDealActivity.class);
-                chooseBranchIntent.putExtra("branch_id", branch_id);
-                v.getContext().startActivity(chooseBranchIntent);
+//                Intent chooseBranchIntent = new Intent(v.getContext(), ChooseDealActivity.class);
+//                chooseBranchIntent.putExtra("branch_id", branch_id);
+//                v.getContext().startActivity(chooseBranchIntent);
             }
         });
     }

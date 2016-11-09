@@ -1,11 +1,27 @@
 package com.buffet.fragments;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.buffet.activities.MainActivity;
+import com.buffet.adapters.CategoryRecyclerAdapter;
+import com.buffet.adapters.NewPromotionRecyclerAdapter;
+import com.buffet.customs.CategoryCustomListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -18,16 +34,12 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
  * create an instance of this fragment.
  */
 public class CategoryFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
+    private CategoryCustomListView adapter;
+    private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
+    private ListView list;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -45,9 +57,9 @@ public class CategoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
+        getCategoryData();
     }
 
     @Override
@@ -55,7 +67,43 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_category, container, false);
+
+        list = (ListView) rootView.findViewById(R.id.category_list);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CategoryPromotionFragment categoryPromotionFragment = CategoryPromotionFragment.newInstance();
+                FragmentManager fm = ((AppCompatActivity) view.getContext()).getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.root_category, categoryPromotionFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+//        recyclerView = (RecyclerView) rootView.findViewById(R.id.category_list);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+//        recyclerView.setAdapter(adapter);
         return rootView;
+    }
+
+    private void changeFragment(FragmentManager fm, Fragment newFragment) {
+
+    }
+
+    private void getCategoryData() {
+        List<String> categories = new ArrayList<>();
+        for (int i = 0; i < 8 ;i ++) {
+            categories.add("category "+ i);
+        }
+
+        adapter = new CategoryCustomListView(getContext(), categories);
+
+
+//        adapter = new CategoryRecyclerAdapter(getActivity(), categories);
+//        recyclerView.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -65,16 +113,16 @@ public class CategoryFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity) {
+            context = (MainActivity) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
     @Override
     public void onDetach() {
