@@ -29,6 +29,15 @@ public class Promotion {
     @SerializedName("image")
     @Expose
     private String image;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("cat_name")
+    @Expose
+    private String cat_name;
+    @SerializedName("cat_id")
+    @Expose
+    private int cat_id;
 
     /**
      *
@@ -144,5 +153,59 @@ public class Promotion {
 
     public String getImage() {
         return image;
+    }
+
+    /**
+     *
+     * @return
+     * The cat_id
+     */
+    public int getCatId() {
+        return cat_id;
+    }
+
+    /**
+     *
+     * @param cat_id
+     * The pro_id
+     */
+    public void setCatId(int cat_id) {
+        this.cat_id = cat_id;
+    }
+
+    /**
+     *
+     * @return
+     * The description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     *
+     * @param description
+     * The description
+     */
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    /**
+     *
+     * @return
+     * The cat_name
+     */
+    public String getCatName() {
+        return cat_name;
+    }
+
+    /**
+     *
+     * @param cat_name
+     * The cat_name
+     */
+    public void setCatName(String cat_name) {
+        this.cat_name = cat_name;
     }
 }

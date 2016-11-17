@@ -90,6 +90,9 @@ public class NewProFragment extends Fragment {
                         current.setDateStart(model.getPromotion().get(i).getDateStart());
                         current.setExpire(model.getPromotion().get(i).getExpire());
                         current.setMaxPerson(model.getPromotion().get(i).getMaxPerson());
+                        current.setCatId(model.getPromotion().get(i).getCatId());
+                        current.setCatName(model.getPromotion().get(i).getCatName());
+                        current.setDescription(model.getPromotion().get(i).getDescription());
                         promotions.add(current);
                     }
                 }

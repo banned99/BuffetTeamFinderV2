@@ -57,12 +57,14 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
         final String promotion_expire = current.getExpire();
         final int promotion_max_person = current.getMaxPerson();
         final String promotion_image = current.getImage();
+        final String promotion_catname = current.getCatName();
 
         holder.promotionLabel.setText(promotion_name);
 
         holder.promotionPrice.setText("ราคา " + Double.toString(promotion_price) + " บาท");
         holder.promotionMax.setText("จำนวน " + Integer.toString(promotion_max_person) + " คน");
         holder.promotionExpire.setText("ถึง " + promotion_expire);
+        holder.promotionCat.setText(promotion_catname);
         Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/images/"+promotion_image).resize(1200, 650).into(holder.promotionImage);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +99,7 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
         TextView promotionMax;
         TextView promotionExpire;
         ImageView promotionImage;
+        TextView promotionCat;
 
 
         public ViewHolder(View itemView) {
@@ -107,7 +110,7 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
             promotionMax = (TextView) itemView.findViewById(R.id.promotionMax);
             promotionExpire = (TextView) itemView.findViewById(R.id.promotionExpire);
             promotionImage = (ImageView) itemView.findViewById(R.id.promotionImage);
-
+            promotionCat = (TextView) itemView.findViewById(R.id.pro_catname);
         }
     }
 }
