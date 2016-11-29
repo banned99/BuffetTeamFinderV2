@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.buffet.dialogs.CreateDealDialog;
@@ -59,6 +60,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
     TextView promotionPrice;
     TextView promotionMax;
     TextView promotionExpire;
+    TextView promotionCategory;
     TextView promotionDescription;
     ImageView promotionImage;
     ImageButton expandButton;
@@ -83,9 +85,11 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
         String promotion_date_start = bundle.getString("promotion_date_start");
         String promotion_expire = bundle.getString("promotion_expire");
         String promotion_image = bundle.getString("promotion_image");
+        String promotion_catname = bundle.getString("promotion_catname");
+        String promotion_description = bundle.getString("protmotion_description");
         promotion_max_person = bundle.getInt("promotion_max_person");
 //        Toast.makeText(this, "id: "+ promotion_id+"\nname:"+promotion_name+"\nprice:"+promotion_price+"\ndate_start:"+promotion_date_start+"\nexpire"+ promotion_expire+"\nmax_person"+promotion_max_person, Toast.LENGTH_LONG).show();
-
+        Toast.makeText(this, promotion_description, Toast.LENGTH_SHORT).show();
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_choose_branch_root_layout);
 
         // Toolbar
@@ -107,6 +111,8 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
         promotionMax = (TextView) findViewById(R.id.promotionMax);
         promotionExpire = (TextView) findViewById(R.id.promotionExpire);
         promotionImage = (ImageView) findViewById(R.id.promotionImage);
+        promotionDescription = (TextView) findViewById(R.id.promotionDescription);
+        promotionCategory = (TextView) findViewById(R.id.promotionCategory);
 
         promotionLabel.setText(promotion_name);
 
@@ -114,6 +120,8 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
         promotionMax.setText("จำนวน " + Integer.toString(promotion_max_person) + " คน");
         promotionExpire.setText("ถึง " + promotion_expire);
         Picasso.with(getApplicationContext()).load("http://api.tunacon.com/images/"+promotion_image).resize(1200, 650).into(promotionImage);
+        promotionDescription.setText(promotion_description);
+        promotionCategory.setText(promotion_catname);
 
         branch_spin = (LabelledSpinner) findViewById(R.id.branch_spinner);
 
@@ -159,7 +167,6 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
             }
         });
 
-        promotionDescription = (TextView) findViewById(R.id.promotion_description);
         expandButton = (ImageButton) findViewById(R.id.expand_button);
         expandButton.setOnClickListener(new View.OnClickListener() {
             @Override

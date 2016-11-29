@@ -58,6 +58,7 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
         final int promotion_max_person = current.getMaxPerson();
         final String promotion_image = current.getImage();
         final String promotion_catname = current.getCatName();
+        final String promotion_description = current.getDescription();
 
         holder.promotionLabel.setText(promotion_name);
 
@@ -80,6 +81,8 @@ public class NewPromotionRecyclerAdapter extends RecyclerView.Adapter<NewPromoti
                 chooseProIntent.putExtra("promotion_expire", promotion_expire);
                 chooseProIntent.putExtra("promotion_max_person", promotion_max_person);
                 chooseProIntent.putExtra("promotion_image", promotion_image);
+                chooseProIntent.putExtra("promotion_catname", promotion_catname);
+                chooseProIntent.putExtra("promotion_description", promotion_description);
                 v.getContext().startActivity(chooseProIntent);
             }
         });

@@ -1,6 +1,8 @@
 package com.buffet.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buffet.activities.ChooseBranchActivity;
+
 import com.buffet.models.Deal;
 
 import java.util.Collections;
@@ -75,18 +79,20 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
 
         holder.join_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(final View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Join Event");
+                builder.setMessage("Are you sure to join this event?");
+                builder.setPositiveButton("Join", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(v.getContext(), "Join", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+                builder.show();
             }
         });
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent chooseBranchIntent = new Intent(v.getContext(), ChooseDealActivity.class);
-//                chooseBranchIntent.putExtra("deal_id", deal_id);
-//                v.getContext().startActivity(chooseBranchIntent);
-//            }
-//        });
     }
 
     @Override
