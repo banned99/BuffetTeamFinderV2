@@ -16,7 +16,7 @@
         android:noHistory="true"
         android:configChanges="orientation|screenSize"
         android:theme="@style/AppTheme">
-        <activity android:name="com.buffet.activities.MainActivity"></activity>
+        <activity android:name="com.buffet.activities.MainActivity" />
         <activity android:name="com.buffet.activities.ViewProfileActivity" />
 
         <meta-data
@@ -37,9 +37,7 @@
         <activity
             android:name="com.buffet.activities.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -49,7 +47,8 @@
             android:name="com.facebook.FacebookActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-        <activity android:name="com.buffet.activities.RegisterActivity"></activity>
+        <activity android:name="com.buffet.activities.RegisterActivity" />
+        <activity android:name="com.buffet.activities.MyDealActivity"></activity>
     </application>
 
 </manifest>

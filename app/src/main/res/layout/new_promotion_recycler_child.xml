@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
     card_view:contentPadding="5dp"
     card_view:cardElevation="5dp"
     card_view:cardMaxElevation="5dp">
@@ -73,10 +74,10 @@
             android:layout_height="wrap_content"
             >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="180dp"
                 card_view:srcCompat="@drawable/promo_1"
-                android:scaleType="centerCrop"
+                android:scaleType="center"
                 android:id="@+id/promotionImage" />
             <TextView
                 android:layout_width="wrap_content"

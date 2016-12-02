@@ -5,7 +5,7 @@
         <item
             android:id="@+id/my_deal"
             android:icon="@mipmap/ic_launcher"
-            android:title="my deal"/>
+            android:title="my events"/>
         <!--<item-->
             <!--android:id="@+id/favorite_deal"-->
             <!--android:icon="@mipmap/ic_launcher"-->
