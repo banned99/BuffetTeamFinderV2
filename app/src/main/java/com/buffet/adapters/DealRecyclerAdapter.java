@@ -108,7 +108,6 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
 
         TextView owner_name;
         TextView eat_time, eat_date;
-        TextView current_person;
         Button join_button;
 
         LinearLayout linearLayout;

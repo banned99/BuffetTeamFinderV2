@@ -1,8 +1,11 @@
 package com.buffet.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.provider.SearchRecentSuggestions;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -14,6 +17,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -21,7 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.buffet.MySuggestionProvider;
 import com.buffet.customs.CustomNestedScrollView;
 import com.buffet.fragments.MapFragment;
 import com.buffet.fragments.NotiFragment;
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Button viewProfileButton;
     TextView viewProfileName;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //pref = getPreferences(0);
+
+        // Search
+        intent = getIntent();
+
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    MySuggestionProvider.AUTHORITY,
+                    MySuggestionProvider.MODE);
+            suggestions.saveRecentQuery(query, "recent");
+        }
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_main_root_layout);
 
@@ -96,13 +114,13 @@ public class MainActivity extends AppCompatActivity {
                     transaction.commit();
                 }
 
-                if (tabId == R.id.search_tab) {
-//                    ChangeStyleBottomBarLabel(1);
-                    SearchFragment searchFragment = SearchFragment.newInstance();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, searchFragment);
-                    transaction.commit();
-                }
+//                if (tabId == R.id.search_tab) {
+////                    ChangeStyleBottomBarLabel(1);
+//                    SearchFragment searchFragment = SearchFragment.newInstance();
+//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.fragmentContainer, searchFragment);
+//                    transaction.commit();
+//                }
 
                 if (tabId == R.id.map_tab) {
 //                    ChangeStyleBottomBarLabel(2);
@@ -191,6 +209,32 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // INPUT CODE HERE
+                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // INPUT CODE HERE
+//                String[] q = {"promotion_name"};
+//                String[] t = {newText};
+//                MySuggestionProvider suggestion = new MySuggestionProvider();
+//                suggestion.query(Uri.parse("database.it.kmitl.ac.th/it_35"), q, "promotion_name LIKE %?%", t, null);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -207,9 +251,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
