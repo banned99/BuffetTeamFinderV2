@@ -63,103 +63,130 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FacebookSdk.sdkInitialize(getApplicationContext());
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        pref = getPreferences(0);
-        btn_login = (AppCompatButton) findViewById(R.id.btn_login);
-        tv_register = (TextView) findViewById(R.id.tv_register);
-        et_email = (EditText) findViewById(R.id.et_email);
-        et_password = (EditText) findViewById(R.id.et_password);
-        progress = (ProgressBar) findViewById(R.id.progress);
-        // Click Login
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = et_email.getText().toString();
-                String password = et_password.getText().toString();
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    loginProcess(email, password);
-                } else {
-                    Snackbar.make(v, "Fields are empty !", Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
-        // Click Register
-        tv_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToRegister();
-            }
-        });
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /**
+         * Facebook SDK initialized
+         * To create callbackmanager.
+         */
+        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-//        accessToken = AccessToken.getCurrentAccessToken();
 
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-//        profile = (ProfilePictureView)findViewById(R.id.picture);
-        loginButton.setReadPermissions("public_profile email");
 
-        if (AccessToken.getCurrentAccessToken() != null) {
-            RequestData();
-        }
+        /**
+         * Create login and register layout
+         */
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                if (AccessToken.getCurrentAccessToken() != null) {
-                    RequestData();
-                }
-            }
+            setContentView(R.layout.activity_login);
+            pref = getPreferences(0);
+            btn_login = (AppCompatButton) findViewById(R.id.btn_login);
+            tv_register = (TextView) findViewById(R.id.tv_register);
+            et_email = (EditText) findViewById(R.id.et_email);
+            et_password = (EditText) findViewById(R.id.et_password);
+            progress = (ProgressBar) findViewById(R.id.progress);
+            LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+            //profile = (ProfilePictureView)findViewById(R.id.picture);
+            loginButton.setReadPermissions("public_profile email");
 
-            @Override
-            public void onCancel() {
-            }
+        /**
+         *  Normal Login initiallized
+         *  To create onClickListener.
+         */
 
-            @Override
-            public void onError(FacebookException exception) {
-                if (exception instanceof FacebookAuthorizationException) {
-                    if (AccessToken.getCurrentAccessToken() != null) {
-                        LoginManager.getInstance().logOut();
+            // Click Login
+            btn_login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String email = et_email.getText().toString();
+                    String password = et_password.getText().toString();
+                    if (!email.isEmpty() && !password.isEmpty()) {
+                        loginProcess(email, password);
+                    } else {
+                        Snackbar.make(v, "Fields are empty !", Snackbar.LENGTH_LONG).show();
                     }
                 }
-            }
-        });
-    }
+            });
 
-    public void RequestData() {
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                json = response.getJSONObject();
-                if (Profile.getCurrentProfile() == null) {
-                    mProfileTracker = new ProfileTracker() {
-                        @Override
-                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
-                            // profile2 is the new profile
-                            Log.e("facebook - profile", profile2.getFirstName());
-                            nextActivity(json);
-                            mProfileTracker.stopTracking();
-                        }
-                    };
-                    mProfileTracker.startTracking();
-                } else {
-                    nextActivity(json);
+            // Click Register
+            tv_register.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToRegister();
                 }
-            }
-        });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id, name, link, email, picture");
-        request.setParameters(parameters);
-        request.executeAsync();
+            });
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+        /**
+         * Facebook Callback
+         * To handle the result for login.
+         */
+        if(pref.getBoolean(Constants.IS_LOGGED_IN, false)){
+            goToMain();
+        }
+            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    System.out.println("User ID: "
+                            + loginResult.getAccessToken().getUserId()
+                            + "\n"
+                            + "Auth Token: "
+                            + loginResult.getAccessToken().getToken());
+                    GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                            new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            json = response.getJSONObject();
+                            if (Profile.getCurrentProfile() == null) {
+                                mProfileTracker = new ProfileTracker() {
+                                    @Override
+                                    protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                                        // profile2 is the new profile
+                                        Log.e("facebook - profile", profile2.getFirstName());
+                                        nextActivity(json);
+                                        mProfileTracker.stopTracking();
+                                    }
+                                };
+                                mProfileTracker.startTracking();
+                            } else {
+                                nextActivity(json);
+                            }
+                        }
+                    });
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "id, name, link, email, picture");
+                    request.setParameters(parameters);
+                    request.executeAsync();
+                }
+
+                @Override
+                public void onCancel() {
+                    System.out.println("Facebook login attempt canceled. ");
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                    Log.i("FB", "error", exception);
+                    if (exception instanceof FacebookAuthorizationException) {
+                        if (AccessToken.getCurrentAccessToken() != null) {
+                            LoginManager.getInstance().logOut();
+                        }
+                    }
+                }
+            });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(pref.getBoolean(Constants.IS_LOGGED_IN, false)){
+            goToMain();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private void nextActivity(JSONObject profile) {
@@ -168,10 +195,10 @@ public class LoginActivity extends AppCompatActivity {
                 String name = profile.getString("name");
                 String email = profile.getString("email");
                 String fbid = profile.getString("id");
-                System.out.println("fbid: " + fbid);
                 fbProcess(name, email, fbid);
                 getUserData(email);
                 goToMain();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -276,6 +303,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Constants.TEL, model.getUser().getTel());
                     editor.putString(Constants.MEMBER_ID, model.getUser().getMember_id());
                     editor.apply();
+                    System.out.println(Constants.IS_LOGGED_IN);
                     goToMain();
                 }
             }
