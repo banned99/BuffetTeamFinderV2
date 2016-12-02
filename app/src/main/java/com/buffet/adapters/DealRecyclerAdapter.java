@@ -2,6 +2,7 @@ package com.buffet.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.buffet.activities.ChooseBranchActivity;
 
+import com.buffet.activities.MyDealActivity;
 import com.buffet.models.Deal;
 
 import java.util.Collections;
@@ -65,14 +67,14 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
         for (int i = 1; i<= current_person; i++) {
             img_black = new ImageView(inflater.getContext());
             img_black.setImageResource(R.drawable.person);
-            img_black.setLayoutParams(new ViewGroup.LayoutParams(20,20));
+            img_black.setLayoutParams(new ViewGroup.LayoutParams(40,40));
             holder.linearLayout.addView(img_black);
         }
 
         for (int i = 1; i<= ChooseBranchActivity.promotion_max_person - current_person; i++) {
             img_gray = new ImageView(inflater.getContext());
             img_gray.setImageResource(R.drawable.person_gray);
-            img_gray.setLayoutParams(new ViewGroup.LayoutParams(20,20));
+            img_gray.setLayoutParams(new ViewGroup.LayoutParams(40,40));
             holder.linearLayout.addView(img_gray);
         }
 
@@ -86,7 +88,8 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
                 builder.setPositiveButton("Join", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(v.getContext(), "Join", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(v.getContext(), MyDealActivity.class);
+                        v.getContext().startActivity(intent);
                     }
                 });
                 builder.setNegativeButton("Cancel", null);

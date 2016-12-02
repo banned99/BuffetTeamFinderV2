@@ -141,7 +141,8 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (id) {
                     case R.id.my_deal:
-                        Snackbar.make(navigationView, "My Deal", Snackbar.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MyDealActivity.class);
+                        startActivity(intent);
                         break;
 //                    case R.id.view_profile:
 //                        Intent navIntent = new Intent(getApplicationContext(), ViewProfileActivity.class);

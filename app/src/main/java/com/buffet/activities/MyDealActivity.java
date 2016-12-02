@@ -11,21 +11,22 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Toast;
 
-import com.buffet.models.Constants;
+import com.buffet.adapters.MyCreateDealRecyclerAdapter;
+import com.buffet.adapters.MyJoinDealRecyclerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
-import static com.buffet.activities.LoginActivity.pref;
-
-
-public class ViewProfileActivity extends AppCompatActivity {
+public class MyDealActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -33,27 +34,30 @@ public class ViewProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
-    Button viewProfileButton;
-    EditText username, email, tel;
 
+
+    RecyclerView createDealRecyclerView, joinDealRecyclerView;
+    MyCreateDealRecyclerAdapter createAdapter;
+    MyJoinDealRecyclerAdapter joinAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_profile);
-        rootLayout = (CoordinatorLayout) findViewById(R.id.activity_view_profile_root_layout);
+        setContentView(R.layout.activity_my_deal);
+
+        rootLayout = (CoordinatorLayout) findViewById(R.id.activity_my_deal_root_layout);
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_view_profile);
-        drawerToggle = new ActionBarDrawerToggle(ViewProfileActivity.this, drawerLayout, R.string.profile, R.string.profile);
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_my_deal);
+        drawerToggle = new ActionBarDrawerToggle(MyDealActivity.this, drawerLayout, R.string.profile, R.string.profile);
         drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.setDrawerIndicatorEnabled(false);
         drawerToggle.setHomeAsUpIndicator(R.drawable.back_button);
         drawerLayout.addDrawerListener(drawerToggle);
-        getSupportActionBar().setTitle(R.string.profile);
+        getSupportActionBar().setTitle(R.string.my_deal);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -84,25 +88,35 @@ public class ViewProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
-        viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
-//
-        viewProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawers();
-                Intent navIntent = new Intent(v.getContext().getApplicationContext(), ViewProfileActivity.class);
-                startActivity(navIntent);
-            }
-        });
 
-        username = (EditText) findViewById(R.id.edit_name);
-        username.setText(pref.getString(Constants.NAME, ""));
-        email = (EditText) findViewById(R.id.edit_email);
-        email.setText(pref.getString(Constants.EMAIL, ""));
-        tel = (EditText) findViewById(R.id.edit_tel);
-        tel.setText(pref.getString(Constants.TEL, ""));
+        createDealRecyclerView = (RecyclerView) findViewById(R.id.my_create_deal_list);
+        createDealRecyclerView.setHasFixedSize(false);
+        createDealRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
+        joinDealRecyclerView = (RecyclerView) findViewById(R.id.my_join_deal_list);
+        joinDealRecyclerView.setHasFixedSize(false);
+        joinDealRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        getCreatedDeal();
+        getJoinedDeal();
+    }
+
+    public void getCreatedDeal() {
+
+        List<String> list = new ArrayList<>();
+        list.add("create1");
+        list.add("create2");
+        createAdapter = new MyCreateDealRecyclerAdapter(getApplicationContext(), list);
+        createDealRecyclerView.setAdapter(createAdapter);
+    }
+
+    public void getJoinedDeal() {
+        List<String> list = new ArrayList<>();
+        list.add("join1");
+        list.add("join2");
+        joinAdapter = new MyJoinDealRecyclerAdapter(getApplicationContext(), list);
+        joinDealRecyclerView.setAdapter(joinAdapter);
     }
 
     @Override
@@ -153,7 +167,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 //
 //        return super.onOptionsItemSelected(item);
     }
- 
+
 
     // When pressed back button, switch to promotion tab
 //    @Override
@@ -162,6 +176,4 @@ public class ViewProfileActivity extends AppCompatActivity {
 //            bottomBar.selectTabAtPosition(0);
 //        } else super.onBackPressed();
 //    }
-
 }
-
