@@ -19,6 +19,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/pro_name"
+            android:text="Promotion : "
+            android:textSize="18sp"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pro_branch_name"
+            android:text="Branch : "
+            android:textSize="18sp"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/deal_owner"
             android:text="Owner Name : "
             android:textSize="18sp"
@@ -47,16 +63,32 @@
             android:id="@+id/deal_member_img"
             android:padding="5dp">
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/member_button"
+                android:layout_gravity="bottom|right"
+                android:text="view member"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chat_button"
+                android:layout_gravity="bottom|right"
+                android:text="chat"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/join_button"
-            android:layout_gravity="bottom|right"
-            android:text="join"
-            />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

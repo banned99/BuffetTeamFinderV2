@@ -74,10 +74,10 @@
             android:layout_height="wrap_content"
             >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="180dp"
                 card_view:srcCompat="@drawable/promo_1"
-                android:scaleType="centerCrop"
+                android:scaleType="center"
                 android:id="@+id/promotionImage" />
             <TextView
                 android:layout_width="wrap_content"
