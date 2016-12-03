@@ -5,8 +5,9 @@ import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.GsonConverterFactory;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Tastomy on 10/20/2016 AD.
@@ -34,6 +35,7 @@ public class ServiceGenerator {
                     // Request customization: add request headers
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("Authorization", authToken)
+                            .header("Accept", "application/json")
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
@@ -41,7 +43,9 @@ public class ServiceGenerator {
                 }
             });
         }
-
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpClient.addInterceptor(logging);
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);

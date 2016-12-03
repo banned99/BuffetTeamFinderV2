@@ -251,7 +251,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
         Call<ServerResponse> call = service.getBranch(request);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Response<ServerResponse> response){
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response){
                 branches = new ArrayList<>();
                 ServerResponse model = response.body();
                 if(model.getResult().equals("failure")){
@@ -275,7 +275,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
                 branch_spin.setItemsArray(branch);
             }
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -305,7 +305,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
         Call<ServerResponse> call = service.getDeal(request);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Response<ServerResponse> response) {
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 ServerResponse model = response.body();
                 System.out.println("addDeal: onResponse" +
                         "\nResult : " + model.getResult()
@@ -313,7 +313,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

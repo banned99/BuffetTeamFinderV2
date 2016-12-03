@@ -19,6 +19,7 @@ import com.buffet.models.User;
 import com.buffet.network.ServerRequest;
 import com.buffet.network.ServerResponse;
 import com.buffet.network.ServiceAction;
+import com.buffet.network.ServiceGenerator;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookAuthorizationException;
@@ -230,7 +231,7 @@ public class LoginActivity extends AppCompatActivity {
         Call<ServerResponse> call = service.accountProcess(request);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Response<ServerResponse> response) {
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 ServerResponse model = response.body();
                 System.out.println("loginProcess: onResponse"
                         + "\nResult : " + model.getResult()
@@ -248,7 +249,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -266,7 +267,7 @@ public class LoginActivity extends AppCompatActivity {
         Call<ServerResponse> call = service.accountProcess(request);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Response<ServerResponse> response) {
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 ServerResponse model = response.body();
                 System.out.println("fbProcess: onResponse" +
                         "\nResult : " + model.getResult()
@@ -274,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -291,7 +292,7 @@ public class LoginActivity extends AppCompatActivity {
         Call<ServerResponse> call = service.accountProcess(request);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Response<ServerResponse> response) {
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 ServerResponse model = response.body();
                 System.out.println("getUserData: onResponse" + "\nResult : " + model.getResult()
                         + "\nMessage : " + model.getMessage());
@@ -309,7 +310,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
                 System.out.println("Debugging......");
                 t.printStackTrace();
             }

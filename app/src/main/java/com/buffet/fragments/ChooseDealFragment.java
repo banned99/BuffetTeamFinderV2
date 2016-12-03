@@ -91,7 +91,7 @@ public class ChooseDealFragment extends Fragment {
         Call<ServerResponse> call = service.getDeal(request);
         call.enqueue(new Callback<ServerResponse>(){
             @Override
-            public void onResponse(Response<ServerResponse> response) {
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 ServerResponse model = response.body();
                 List<Deal> deals = new ArrayList<>();
                 if(model.getResult().equals("failure")){
@@ -113,7 +113,7 @@ public class ChooseDealFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             }
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

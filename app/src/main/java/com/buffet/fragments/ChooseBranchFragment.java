@@ -89,7 +89,7 @@ public class ChooseBranchFragment extends Fragment {
         Call<ServerResponse> call = service.getBranch(request);
         call.enqueue(new Callback<ServerResponse>() {
              @Override
-             public void onResponse(Response<ServerResponse> response){
+             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response){
                  List<Branch> branches = new ArrayList<>();
                  ServerResponse model = response.body();
                  if(model.getResult().equals("failure")){
@@ -110,7 +110,7 @@ public class ChooseBranchFragment extends Fragment {
                  recyclerView.setAdapter(adapter);
              }
              @Override
-             public void onFailure(Throwable t) {
+             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

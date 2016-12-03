@@ -73,7 +73,7 @@ public class NewProFragment extends Fragment {
         Call<ServerResponse> call = service.getPromotion();
         call.enqueue(new Callback<ServerResponse>(){
             @Override
-            public void onResponse(Response<ServerResponse> response){
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response){
                 ServerResponse model = response.body();
                 List<Promotion> promotions = new ArrayList<>();
                 if(model.getResult().equals("failure")){
@@ -100,7 +100,7 @@ public class NewProFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             }
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

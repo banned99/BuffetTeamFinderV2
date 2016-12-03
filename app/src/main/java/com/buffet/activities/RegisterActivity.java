@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         Call<ServerResponse> call = service.accountProcess(request);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Response<ServerResponse> response){
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response){
                 ServerResponse model = response.body();
                 System.out.println("Result : " + model.getResult()
                         + "\nMessage : " + model.getMessage());
@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });
