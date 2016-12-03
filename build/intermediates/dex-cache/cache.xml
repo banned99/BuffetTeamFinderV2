@@ -43,7 +43,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="5b1f84f039a784e0be35d067edbe4f2edee3fdab">
+        sha1="f12effc9b0a059fec5cefb6fead00306a7280c6d">
         <dex dex="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_3bffb460b3215c30733ea4d2ce1b847736fd233b/classes.dex" />
     </item>
     <item
@@ -385,7 +385,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="743ad73355d9cfb101b5ea5a4fb5394f8d2432a5">
+        sha1="3570841566f1188eae01797acf1f26c7671e0629">
         <dex dex="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_09b6e1acf44e6a59d9389ac21d8e1402a1742438/classes.dex" />
     </item>
 
