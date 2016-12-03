@@ -102,15 +102,17 @@ public class ChooseDealFragment extends Fragment {
                     for (int i = 0; i < model.getDeal().size(); i++) {
                         Deal current = new Deal();
                         current.setDealId(model.getDeal().get(i).getDealId());
-                        current.setDealOwner(model.getDeal().get(i).getDealOwner());
+                        current.setName(model.getDeal().get(i).getName());
                         current.setCurrentPerson(model.getDeal().get(i).getCurrentPerson());
                         current.setDate(model.getDeal().get(i).getDate());
                         current.setTime(model.getDeal().get(i).getTime());
                         deals.add(current);
                     }
                 }
-                adapter = new DealRecyclerAdapter(getActivity(), deals);
-                recyclerView.setAdapter(adapter);
+                if (getActivity() != null) {
+                    adapter = new DealRecyclerAdapter(getActivity(), deals);
+                    recyclerView.setAdapter(adapter);
+                }
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {

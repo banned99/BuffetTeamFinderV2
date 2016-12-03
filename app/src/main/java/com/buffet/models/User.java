@@ -1,5 +1,8 @@
 package com.buffet.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Tastomy on 10/27/2016 AD.
  */
@@ -8,7 +11,9 @@ public class User {
     private String name;
     private String email;
     private String tel;
-    private String member_id;
+    @SerializedName("member_id")
+    @Expose
+    private int memberId;
     private String password;
     private String old_password;
     private String new_password;
@@ -26,8 +31,8 @@ public class User {
         return email;
     }
 
-    public String getMember_id() {
-        return member_id;
+    public int getMemberId() {
+        return memberId;
     }
 
     public String getTel(){

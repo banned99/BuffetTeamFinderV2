@@ -51,7 +51,7 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
 
         Deal current = deals.get(position);
         final int deal_id = current.getDealId();
-        final String owner_name = current.getDealOwner();
+        final String owner_name = current.getName();
         final String date = current.getDate();
         final String time = current.getTime();
         final int current_person = current.getCurrentPerson();

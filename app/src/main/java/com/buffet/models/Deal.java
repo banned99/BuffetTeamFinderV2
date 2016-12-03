@@ -25,7 +25,10 @@ public class Deal {
     private int currentPerson;
     @SerializedName("deal_owner")
     @Expose
-    private String dealOwner;
+    private int dealOwner;
+    @SerializedName("name")
+    @Expose
+    private String name;
 
     /**
      *
@@ -104,7 +107,7 @@ public class Deal {
      * @return
      * The dealOwner
      */
-    public String getDealOwner() {
+    public int getDealOwner() {
         return dealOwner;
     }
 
@@ -113,8 +116,26 @@ public class Deal {
      * @param dealOwner
      * The deal_owner
      */
-    public void setDealOwner(String dealOwner) {
+    public void setDealOwner(int dealOwner) {
         this.dealOwner = dealOwner;
+    }
+
+    /**
+     *
+     * @return
+     * The name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     *
+     * @param name
+     * The name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

@@ -296,9 +296,11 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
 
         deals.setDate(date);
         deals.setTime(time);
-        deals.setDealOwner(pref.getString(Constants.NAME, ""));
-
+        System.out.println("ID = " +pref.getInt(Constants.MEMBER_ID, 0));
+        deals.setDealOwner(pref.getInt(Constants.MEMBER_ID, 0));
+        deals.setName(pref.getString(Constants.NAME, ""));
         deals.setCurrentPerson(Integer.parseInt(current_person));
+
         request.setDeal(deals);
         request.setPromotionId(pro_id);
         request.setBranchId(branch_id);
