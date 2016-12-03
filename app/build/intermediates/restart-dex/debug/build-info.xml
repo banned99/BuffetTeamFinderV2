@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86_64,x86"
+    api-level="24"
+    density="xxhdpi"
+    format="8"
+    plugin-version="2.2.2"
+    timestamp="138458800317121"
+    token="3495605383412882288"
+    verifier="COLD_SWAP_REQUESTED" >
+
+    <task
+        name="javac"
+        duration="1206" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="34" />
+    <task
+        name="verifier"
+        duration="1" />
+
+    <artifact
+        location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2/classes.dex"
+        type="DEX" />
+
+    <build
+        timestamp="114813249015812"
+        verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/outputs/apk/app-debug.apk"
+            type="MAIN" />
+    </build>
+    <build
+        timestamp="134900330688769"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/instant-run-resources/resources-debug.ir.ap_"
+            type="RESOURCES" />
+        <artifact
+            location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_8/classes.dex"
+            type="DEX" />
+        <artifact
+            location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_6/classes.dex"
+            type="DEX" />
+        <artifact
+            location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_9/classes.dex"
+            type="DEX" />
+    </build>
+    <build
+        timestamp="138025358713376"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_7/classes.dex"
+            type="DEX" />
+    </build>
+    <build
+        timestamp="138264721174533"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4/classes.dex"
+            type="DEX" />
+    </build>
+    <build
+        timestamp="138458800317121"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2/classes.dex"
+            type="DEX" />
+    </build>
+
+</instant-run>

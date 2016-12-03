@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/promotion_tab"
+        icon="@drawable/ic_promotion"
+        title="Promotion"
+        inActiveColor="@color/colorPrimaryLight"
+        activeColor="#FFFFFF"
+        barColorWhenSelected="@color/colorPrimary"
+        />
+    <tab
+        id="@+id/map_tab"
+        icon="@drawable/ic_map"
+        title="Map"
+        inActiveColor="@color/colorPrimaryLight"
+        activeColor="#FFFFFF"
+        barColorWhenSelected="@color/colorPrimary"
+        />
+
+    <tab
+        id="@+id/notification_tab"
+        icon="@drawable/ic_notifications"
+        title="Notification"
+        inActiveColor="@color/colorPrimaryLight"
+        activeColor="#FFFFFF"
+        barColorWhenSelected="@color/colorPrimary"
+        />
+</tabs>

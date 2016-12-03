@@ -1,0 +1,7 @@
+#Sat Dec 03 15:58:19 ICT 2016
+base.0=/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_3bffb460b3215c30733ea4d2ce1b847736fd233b
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_09b6e1acf44e6a59d9389ac21d8e1402a1742438/classes.dex
+base.1=/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_09b6e1acf44e6a59d9389ac21d8e1402a1742438
+file.0=/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_3bffb460b3215c30733ea4d2ce1b847736fd233b/classes.dex
