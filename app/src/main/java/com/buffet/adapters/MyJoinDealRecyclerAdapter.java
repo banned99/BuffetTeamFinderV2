@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -47,9 +49,23 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView proname, branchname, ownername, date, time;
+        ImageButton memberbtn, chatbtn;
+        LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            proname = (TextView) itemView.findViewById(R.id.pro_name);
+            branchname = (TextView) itemView.findViewById(R.id.pro_branch_name);
+            ownername = (TextView) itemView.findViewById(R.id.deal_owner);
+            date = (TextView) itemView.findViewById(R.id.eat_date);
+            time = (TextView) itemView.findViewById(R.id.eat_time);
+            chatbtn = (ImageButton) itemView.findViewById(R.id.chat_button);
+            memberbtn = (ImageButton) itemView.findViewById(R.id.member_button);
+
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.deal_member_img);
+
 
         }
 

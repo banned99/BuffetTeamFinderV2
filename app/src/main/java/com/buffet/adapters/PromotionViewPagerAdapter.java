@@ -13,8 +13,8 @@ import com.buffet.fragments.TopProFragment;
  * Created by Banned on 10/16/2016.
  */
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
-    public ViewPagerAdapter(FragmentManager fm) {
+public class PromotionViewPagerAdapter extends FragmentPagerAdapter {
+    public PromotionViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

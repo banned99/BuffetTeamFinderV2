@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.buffet.adapters.AllDealViewPagerAdapter;
 import com.buffet.adapters.MyCreateDealRecyclerAdapter;
 import com.buffet.adapters.MyJoinDealRecyclerAdapter;
 
@@ -36,9 +39,10 @@ public class MyDealActivity extends AppCompatActivity {
     NavigationView navigationView;
 
 
-    RecyclerView createDealRecyclerView, joinDealRecyclerView;
-    MyCreateDealRecyclerAdapter createAdapter;
-    MyJoinDealRecyclerAdapter joinAdapter;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    AllDealViewPagerAdapter adapter;
+    TabLayout.Tab owner, join;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +65,6 @@ public class MyDealActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        nestedScrollView = (NestedScrollView) findViewById(R.id.nest_scroll_view);
-        nestedScrollView.setFillViewport(true);
 
         // Navigation Drawer
         navigationView = (NavigationView) findViewById(R.id.navigation);
@@ -89,34 +90,55 @@ public class MyDealActivity extends AppCompatActivity {
             }
         });
 
-        createDealRecyclerView = (RecyclerView) findViewById(R.id.my_create_deal_list);
-        createDealRecyclerView.setHasFixedSize(false);
-        createDealRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ////         Tab
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
+        owner = tabLayout.newTab();
+        join = tabLayout.newTab();
 
-        joinDealRecyclerView = (RecyclerView) findViewById(R.id.my_join_deal_list);
-        joinDealRecyclerView.setHasFixedSize(false);
-        joinDealRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        tabLayout.addTab(join);
+        tabLayout.addTab(owner);
 
-        getCreatedDeal();
-        getJoinedDeal();
-    }
+        // ViewPager
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        adapter = new AllDealViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager, false);
 
-    public void getCreatedDeal() {
+        owner.setText("Owner events");
+        join.setText("Join events");
 
-        List<String> list = new ArrayList<>();
-        list.add("create1");
-        list.add("create2");
-        createAdapter = new MyCreateDealRecyclerAdapter(getApplicationContext(), list);
-        createDealRecyclerView.setAdapter(createAdapter);
-    }
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    public void getJoinedDeal() {
-        List<String> list = new ArrayList<>();
-        list.add("join1");
-        list.add("join2");
-        joinAdapter = new MyJoinDealRecyclerAdapter(getApplicationContext(), list);
-        joinDealRecyclerView.setAdapter(joinAdapter);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                Change Icon
+//                switch (position) {
+//                    case 0: {
+//                        homeTab.setIcon(R.drawable.home_tab_white);
+//                        profileTab.setIcon(R.drawable.profile_tab);
+//                        break;
+//                    }
+//                    case 1: {
+//                        profileTab.setIcon(R.drawable.profile_tab_white);
+//                        homeTab.setIcon(R.drawable.home_tab);
+//                        break;
+//                    }
+//                }
+//
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     @Override

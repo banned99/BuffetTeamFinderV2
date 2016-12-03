@@ -1,5 +1,6 @@
 package com.buffet.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
@@ -20,6 +21,9 @@ import android.widget.EditText;
 
 import com.buffet.models.Constants;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
 import static com.buffet.activities.LoginActivity.pref;
@@ -33,7 +37,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
-    Button viewProfileButton;
+    Button viewProfileButton, editPhotoButton;
     EditText username, email, tel;
 
 
@@ -102,8 +106,42 @@ public class ViewProfileActivity extends AppCompatActivity {
         tel = (EditText) findViewById(R.id.edit_tel);
         tel.setText(pref.getString(Constants.TEL, ""));
 
+        editPhotoButton = (Button) findViewById(R.id.edit_photo);
+        editPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImage();
+            }
+        });
+
 
     }
+
+    private static final int PICK_PHOTO_FOR_AVATAR = 0;
+
+    public void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //Display an error
+                return;
+            }
+            try {
+                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+        }
+    }
+
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {

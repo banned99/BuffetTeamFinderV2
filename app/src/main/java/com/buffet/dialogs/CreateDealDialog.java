@@ -81,7 +81,7 @@ public class CreateDealDialog extends DialogFragment{
         });
 
 
-        builder.setTitle("New Deal");
+        builder.setTitle("New Event");
         builder.setView(view)
                 .setPositiveButton("OK", null)
                 .setNegativeButton("CANCEL", null);
