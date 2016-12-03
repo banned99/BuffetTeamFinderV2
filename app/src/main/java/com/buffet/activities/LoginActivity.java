@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_email, et_password;
     private TextView tv_register;
     private ProgressBar progress;
+    private LoginButton loginButton;
     public static SharedPreferences pref;
 
 
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             et_email = (EditText) findViewById(R.id.et_email);
             et_password = (EditText) findViewById(R.id.et_password);
             progress = (ProgressBar) findViewById(R.id.progress);
-            LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+            loginButton = (LoginButton) findViewById(R.id.login_button);
             //profile = (ProfilePictureView)findViewById(R.id.picture);
             loginButton.setReadPermissions("public_profile email");
 
@@ -100,6 +101,12 @@ public class LoginActivity extends AppCompatActivity {
                     String email = et_email.getText().toString();
                     String password = et_password.getText().toString();
                     if (!email.isEmpty() && !password.isEmpty()) {
+                        et_email.setEnabled(false);
+                        et_password.setEnabled(false);
+                        btn_login.setEnabled(false);
+                        loginButton.setEnabled(false);
+                        progress.setVisibility(View.VISIBLE);
+                        tv_register.setEnabled(false);
                         loginProcess(email, password);
                     } else {
                         Snackbar.make(v, "Fields are empty !", Snackbar.LENGTH_LONG).show();
@@ -245,12 +252,22 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Constants.MEMBER_ID, model.getUser().getMember_id());
                     editor.apply();
                     goToMain();
+                } else if (model.getResult().equals(Constants.FAILURE)) {
+                    et_email.setEnabled(true);
+                    et_password.setEnabled(true);
+                    btn_login.setEnabled(true);
+                    loginButton.setEnabled(true);
+                    progress.setVisibility(View.INVISIBLE);
+                    tv_register.setEnabled(true);
+                    Snackbar.make(getCurrentFocus(), "Wrong email or password", Snackbar.LENGTH_LONG).show();
                 }
+
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 t.printStackTrace();
+
             }
         });
     }

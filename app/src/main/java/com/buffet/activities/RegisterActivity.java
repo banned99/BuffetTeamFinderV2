@@ -53,6 +53,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
                     progress.setVisibility(View.VISIBLE);
+                    tv_login.setEnabled(false);
+                    et_email.setEnabled(false);
+                    et_name.setEnabled(false);
+                    et_password.setEnabled(false);
                     registerProcess(name,email,password, v);
                 } else {
                     Snackbar.make(v, "Fields are empty !", Snackbar.LENGTH_LONG).show();
