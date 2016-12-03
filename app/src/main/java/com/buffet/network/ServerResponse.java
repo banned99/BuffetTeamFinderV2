@@ -14,8 +14,8 @@ import java.util.List;
 public class ServerResponse {
     private String result;
     private String message;
-    private List<User> user;
-    private User user1;
+    private List<User> userobj;
+    private User user;
     private List<Promotion> promotion;
     private List<Branch> branch;
     private List<Deal> deal;
@@ -36,9 +36,9 @@ public class ServerResponse {
         return (List<Deal>) deal;
     }
     public User getUser() {
-        return user1;
+        return user;
     }
     public List<User> getListUser() {
-        return (List<User>)user;
+        return (List<User>)userobj;
     }
 }

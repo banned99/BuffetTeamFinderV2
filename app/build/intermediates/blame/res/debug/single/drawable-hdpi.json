@@ -4,16 +4,16 @@
         "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/src/main/res/drawable-hdpi/ic_map.png"
     },
     {
-        "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable-hdpi/com_facebook_tooltip_blue_background.9.png",
-        "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.6.0/res/drawable-hdpi/com_facebook_tooltip_blue_background.9.png"
-    },
-    {
         "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable-hdpi/com_facebook_tooltip_black_background.9.png",
         "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.6.0/res/drawable-hdpi/com_facebook_tooltip_black_background.9.png"
     },
     {
         "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable-hdpi/com_facebook_button_like_icon_selected.png",
         "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.6.0/res/drawable-hdpi/com_facebook_button_like_icon_selected.png"
+    },
+    {
+        "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable-hdpi/com_facebook_tooltip_blue_background.9.png",
+        "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.6.0/res/drawable-hdpi/com_facebook_tooltip_blue_background.9.png"
     },
     {
         "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable-hdpi/messenger_button_send_round_shadow.png",
