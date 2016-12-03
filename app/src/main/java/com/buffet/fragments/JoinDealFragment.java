@@ -1,6 +1,7 @@
 package com.buffet.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.buffet.activities.MyDealActivity;
 import com.buffet.adapters.MyCreateDealRecyclerAdapter;
 import com.buffet.adapters.MyJoinDealRecyclerAdapter;
+import com.buffet.models.Branch;
+import com.buffet.models.Constants;
+import com.buffet.models.Deal;
+import com.buffet.models.Promotion;
+import com.buffet.models.User;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import static com.buffet.activities.LoginActivity.pref;
+import static com.buffet.network.ServiceGenerator.createService;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
@@ -67,11 +82,58 @@ public class JoinDealFragment extends Fragment {
     }
 
     public void getJoinedDeal() {
-        List<String> list = new ArrayList<>();
-        list.add("join1");
-        list.add("join2");
-        joinAdapter = new MyJoinDealRecyclerAdapter(getApplicationContext(), list);
-        joinDealRecyclerView.setAdapter(joinAdapter);
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("getdealjoined");
+
+        User users = new User();
+        users.setMemberId(pref.getInt(Constants.MEMBER_ID, 0));
+
+        request.setUser(users);
+        Call<ServerResponse> call = service.getDealJoined(request);
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                ServerResponse model = response.body();
+                List<Deal> deals = new ArrayList<>();
+                List<Branch> branchs = new ArrayList<>();
+                List<Promotion> promotions = new ArrayList<>();
+                if(model.getResult().equals("failure")){
+                    System.out.println("Event IS NULL");
+                }else {
+                    System.out.println("Result : " + model.getResult()
+                            + "\nMessage : " + model.getMessage());
+                    for (int i = 0; i< model.getDeal().size(); i++) {
+                        Deal current = new Deal();
+                        Branch b = new Branch();
+                        Promotion p = new Promotion();
+                        current.setDealId(model.getDeal().get(i).getDealId());
+                        current.setDate(model.getDeal().get(i).getDate());
+                        current.setCurrentPerson(model.getDeal().get(i).getCurrentPerson());
+                        current.setTime(model.getDeal().get(i).getTime());
+                        current.setDealOwner(model.getDeal().get(i).getDealOwner());
+
+                        b.setBranchName(model.getBranch().get(i).getBranchName());
+                        p.setProName(model.getPromotion().get(i).getProName());
+
+                        deals.add(current);
+                        branchs.add(b);
+                        promotions.add(p);
+                    }
+                    if(getApplicationContext()!=null) {
+                        joinAdapter = new MyJoinDealRecyclerAdapter(getApplicationContext(), deals, branchs, promotions);
+                        joinDealRecyclerView.setAdapter(joinAdapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
