@@ -12,17 +12,13 @@ import android.widget.TextView;
 
 import com.buffet.activities.ChooseBranchActivity;
 import com.buffet.models.Branch;
-import com.buffet.models.Constants;
 import com.buffet.models.Deal;
 import com.buffet.models.Promotion;
-import com.buffet.models.User;
 
 import java.util.Collections;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
-
-import static com.buffet.activities.LoginActivity.pref;
 
 /**
  * Created by icespw on 12/2/2016 AD.
@@ -34,15 +30,13 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
     List<Deal> mydeals = Collections.emptyList();
     List<Branch> branchs = Collections.emptyList();
     List<Promotion> promotions = Collections.emptyList();
-    List<User> users = Collections.emptyList();
 
 
-    public MyCreateDealRecyclerAdapter(Context context, List<Deal> mydeals, List<Branch> branchs, List<Promotion> promotions, List<User> users) {
+    public MyCreateDealRecyclerAdapter(Context context, List<Deal> mydeals, List<Branch> branchs, List<Promotion> promotions) {
         inflater = LayoutInflater.from(context);
         this.mydeals = mydeals;
         this.branchs = branchs;
         this.promotions = promotions;
-        this.users = users;
     }
 
     @Override
@@ -57,7 +51,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
 
         holder.proname.setText(promotions.get(position).getProName());
         holder.branchname.setText(branchs.get(position).getBranchName());
-        holder.ownername.setText(pref.getString(Constants.NAME, "no name"));
+        holder.ownername.setText(Integer.toString(mydeals.get(position).getDealOwner()));
         holder.date.setText(mydeals.get(position).getDate());
         holder.time.setText(mydeals.get(position).getTime());
 

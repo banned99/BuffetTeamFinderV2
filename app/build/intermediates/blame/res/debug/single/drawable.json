@@ -8,12 +8,12 @@
         "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/res/drawable/abc_seekbar_tick_mark_material.xml"
     },
     {
-        "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable/abc_ic_menu_overflow_material.xml",
-        "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/res/drawable/abc_ic_menu_overflow_material.xml"
-    },
-    {
         "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable/com_facebook_button_login_silver_background.xml",
         "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.6.0/res/drawable/com_facebook_button_login_silver_background.xml"
+    },
+    {
+        "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable/abc_ic_menu_overflow_material.xml",
+        "source": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/res/drawable/abc_ic_menu_overflow_material.xml"
     },
     {
         "merged": "/Users/tastomy/Documents/project_se/BuffetTeamFinderV2/app/build/intermediates/res/merged/debug/drawable/abc_switch_thumb_material.xml",

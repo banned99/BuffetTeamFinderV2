@@ -14,7 +14,10 @@ import java.util.List;
 public class ServerResponse {
     private String result;
     private String message;
+<<<<<<< HEAD
     private List<User> userobj;
+=======
+>>>>>>> parent of f0af6f2... no comment
     private User user;
     private List<Promotion> promotion;
     private List<Branch> branch;
@@ -37,8 +40,11 @@ public class ServerResponse {
     }
     public User getUser() {
         return user;
+<<<<<<< HEAD
     }
     public List<User> getListUser() {
         return (List<User>)userobj;
+=======
+>>>>>>> parent of f0af6f2... no comment
     }
 }
