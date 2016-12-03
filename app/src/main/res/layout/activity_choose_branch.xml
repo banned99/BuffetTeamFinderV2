@@ -144,6 +144,13 @@
                     android:layout_height="match_parent"
                     android:id="@+id/branch_container"
                     />
+                <ProgressBar
+                    style="@style/Base.Widget.AppCompat.ProgressBar"
+                    android:id="@+id/progress"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 

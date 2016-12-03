@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.buffet.adapters.NewPromotionRecyclerAdapter;
 import com.buffet.models.Promotion;
@@ -37,6 +39,9 @@ public class NewProFragment extends Fragment {
     private NewPromotionRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
+    private ProgressBar progressBar;
+    private TextView noeventText;
+
     public NewProFragment() {
         // Required empty public constructor
     }
@@ -63,6 +68,10 @@ public class NewProFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+
+        noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
+
         getPromotionData();
 
         return rootView;
@@ -78,9 +87,11 @@ public class NewProFragment extends Fragment {
                 List<Promotion> promotions = new ArrayList<>();
                 if(model.getResult().equals("failure")){
                     System.out.println("PROMOTION IS NULL");
+                    noeventText.setVisibility(View.VISIBLE);
                 } else {
                     System.out.println("Result : " + model.getResult()
                                     + "\nMessage : " + model.getMessage());
+                    noeventText.setVisibility(View.INVISIBLE);
                     for (int i = 0; i< model.getPromotion().size(); i++) {
                         Promotion current = new Promotion();
                         current.setProId(model.getPromotion().get(i).getProId());
@@ -96,6 +107,7 @@ public class NewProFragment extends Fragment {
                         promotions.add(current);
                     }
                 }
+                progressBar.setVisibility(View.INVISIBLE);
                 if(getActivity()!=null){
                     adapter = new NewPromotionRecyclerAdapter(getActivity(), promotions);
                     recyclerView.setAdapter(adapter);
