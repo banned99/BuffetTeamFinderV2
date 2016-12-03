@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +66,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
     TextView promotionDescription;
     ImageView promotionImage;
     ImageButton expandButton;
+    ProgressBar progressBar;
 
     List<Branch> branches;
 
@@ -90,7 +92,6 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
         String promotion_description = bundle.getString("promotion_description");
         promotion_max_person = bundle.getInt("promotion_max_person");
 //        Toast.makeText(this, "id: "+ promotion_id+"\nname:"+promotion_name+"\nprice:"+promotion_price+"\ndate_start:"+promotion_date_start+"\nexpire"+ promotion_expire+"\nmax_person"+promotion_max_person, Toast.LENGTH_LONG).show();
-        Toast.makeText(this, promotion_description, Toast.LENGTH_SHORT).show();
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_choose_branch_root_layout);
 
         // Toolbar
@@ -125,6 +126,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
         promotionCategory.setText(promotion_catname);
 
         branch_spin = (LabelledSpinner) findViewById(R.id.branch_spinner);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
 
         getData(promotion_id);
 
@@ -274,6 +276,8 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
                 }
 
                 branch_spin.setItemsArray(branch);
+
+                progressBar.setVisibility(View.INVISIBLE);
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {

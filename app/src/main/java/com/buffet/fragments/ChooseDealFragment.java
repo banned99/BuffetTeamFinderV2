@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -47,6 +49,8 @@ public class ChooseDealFragment extends Fragment {
     private DealRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
+    private ProgressBar progressBar;
+    private TextView noeventText;
 
     public ChooseDealFragment() {
         // Required empty public constructor
@@ -76,6 +80,10 @@ public class ChooseDealFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+
+        noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
+
         Bundle bundle = this.getArguments();
         getData(bundle.getInt("branch_id"));
 
@@ -96,9 +104,11 @@ public class ChooseDealFragment extends Fragment {
                 List<Deal> deals = new ArrayList<>();
                 if(model.getResult().equals("failure")){
                     System.out.println("DEAL IS NULL");
+                    noeventText.setVisibility(View.VISIBLE);
                 } else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());
+                    noeventText.setVisibility(View.INVISIBLE);
                     for (int i = 0; i < model.getDeal().size(); i++) {
                         Deal current = new Deal();
                         current.setDealId(model.getDeal().get(i).getDealId());
@@ -109,6 +119,7 @@ public class ChooseDealFragment extends Fragment {
                         deals.add(current);
                     }
                 }
+                progressBar.setVisibility(View.INVISIBLE);
                 if (getActivity() != null) {
                     adapter = new DealRecyclerAdapter(getActivity(), deals);
                     recyclerView.setAdapter(adapter);
