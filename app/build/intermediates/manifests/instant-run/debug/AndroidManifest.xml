@@ -83,6 +83,7 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.buffet.activities.RegisterActivity" />
         <activity android:name="com.buffet.activities.MyDealActivity" />
+        <activity android:name="com.buffet.activities.DealMemberActivity" />
         <activity
             android:name="com.google.android.gms.common.api.GoogleApiActivity"
             android:exported="false"
@@ -106,12 +107,6 @@
             android:name="com.google.android.gms.measurement.AppMeasurementService"
             android:enabled="true"
             android:exported="false" />
-
-        <provider
-            android:name="com.google.firebase.provider.FirebaseInitProvider"
-            android:authorities="ggwp.caliver.banned.buffetteamfinderv2.firebaseinitprovider"
-            android:exported="false"
-            android:initOrder="100" />
 
         <receiver
             android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
@@ -142,6 +137,12 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="ggwp.caliver.banned.buffetteamfinderv2.firebaseinitprovider"
+            android:exported="false"
+            android:initOrder="100" />
     </application>
 
 </manifest>
