@@ -1,5 +1,6 @@
 package com.buffet.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -284,8 +285,8 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
     @Override
     public void onDialogMessage(String time, String date, String max_ppl) {
         addDeal(date, time, max_ppl, promotion_id, branch_id);
-        finish();
-        startActivity(getIntent());
+        Intent intent = new Intent(getApplicationContext(), MyDealActivity.class);
+        startActivity(intent);
     }
     private void addDeal(String date, String time, String current_person, int pro_id, int branch_id) {
         ServiceAction service = createService(ServiceAction.class);

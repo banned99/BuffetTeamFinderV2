@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.buffet.activities.MainActivity;
-import com.buffet.adapters.ViewPagerAdapter;
+import com.buffet.adapters.PromotionViewPagerAdapter;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
@@ -38,7 +38,7 @@ public class PromotionFragment extends Fragment {
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    ViewPagerAdapter adapter;
+    PromotionViewPagerAdapter adapter;
     TabLayout.Tab newPro, categories, topTen, aToZ;
 
     public PromotionFragment() {
@@ -81,7 +81,7 @@ public class PromotionFragment extends Fragment {
 
         // ViewPager
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter = new PromotionViewPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager, false);
 
