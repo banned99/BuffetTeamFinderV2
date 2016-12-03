@@ -9,6 +9,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.buffet.models.Branch;
+import com.buffet.models.Deal;
+import com.buffet.models.Promotion;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -21,12 +25,16 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
 public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDealRecyclerAdapter.ViewHolder>{
 
     private LayoutInflater inflater;
-    List<String> mydeals = Collections.emptyList();
+    List<Deal> mydeals = Collections.emptyList();
+    List<Branch> branchs = Collections.emptyList();
+    List<Promotion> promotions = Collections.emptyList();
 
 
-    public MyCreateDealRecyclerAdapter(Context context, List<String> mydeals) {
+    public MyCreateDealRecyclerAdapter(Context context, List<Deal> mydeals, List<Branch> branchs, List<Promotion> promotions) {
         inflater = LayoutInflater.from(context);
         this.mydeals = mydeals;
+        this.branchs = branchs;
+        this.promotions = promotions;
     }
 
     @Override
