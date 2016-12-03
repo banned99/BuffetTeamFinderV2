@@ -16,4 +16,5 @@ public interface ServiceAction {
     @POST("branch.php") Call<ServerResponse> getBranch(@Body ServerRequest request);
     @POST("deal.php") Call<ServerResponse> getDeal(@Body ServerRequest request);
     @POST("account.php") Call<ServerResponse> accountProcess(@Body ServerRequest request);
+    @POST("deal.php") Call<ServerResponse> joinDeal(@Body ServerRequest request);
 }

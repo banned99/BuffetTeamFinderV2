@@ -35,6 +35,10 @@ public class User {
         return memberId;
     }
 
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
     public String getTel(){
         return tel;
     }

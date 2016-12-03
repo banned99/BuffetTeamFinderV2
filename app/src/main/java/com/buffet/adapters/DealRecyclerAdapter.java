@@ -17,12 +17,23 @@ import android.widget.Toast;
 import com.buffet.activities.ChooseBranchActivity;
 
 import com.buffet.activities.MyDealActivity;
+import com.buffet.models.Constants;
 import com.buffet.models.Deal;
+import com.buffet.models.User;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
 import java.util.Collections;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.activities.LoginActivity.pref;
+import static com.buffet.network.ServiceGenerator.createService;
 
 /**
  * Created by YaYaTripleSix on 23-Oct-16.
@@ -88,8 +99,34 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
                 builder.setPositiveButton("Join", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(v.getContext(), MyDealActivity.class);
-                        v.getContext().startActivity(intent);
+                        ServiceAction service = createService(ServiceAction.class);
+                        ServerRequest request = new ServerRequest();
+                        request.setOperation("joindeal");
+                        Deal deals = new Deal();
+                        deals.setDealId(deal_id);
+
+                        User users = new User();
+                        users.setMemberId(pref.getInt(Constants.MEMBER_ID, 0));
+
+                        request.setDeal(deals);
+                        request.setUser(users);
+                        Call<ServerResponse> call = service.getDeal(request);
+                        call.enqueue(new Callback<ServerResponse>() {
+                            @Override
+                            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                                ServerResponse model = response.body();
+                                System.out.println("addDeal: onResponse" +
+                                        "\nResult : " + model.getResult()
+                                        + "\nMessage : " + model.getMessage());
+                                Intent intent = new Intent(v.getContext(), MyDealActivity.class);
+                                v.getContext().startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("Cancel", null);
