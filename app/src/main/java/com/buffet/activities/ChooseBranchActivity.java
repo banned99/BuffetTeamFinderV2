@@ -87,7 +87,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
         String promotion_expire = bundle.getString("promotion_expire");
         String promotion_image = bundle.getString("promotion_image");
         String promotion_catname = bundle.getString("promotion_catname");
-        String promotion_description = bundle.getString("protmotion_description");
+        String promotion_description = bundle.getString("promotion_description");
         promotion_max_person = bundle.getInt("promotion_max_person");
 //        Toast.makeText(this, "id: "+ promotion_id+"\nname:"+promotion_name+"\nprice:"+promotion_price+"\ndate_start:"+promotion_date_start+"\nexpire"+ promotion_expire+"\nmax_person"+promotion_max_person, Toast.LENGTH_LONG).show();
         Toast.makeText(this, promotion_description, Toast.LENGTH_SHORT).show();

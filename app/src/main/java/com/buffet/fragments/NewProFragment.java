@@ -96,8 +96,10 @@ public class NewProFragment extends Fragment {
                         promotions.add(current);
                     }
                 }
-                adapter = new NewPromotionRecyclerAdapter(getActivity(), promotions);
-                recyclerView.setAdapter(adapter);
+                if(getActivity()!=null){
+                    adapter = new NewPromotionRecyclerAdapter(getActivity(), promotions);
+                    recyclerView.setAdapter(adapter);
+                }
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
