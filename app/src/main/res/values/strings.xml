@@ -17,4 +17,5 @@ There are also:
 This can also be expensive and time consuming, but is best for high value or premium products. </string>
     <string name="join_events">Join Events</string>
     <string name="my_deal">My events</string>
+    <string name="member">Members</string>
 </resources>

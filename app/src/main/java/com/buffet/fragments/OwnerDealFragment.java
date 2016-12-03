@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.buffet.adapters.MyCreateDealRecyclerAdapter;
 import com.buffet.adapters.MyJoinDealRecyclerAdapter;
@@ -46,6 +48,8 @@ public class OwnerDealFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     RecyclerView createDealRecyclerView;
     MyCreateDealRecyclerAdapter createAdapter;
+    ProgressBar progressBar;
+    TextView noeventText;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -81,7 +85,8 @@ public class OwnerDealFragment extends Fragment {
         createDealRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_create_deal_list);
         createDealRecyclerView.setHasFixedSize(false);
         createDealRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+        noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
         getCreatedDeal();
 
         return rootView;
@@ -107,6 +112,7 @@ public class OwnerDealFragment extends Fragment {
                 List<User> users = new ArrayList<>();
                 if(model.getResult().equals("failure")){
                     System.out.println("Event IS NULL");
+                    noeventText.setVisibility(View.VISIBLE);
                 }else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());
@@ -131,6 +137,8 @@ public class OwnerDealFragment extends Fragment {
                         promotions.add(p);
                         users.add(u);
                     }
+                    progressBar.setVisibility(View.INVISIBLE);
+                    noeventText.setVisibility(View.INVISIBLE);
                     if(getApplicationContext()!=null) {
                         createAdapter = new MyCreateDealRecyclerAdapter(getApplicationContext(), deals, branchs, promotions, users);
                         createDealRecyclerView.setAdapter(createAdapter);

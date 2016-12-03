@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.buffet.activities.MyDealActivity;
 import com.buffet.adapters.MyCreateDealRecyclerAdapter;
@@ -47,6 +49,8 @@ public class JoinDealFragment extends Fragment {
 
     RecyclerView joinDealRecyclerView;
     MyJoinDealRecyclerAdapter joinAdapter;
+    ProgressBar progressBar;
+    TextView noeventText;
 
     private OnFragmentInteractionListener mListener;
 
@@ -77,6 +81,9 @@ public class JoinDealFragment extends Fragment {
         joinDealRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_join_deal_list);
         joinDealRecyclerView.setHasFixedSize(false);
         joinDealRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+        noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
+
         getJoinedDeal();
         return rootView;
     }
@@ -101,6 +108,7 @@ public class JoinDealFragment extends Fragment {
                 List<User> users = new ArrayList<>();
                 if(model.getResult().equals("failure")){
                     System.out.println("Event IS NULL");
+                    noeventText.setVisibility(View.VISIBLE);
                 }else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());
@@ -125,6 +133,8 @@ public class JoinDealFragment extends Fragment {
                         promotions.add(p);
                         users.add(u);
                     }
+                    progressBar.setVisibility(View.INVISIBLE);
+                    noeventText.setVisibility(View.INVISIBLE);
                     if(getApplicationContext()!=null) {
                         joinAdapter = new MyJoinDealRecyclerAdapter(getApplicationContext(), deals, branchs, promotions, users);
                         joinDealRecyclerView.setAdapter(joinAdapter);

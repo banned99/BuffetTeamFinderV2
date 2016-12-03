@@ -1,6 +1,7 @@
 package com.buffet.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buffet.activities.ChooseBranchActivity;
+import com.buffet.activities.DealMemberActivity;
 import com.buffet.models.Branch;
 import com.buffet.models.Constants;
 import com.buffet.models.Deal;
@@ -81,6 +83,14 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
             img_gray.setLayoutParams(new ViewGroup.LayoutParams(40,40));
             holder.linearLayout.addView(img_gray);
         }
+
+        holder.memberbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DealMemberActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -15,4 +15,20 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <ProgressBar
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:id="@+id/progress"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/noevent_text"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        android:text="คุณยังไม่ได้เข้าร่วมอีเว้น"/>
+
 </FrameLayout>
