@@ -104,6 +104,7 @@ public class OwnerDealFragment extends Fragment {
                 List<Deal> deals = new ArrayList<>();
                 List<Branch> branchs = new ArrayList<>();
                 List<Promotion> promotions = new ArrayList<>();
+                List<User> users = new ArrayList<>();
                 if(model.getResult().equals("failure")){
                     System.out.println("Event IS NULL");
                 }else {
@@ -113,6 +114,7 @@ public class OwnerDealFragment extends Fragment {
                         Deal current = new Deal();
                         Branch b = new Branch();
                         Promotion p = new Promotion();
+                        User u = new User();
                         current.setDealId(model.getDeal().get(i).getDealId());
                         current.setDate(model.getDeal().get(i).getDate());
                         current.setCurrentPerson(model.getDeal().get(i).getCurrentPerson());
@@ -122,13 +124,15 @@ public class OwnerDealFragment extends Fragment {
                         b.setBranchName(model.getBranch().get(i).getBranchName());
                         p.setProName(model.getPromotion().get(i).getProName());
                         p.setMaxPerson(model.getPromotion().get(i).getMaxPerson());
+                        u.setName(model.getListUser().get(i).getName());
 
                         deals.add(current);
                         branchs.add(b);
                         promotions.add(p);
+                        users.add(u);
                     }
                     if(getApplicationContext()!=null) {
-                        createAdapter = new MyCreateDealRecyclerAdapter(getApplicationContext(), deals, branchs, promotions);
+                        createAdapter = new MyCreateDealRecyclerAdapter(getApplicationContext(), deals, branchs, promotions, users);
                         createDealRecyclerView.setAdapter(createAdapter);
                     }
                 }
