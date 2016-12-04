@@ -116,6 +116,7 @@ public class ChooseDealFragment extends Fragment {
                         current.setCurrentPerson(model.getDeal().get(i).getCurrentPerson());
                         current.setDate(model.getDeal().get(i).getDate());
                         current.setTime(model.getDeal().get(i).getTime());
+                        current.setDealOwner(model.getDeal().get(i).getDealOwner());
                         deals.add(current);
                     }
                 }

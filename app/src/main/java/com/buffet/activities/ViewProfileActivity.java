@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.buffet.models.Constants;
 
@@ -40,7 +41,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
-    Button viewProfileButton, editPhotoButton;
+    Button viewProfileButton, editPhotoButton, updateProfileButton;
     CircleImageView photo;
     EditText username, email, tel;
 
@@ -121,6 +122,18 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
 
         photo = (CircleImageView) findViewById(R.id.user_photo);
+
+        updateProfileButton = (Button) findViewById(R.id.edit_profile_button);
+        updateProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = username.getText().toString();
+                String mail = email.getText().toString();
+                String tele = tel.getText().toString();
+
+                Toast.makeText(ViewProfileActivity.this, name+"\n"+mail+"\n"+tele, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }

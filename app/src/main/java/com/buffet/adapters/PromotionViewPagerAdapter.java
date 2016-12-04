@@ -29,14 +29,12 @@ public class PromotionViewPagerAdapter extends FragmentPagerAdapter {
             return NewProFragment.newInstance();
         } else if (position == 1) {
             return CategoryRootFragment.newInstance();
-        } else if (position == 2) {
-            return TopProFragment.newInstance();
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }

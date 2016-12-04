@@ -90,49 +90,57 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
         }
 
 
-        holder.join_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Join Event");
-                builder.setMessage("Are you sure to join this event?");
-                builder.setPositiveButton("Join", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ServiceAction service = createService(ServiceAction.class);
-                        ServerRequest request = new ServerRequest();
-                        request.setOperation("joindeal");
-                        Deal deals = new Deal();
-                        deals.setDealId(deal_id);
+        System.out.println("Owner = " + deals.get(position).getDealOwner());
+        System.out.println("User = " + pref.getInt(Constants.MEMBER_ID, 0));
 
-                        User users = new User();
-                        users.setMemberId(pref.getInt(Constants.MEMBER_ID, 0));
+        if (deals.get(position).getDealOwner() == pref.getInt(Constants.MEMBER_ID, 0)) {
+            holder.join_button.setVisibility(View.GONE);
+        } else {
+            holder.join_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Join Event");
+                    builder.setMessage("Are you sure to join this event?");
+                    builder.setPositiveButton("Join", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ServiceAction service = createService(ServiceAction.class);
+                            ServerRequest request = new ServerRequest();
+                            request.setOperation("joindeal");
+                            Deal deals = new Deal();
+                            deals.setDealId(deal_id);
 
-                        request.setDeal(deals);
-                        request.setUser(users);
-                        Call<ServerResponse> call = service.getDeal(request);
-                        call.enqueue(new Callback<ServerResponse>() {
-                            @Override
-                            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                                ServerResponse model = response.body();
-                                System.out.println("addDeal: onResponse" +
-                                        "\nResult : " + model.getResult()
-                                        + "\nMessage : " + model.getMessage());
-                                Intent intent = new Intent(v.getContext(), MyDealActivity.class);
-                                v.getContext().startActivity(intent);
-                            }
+                            User users = new User();
+                            users.setMemberId(pref.getInt(Constants.MEMBER_ID, 0));
 
-                            @Override
-                            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                                t.printStackTrace();
-                            }
-                        });
-                    }
-                });
-                builder.setNegativeButton("Cancel", null);
-                builder.show();
-            }
-        });
+                            request.setDeal(deals);
+                            request.setUser(users);
+                            Call<ServerResponse> call = service.getDeal(request);
+                            call.enqueue(new Callback<ServerResponse>() {
+                                @Override
+                                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                                    ServerResponse model = response.body();
+                                    System.out.println("addDeal: onResponse" +
+                                            "\nResult : " + model.getResult()
+                                            + "\nMessage : " + model.getMessage());
+                                    Intent intent = new Intent(v.getContext(), MyDealActivity.class);
+                                    v.getContext().startActivity(intent);
+                                }
+
+                                @Override
+                                public void onFailure(Call<ServerResponse> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", null);
+                    builder.show();
+                }
+            });
+        }
+
     }
 
     @Override

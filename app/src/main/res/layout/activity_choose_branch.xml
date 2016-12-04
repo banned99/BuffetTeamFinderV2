@@ -95,9 +95,9 @@
                             android:layout_height="wrap_content">
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="195dp"
+                                android:layout_height="240dp"
                                 android:src="@drawable/promo_1"
-                                android:scaleType="center"
+                                android:scaleType="fitXY"
                                 android:id="@+id/promotionImage" />
                             <TextView
                                 android:layout_width="wrap_content"

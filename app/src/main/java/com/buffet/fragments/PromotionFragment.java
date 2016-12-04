@@ -39,7 +39,7 @@ public class PromotionFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager viewPager;
     PromotionViewPagerAdapter adapter;
-    TabLayout.Tab newPro, categories, topTen;
+    TabLayout.Tab newPro, categories;
 
     public PromotionFragment() {
         // Required empty public constructor
@@ -73,9 +73,7 @@ public class PromotionFragment extends Fragment {
 
         newPro = tabLayout.newTab();
         categories = tabLayout.newTab();
-        topTen = tabLayout.newTab();
 
-        tabLayout.addTab(topTen);
         tabLayout.addTab(categories);
         tabLayout.addTab(newPro);
 
@@ -87,7 +85,6 @@ public class PromotionFragment extends Fragment {
 
         newPro.setText("new");
         categories.setText("category");
-        topTen.setText("top 10");
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
