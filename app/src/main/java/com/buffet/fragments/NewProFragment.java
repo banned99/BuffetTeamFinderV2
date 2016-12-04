@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.buffet.activities.MainActivity;
 import com.buffet.adapters.NewPromotionRecyclerAdapter;
 import com.buffet.models.Promotion;
 import com.buffet.network.ServerRequest;
@@ -43,18 +45,15 @@ public class NewProFragment extends Fragment {
     private ProgressBar progressBar;
     private TextView noeventText;
 
-    static String query;
-
     public NewProFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static NewProFragment newInstance(String q) {
+    public static NewProFragment newInstance() {
         NewProFragment fragment = new NewProFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
-        query = q;
         return fragment;
     }
 
@@ -76,13 +75,20 @@ public class NewProFragment extends Fragment {
 
         noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
 
+<<<<<<< HEAD
         if (query == null) {
             getPromotionData();
         } else {
             searchPromotion();
-        }
+=======
+        if (MainActivity.query == null) {
+            Toast.makeText(rootView.getContext(), MainActivity.query, Toast.LENGTH_SHORT).show();
 
-        getPromotionData();
+            getPromotionData();
+        } else {
+            Toast.makeText(rootView.getContext(), MainActivity.query, Toast.LENGTH_SHORT).show();
+>>>>>>> 7a26ee1d09a401344c954024a15b8f06870a8a10
+        }
 
         return rootView;
     }
