@@ -97,6 +97,7 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
             }
         });
 
+        holder.leavebtn.setVisibility(View.VISIBLE);
         holder.leavebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

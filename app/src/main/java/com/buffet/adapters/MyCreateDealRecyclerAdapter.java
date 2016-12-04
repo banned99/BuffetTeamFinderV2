@@ -101,6 +101,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
             }
         });
 
+        holder.deletebtn.setVisibility(View.VISIBLE);
         holder.deletebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

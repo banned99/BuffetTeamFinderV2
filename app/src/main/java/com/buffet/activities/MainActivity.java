@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Button viewProfileButton;
     TextView viewProfileName;
-    Intent intent;
     //Creating a broadcast receiver for gcm registration
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
@@ -321,30 +320,43 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        final Intent i = new Intent(MainActivity.this, SearchActivity.class);
+        if( Intent.ACTION_VIEW.equals(i.getAction())){
+            query = getIntent().getStringExtra(SearchManager.QUERY);
+            i.setAction(Intent.ACTION_SEARCH);
+            i.putExtra("query", query);
+            startActivity(i);
+
+            Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+        }
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // INPUT CODE HERE
-                Intent i = new Intent(getApplicationContext(), SearchActivity.class);
                 i.setAction(Intent.ACTION_SEARCH);
                 i.putExtra("query", query);
                 System.out.println("query = " + query);
                 startActivity(i);
 
-                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 // INPUT CODE HERE
+//                Toast.makeText(MainActivity.this, newText, Toast.LENGTH_SHORT).show();
 //                String[] q = {"promotion_name"};
 //                String[] t = {newText};
 //                MySuggestionProvider suggestion = new MySuggestionProvider();
 //                suggestion.query(Uri.parse("database.it.kmitl.ac.th/it_35"), q, "promotion_name LIKE %?%", t, null);
                 return false;
             }
+
         });
+
+
         return true;
     }
 

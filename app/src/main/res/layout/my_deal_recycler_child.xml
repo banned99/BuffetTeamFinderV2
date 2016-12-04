@@ -71,23 +71,25 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:layout_width="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#00000000"
                 android:id="@+id/cancel_deal_button"
                 android:visibility="gone"
+                android:layout_weight="1"
                 card_view:srcCompat="@android:drawable/presence_offline" />
 
             <ImageButton
-                android:layout_width="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#0000000"
+                android:background="#00000000"
                 android:id="@+id/leave_deal_button"
                 android:visibility="gone"
+                android:layout_weight="1"
                 card_view:srcCompat="@android:drawable/presence_offline" />
 
             <ImageButton
-                android:layout_width="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:id="@+id/member_button"
                 android:scaleType="fitCenter"
@@ -98,7 +100,7 @@
                 android:layout_weight="1" />
 
             <ImageButton
-                android:layout_width="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:id="@+id/chat_button"
                 android:background="#00000000"

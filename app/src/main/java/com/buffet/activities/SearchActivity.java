@@ -57,6 +57,8 @@ public class SearchActivity extends AppCompatActivity {
     private NewPromotionRecyclerAdapter adapter;
     private RecyclerView recyclerView;
 
+    private String query;
+
     Intent intent;
 
     @Override
@@ -182,6 +184,16 @@ public class SearchActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        if( Intent.ACTION_VIEW.equals(getIntent().getAction())){
+            Intent i = new Intent(SearchActivity.this, SearchActivity.class);
+            query = getIntent().getStringExtra(SearchManager.QUERY);
+            i.setAction(Intent.ACTION_SEARCH);
+            i.putExtra("query", query);
+            startActivity(i);
+
+            Toast.makeText(SearchActivity.this, query, Toast.LENGTH_SHORT).show();
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
