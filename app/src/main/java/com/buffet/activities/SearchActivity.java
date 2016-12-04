@@ -32,7 +32,6 @@ import com.buffet.models.Promotion;
 import com.buffet.network.ServerRequest;
 import com.buffet.network.ServerResponse;
 import com.buffet.network.ServiceAction;
-import com.roughike.bottombar.BottomBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +56,8 @@ public class SearchActivity extends AppCompatActivity {
     private NewPromotionRecyclerAdapter adapter;
     private RecyclerView recyclerView;
 
+    private String query;
+
     Intent intent;
 
     @Override
@@ -74,11 +75,7 @@ public class SearchActivity extends AppCompatActivity {
                     MySuggestionProvider.AUTHORITY,
                     MySuggestionProvider.MODE);
             suggestions.saveRecentQuery(MainActivity.query, "recent");
-            System.out.println("before testttttt");
         }
-
-        System.out.println("testttttt" + MainActivity.query);
-
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_search_root_layout);
 
@@ -109,8 +106,11 @@ public class SearchActivity extends AppCompatActivity {
 
         noeventText = (TextView) findViewById(R.id.noevent_text);
 
-        searchPromotion();
-
+        if (MainActivity.query == null) {
+            progressBar.setVisibility(View.GONE);
+        } else {
+            searchPromotion();
+        }
     }
     public void searchPromotion(){
         ServiceAction service = createService(ServiceAction.class);
@@ -182,6 +182,22 @@ public class SearchActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setIconifiedByDefault(false);
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+
+
+
+        if( Intent.ACTION_VIEW.equals(getIntent().getAction())){
+            Intent i = new Intent(SearchActivity.this, SearchActivity.class);
+            query = getIntent().getStringExtra(SearchManager.QUERY);
+            i.setAction(Intent.ACTION_SEARCH);
+            i.putExtra("query", query);
+            startActivity(i);
+
+            Toast.makeText(SearchActivity.this, query, Toast.LENGTH_SHORT).show();
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

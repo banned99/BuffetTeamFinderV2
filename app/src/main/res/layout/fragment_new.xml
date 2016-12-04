@@ -19,6 +19,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:indeterminate="true" />
 
     <TextView
@@ -27,6 +28,7 @@
         android:id="@+id/noevent_text"
         android:textAlignment="center"
         android:visibility="invisible"
+        android:layout_gravity="center"
         android:text="ยังไม่มีอีเว้นท์ใหม่"/>
 
 

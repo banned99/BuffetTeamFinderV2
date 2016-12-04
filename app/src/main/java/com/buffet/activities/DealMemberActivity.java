@@ -40,7 +40,6 @@ public class DealMemberActivity extends AppCompatActivity {
     ActionBarDrawerToggle drawerToggle;
     CoordinatorLayout rootLayout;
     Toolbar toolbar;
-    NestedScrollView nestedScrollView;
     RecyclerView recyclerView;
     DealMemberRecyclerAdapter adapter;
     ProgressBar progressBar;
@@ -57,7 +56,6 @@ public class DealMemberActivity extends AppCompatActivity {
 
         status = getIntent().getExtras().getString("member_status");
         deal_id = getIntent().getExtras().getInt("deal_id");
-        System.out.println(status);
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,9 +71,6 @@ public class DealMemberActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        nestedScrollView = (NestedScrollView) findViewById(R.id.nest_scroll_view);
-        nestedScrollView.setFillViewport(true);
 
         progressBar = (ProgressBar) findViewById(R.id.progress);
         noeventText = (TextView) findViewById(R.id.noevent_text);

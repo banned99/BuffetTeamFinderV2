@@ -27,7 +27,9 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,9 +48,6 @@ import com.buffet.network.ServerResponse;
 import com.buffet.network.ServiceAction;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.BottomBarTab;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import com.google.android.gms.common.ConnectionResult;
 import ggwp.caliver.banned.buffetteamfinderv2.R;
@@ -56,6 +55,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.R.drawable.ic_menu_search;
 import static com.buffet.activities.LoginActivity.pref;
 import static com.buffet.network.ServiceGenerator.createService;
 
@@ -66,20 +66,33 @@ public class MainActivity extends AppCompatActivity {
     CoordinatorLayout rootLayout;
     Toolbar toolbar;
     CustomNestedScrollView nestedScrollView;
-    BottomBar bottomBar;
     NavigationView navigationView;
     Button viewProfileButton;
     TextView viewProfileName;
-    Intent intent;
+    ImageView searchIcon;
     //Creating a broadcast receiver for gcm registration
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     public static String query;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        intent = getIntent();
+
+        System.out.println("Activity Created");
+
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
+            System.out.println("Search");
+            MainActivity.query = intent.getExtras().getString("query");
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    MySuggestionProvider.AUTHORITY,
+                    MySuggestionProvider.MODE);
+            suggestions.saveRecentQuery(MainActivity.query, "recent");
+        }
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -134,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        searchIcon = new ImageView(getApplicationContext());
+        searchIcon.setImageResource(ic_menu_search);
+
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.abs_layout, null),
@@ -148,63 +164,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         nestedScrollView = (CustomNestedScrollView) findViewById(R.id.nest_scroll_view);
         nestedScrollView.setFillViewport(true);
 
+        PromotionFragment promotionFragment = PromotionFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, promotionFragment);
+        transaction.commit();
 
 
-        // Bottombar
-        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-
-                // fill Search Query
-
-                if (tabId == R.id.promotion_tab) {
-//                    ChangeStyleBottomBarLabel(0);
-                    PromotionFragment promotionFragment = PromotionFragment.newInstance();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, promotionFragment);
-                    transaction.commit();
-                }
-
-//                if (tabId == R.id.search_tab) {
-////                    ChangeStyleBottomBarLabel(1);
-//                    SearchFragment searchFragment = SearchFragment.newInstance();
-//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.fragmentContainer, searchFragment);
-//                    transaction.commit();
-//                }
-
-//                if (tabId == R.id.map_tab) {
-////                    ChangeStyleBottomBarLabel(2);
-//                    MapFragment mapFragment = MapFragment.newInstance();
-//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.fragmentContainer, mapFragment);
-//                    transaction.commit();
-//                }
-
-                if (tabId == R.id.notification_tab) {
-//                    ChangeStyleBottomBarLabel(3);
-                    BottomBarTab notification = bottomBar.getTabWithId(R.id.notification_tab);
-                    notification.removeBadge();
-
-                    NotiFragment notiFragment = NotiFragment.newInstance();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, notiFragment);
-                    transaction.commit();
-                }
-            }
-        });
-
-        // Add Badge to BottomBar
-        BottomBarTab notification = bottomBar.getTabWithId(R.id.notification_tab);
-        notification.setBadgeCount(99);
-
-        // Remove Badge
-//        notification.removeBadge();
 
         // Navigation Drawer
         navigationView = (NavigationView) findViewById(R.id.navigation);
@@ -309,40 +277,64 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        menu.add(0, 1, 0, "Settings").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent i = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(i);
+                return false;
+            }
+        }).setIcon(R.drawable.ic_search)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//
+//        final Intent i = new Intent(MainActivity.this, SearchActivity.class);
+//        if( Intent.ACTION_VIEW.equals(i.getAction())){
+//            query = getIntent().getStringExtra(SearchManager.QUERY);
+//            i.setAction(Intent.ACTION_SEARCH);
+//            i.putExtra("query", query);
+//            startActivity(i);
+//
+//            Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+//        }
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                // INPUT CODE HERE
+//                i.setAction(Intent.ACTION_SEARCH);
+//                i.putExtra("query", query);
+//                System.out.println("query = " + query);
+//                startActivity(i);
+//
+////                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                // INPUT CODE HERE
+////                Toast.makeText(MainActivity.this, newText, Toast.LENGTH_SHORT).show();
+////                String[] q = {"promotion_name"};
+////                String[] t = {newText};
+////                MySuggestionProvider suggestion = new MySuggestionProvider();
+////                suggestion.query(Uri.parse("database.it.kmitl.ac.th/it_35"), q, "promotion_name LIKE %?%", t, null);
+//                return false;
+//            }
+//
+//        });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // INPUT CODE HERE
-                Intent i = new Intent(getApplicationContext(), SearchActivity.class);
-                i.setAction(Intent.ACTION_SEARCH);
-                i.putExtra("query", query);
-                System.out.println("query = " + query);
-                startActivity(i);
 
-                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // INPUT CODE HERE
-//                String[] q = {"promotion_name"};
-//                String[] t = {newText};
-//                MySuggestionProvider suggestion = new MySuggestionProvider();
-//                suggestion.query(Uri.parse("database.it.kmitl.ac.th/it_35"), q, "promotion_name LIKE %?%", t, null);
-                return false;
-            }
-        });
         return true;
     }
 
@@ -364,14 +356,6 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    // When pressed back button, switch to promotion tab
-    @Override
-    public void onBackPressed() {
-        if (bottomBar.getCurrentTabPosition() != 0) {
-            bottomBar.selectTabAtPosition(0);
-        } else super.onBackPressed();
     }
 
     private void goToLogin(){

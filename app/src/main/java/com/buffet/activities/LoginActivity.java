@@ -114,6 +114,19 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
+            loginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    et_email.setEnabled(false);
+                    et_password.setEnabled(false);
+                    btn_login.setEnabled(false);
+                    btn_login.setEnabled(false);
+                    progress.setVisibility(View.VISIBLE);
+                    tv_register.setEnabled(false);
+                }
+            });
+
+
             // Click Register
             tv_register.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -132,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
             goToMain();
         }
             loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
                 @Override
                 public void onSuccess(LoginResult loginResult) {
                     System.out.println("User ID: "

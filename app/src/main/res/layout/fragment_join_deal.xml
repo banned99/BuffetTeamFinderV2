@@ -21,6 +21,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:indeterminate="true" />
 
     <TextView
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/noevent_text"
         android:textAlignment="center"
+        android:layout_gravity="center"
         android:visibility="invisible"
         android:text="คุณยังไม่ได้เข้าร่วมอีเว้น"/>
 
