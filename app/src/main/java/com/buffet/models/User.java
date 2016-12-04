@@ -18,6 +18,17 @@ public class User {
     private String old_password;
     private String new_password;
     private String fbid;
+    @SerializedName("gcm_token")
+    @Expose
+    private String gcmToken;
+
+    public String getGcmToken() {
+        return gcmToken;
+    }
+
+    public void setGcmToken(String gcmToken) {
+        this.gcmToken = gcmToken;
+    }
 
     public String getFbid() {
         return fbid;
