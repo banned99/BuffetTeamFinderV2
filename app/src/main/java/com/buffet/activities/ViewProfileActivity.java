@@ -3,6 +3,7 @@ package com.buffet.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -18,12 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.buffet.models.Constants;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 
 import static com.buffet.activities.LoginActivity.pref;
@@ -38,7 +41,10 @@ public class ViewProfileActivity extends AppCompatActivity {
     NestedScrollView nestedScrollView;
     NavigationView navigationView;
     Button viewProfileButton, editPhotoButton;
+    CircleImageView photo;
     EditText username, email, tel;
+
+    InputStream inputStream = null;
 
 
     @Override
@@ -114,6 +120,8 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
+        photo = (CircleImageView) findViewById(R.id.user_photo);
+
 
     }
 
@@ -134,11 +142,14 @@ public class ViewProfileActivity extends AppCompatActivity {
                 return;
             }
             try {
-                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
+                inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
             //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+            if (inputStream != null) {
+                photo.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+            }
         }
     }
 
