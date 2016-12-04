@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ServiceGenerator {
-    public static final String API_BASE_URL = "http://api.tunacon.com/";
+    public static final String API_BASE_URL = "http://tunacon.com/api/";
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private static Retrofit.Builder builder =
             new Retrofit.Builder()

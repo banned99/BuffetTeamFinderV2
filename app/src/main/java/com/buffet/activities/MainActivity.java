@@ -240,8 +240,6 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 Intent navIntent = new Intent(v.getContext().getApplicationContext(), ViewProfileActivity.class);
                 startActivity(navIntent);
-
-
             }
         });
 
@@ -265,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 ServerResponse model = response.body();
                 if(model.getResult().equals("failure")){
-                    System.out.println("Event IS NULL");
+                    System.out.println("Update Token is failure");
                 }else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());
