@@ -75,14 +75,7 @@ public class NewProFragment extends Fragment {
 
         noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
 
-        if (MainActivity.query == null) {
-            Toast.makeText(rootView.getContext(), MainActivity.query, Toast.LENGTH_SHORT).show();
-            getPromotionData();
-        } else {
-            Toast.makeText(rootView.getContext(), MainActivity.query, Toast.LENGTH_SHORT).show();
-            searchPromotion();
-            MainActivity.query = null;
-        }
+        getPromotionData();
 
         return rootView;
     }
@@ -129,51 +122,7 @@ public class NewProFragment extends Fragment {
             }
         });
     }
-    public void searchPromotion(){
-        ServiceAction service = createService(ServiceAction.class);
-        ServerRequest request = new ServerRequest();
-        request.setOperation("searchpromotion");
-        request.setSearch(MainActivity.query);
-        Call<ServerResponse> call = service.getSearchPromotion(request);
-        call.enqueue(new Callback<ServerResponse>(){
-            @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response){
-                ServerResponse model = response.body();
-                List<Promotion> promotions = new ArrayList<>();
-                if(model.getResult().equals("failure")){
-                    System.out.println("PROMOTION IS NULL");
-                    noeventText.setVisibility(View.VISIBLE);
-                } else {
-                    System.out.println("Result : " + model.getResult()
-                            + "\nMessage : " + model.getMessage());
-                    noeventText.setVisibility(View.INVISIBLE);
-                    for (int i = 0; i< model.getPromotion().size(); i++) {
-                        Promotion current = new Promotion();
-                        current.setProId(model.getPromotion().get(i).getProId());
-                        current.setImage(model.getPromotion().get(i).getImage());
-                        current.setProName(model.getPromotion().get(i).getProName());
-                        current.setPrice(model.getPromotion().get(i).getPrice());
-                        current.setDateStart(model.getPromotion().get(i).getDateStart());
-                        current.setExpire(model.getPromotion().get(i).getExpire());
-                        current.setMaxPerson(model.getPromotion().get(i).getMaxPerson());
-                        current.setCatId(model.getPromotion().get(i).getCatId());
-                        current.setCatName(model.getPromotion().get(i).getCatName());
-                        current.setDescription(model.getPromotion().get(i).getDescription());
-                        promotions.add(current);
-                    }
-                }
-                progressBar.setVisibility(View.INVISIBLE);
-                if(getActivity()!=null){
-                    adapter = new NewPromotionRecyclerAdapter(getActivity(), promotions);
-                    recyclerView.setAdapter(adapter);
-                }
-            }
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

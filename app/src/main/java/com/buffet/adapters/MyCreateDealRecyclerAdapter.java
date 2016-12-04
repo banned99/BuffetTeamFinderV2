@@ -1,7 +1,9 @@
 package com.buffet.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +19,19 @@ import com.buffet.models.Branch;
 import com.buffet.models.Deal;
 import com.buffet.models.Promotion;
 import com.buffet.models.User;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
 import java.util.Collections;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.network.ServiceGenerator.createService;
 
 /**
  * Created by icespw on 12/2/2016 AD.
@@ -90,6 +100,30 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
                 v.getContext().startActivity(intent);
             }
         });
+
+        holder.deletebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Delete event");
+                builder.setMessage("Do you want to delete this event?");
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mydeals.remove(position);
+                        notifyDataSetChanged();
+
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
     @Override
@@ -100,7 +134,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView proname, branchname, ownername, date, time;
-        ImageButton memberbtn, chatbtn;
+        ImageButton memberbtn, chatbtn, deletebtn;
         LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
@@ -113,6 +147,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
             time = (TextView) itemView.findViewById(R.id.eat_time);
             chatbtn = (ImageButton) itemView.findViewById(R.id.chat_button);
             memberbtn = (ImageButton) itemView.findViewById(R.id.member_button);
+            deletebtn = (ImageButton) itemView.findViewById(R.id.cancel_deal_button);
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.deal_member_img);
         }

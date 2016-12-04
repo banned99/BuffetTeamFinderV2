@@ -66,17 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         //pref = getPreferences(0);
 
-        // Search
-        query = null;
-        intent = getIntent();
-
-        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
-            query = intent.getStringExtra(SearchManager.QUERY);
-            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-                    MySuggestionProvider.AUTHORITY,
-                    MySuggestionProvider.MODE);
-            suggestions.saveRecentQuery(query, "recent");
-        }
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_main_root_layout);
 
@@ -226,6 +215,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // INPUT CODE HERE
+                Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+                i.setAction(Intent.ACTION_SEARCH);
+                i.putExtra("query", query);
+                System.out.println("query = " + query);
+                startActivity(i);
+
                 Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
                 return false;
             }
