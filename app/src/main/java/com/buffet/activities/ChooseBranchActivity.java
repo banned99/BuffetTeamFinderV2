@@ -65,7 +65,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
     TextView promotionCategory;
     TextView promotionDescription;
     ImageView promotionImage;
-    ImageButton expandButton;
+    Button expandButton;
     ProgressBar progressBar;
 
     List<Branch> branches;
@@ -170,15 +170,15 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
             }
         });
 
-        expandButton = (ImageButton) findViewById(R.id.expand_button);
+        expandButton = (Button) findViewById(R.id.expand_button);
         expandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (promotionDescription.getVisibility() == View.GONE) {
-                    expandButton.setImageResource(R.drawable.up_arrow);
+                    expandButton.setText("Show less");
                     promotionDescription.setVisibility(View.VISIBLE);
                 } else {
-                    expandButton.setImageResource(R.drawable.down_arrow);
+                    expandButton.setText("More detail");
                     promotionDescription.setVisibility(View.GONE);
                 }
             }

@@ -22,15 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.buffet.activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
         </activity>
 
         <provider
@@ -69,6 +61,7 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.buffet.activities.RegisterActivity" />
         <activity android:name="com.buffet.activities.MyDealActivity" />
+<<<<<<< HEAD
         <activity android:name="com.buffet.activities.DealMemberActivity"></activity>
 
         <!--
@@ -102,6 +95,16 @@
             </intent-filter>
         </service>
 
+=======
+        <activity android:name="com.buffet.activities.DealMemberActivity" />
+        <activity android:name="com.buffet.activities.SearchActivity">
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
+>>>>>>> 724474b9e0137aab5e96433a26cdbe9c272e5510
     </application>
 
 </manifest>

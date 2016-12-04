@@ -1,7 +1,9 @@
 package com.buffet.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +97,30 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
             }
         });
 
+        holder.leavebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Leave event");
+                builder.setMessage("Do you want to leave this event?");
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mydeals.remove(position);
+                        notifyDataSetChanged();
+
+                    }
+                });
+                builder.show();
+            }
+        });
+
     }
 
     @Override
@@ -105,7 +131,7 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView proname, branchname, ownername, date, time;
-        ImageButton memberbtn, chatbtn;
+        ImageButton memberbtn, chatbtn, leavebtn;
         LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
@@ -120,6 +146,8 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
             memberbtn = (ImageButton) itemView.findViewById(R.id.member_button);
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.deal_member_img);
+
+            leavebtn = (ImageButton) itemView.findViewById(R.id.leave_deal_button);
 
 
         }
