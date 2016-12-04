@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     TextView viewProfileName;
     Intent intent;
 
-    String query;
+    public static String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (tabId == R.id.promotion_tab) {
 //                    ChangeStyleBottomBarLabel(0);
-                    PromotionFragment promotionFragment = PromotionFragment.newInstance(query);
+                    PromotionFragment promotionFragment = PromotionFragment.newInstance();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, promotionFragment);
                     transaction.commit();

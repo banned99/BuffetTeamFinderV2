@@ -15,20 +15,18 @@ import com.buffet.fragments.TopProFragment;
 
 public class PromotionViewPagerAdapter extends FragmentPagerAdapter {
 
-    String query;
 
-    public PromotionViewPagerAdapter(FragmentManager fm, String query) {
+    public PromotionViewPagerAdapter(FragmentManager fm) {
 
         super(fm);
 
-        this.query = query;
     }
 
     @Override
     public Fragment getItem(int position) {
 
         if(position == 0) {
-            return NewProFragment.newInstance(query);
+            return NewProFragment.newInstance();
         } else if (position == 1) {
             return CategoryRootFragment.newInstance();
         } else if (position == 2) {
