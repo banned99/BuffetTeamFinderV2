@@ -39,17 +39,19 @@ public class PromotionFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager viewPager;
     PromotionViewPagerAdapter adapter;
-    TabLayout.Tab newPro, categories, topTen, aToZ;
+    TabLayout.Tab newPro, categories, topTen;
+    static String query;
 
     public PromotionFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static PromotionFragment newInstance() {
+    public static PromotionFragment newInstance(String q) {
         PromotionFragment fragment = new PromotionFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        query = q;
         return fragment;
     }
 
@@ -81,7 +83,7 @@ public class PromotionFragment extends Fragment {
 
         // ViewPager
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        adapter = new PromotionViewPagerAdapter(getChildFragmentManager());
+        adapter = new PromotionViewPagerAdapter(getChildFragmentManager(), query);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager, false);
 

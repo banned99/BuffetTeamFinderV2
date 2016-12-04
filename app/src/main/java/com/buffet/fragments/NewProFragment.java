@@ -42,15 +42,18 @@ public class NewProFragment extends Fragment {
     private ProgressBar progressBar;
     private TextView noeventText;
 
+    static String query;
+
     public NewProFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static NewProFragment newInstance() {
+    public static NewProFragment newInstance(String q) {
         NewProFragment fragment = new NewProFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        query = q;
         return fragment;
     }
 
@@ -71,6 +74,12 @@ public class NewProFragment extends Fragment {
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
 
         noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
+
+        if (query.equals(null)) {
+            getPromotionData();
+        } else {
+
+        }
 
         getPromotionData();
 

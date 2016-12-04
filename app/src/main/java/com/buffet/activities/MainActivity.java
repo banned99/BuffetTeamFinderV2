@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     TextView viewProfileName;
     Intent intent;
 
+    String query;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +67,11 @@ public class MainActivity extends AppCompatActivity {
         //pref = getPreferences(0);
 
         // Search
+        query = null;
         intent = getIntent();
 
         if(Intent.ACTION_SEARCH.equals(intent.getAction())){
-            String query = intent.getStringExtra(SearchManager.QUERY);
+            query = intent.getStringExtra(SearchManager.QUERY);
             SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
                     MySuggestionProvider.AUTHORITY,
                     MySuggestionProvider.MODE);
@@ -106,9 +109,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(@IdRes int tabId) {
 
+                // fill Search Query
+
                 if (tabId == R.id.promotion_tab) {
 //                    ChangeStyleBottomBarLabel(0);
-                    PromotionFragment promotionFragment = PromotionFragment.newInstance();
+                    PromotionFragment promotionFragment = PromotionFragment.newInstance(query);
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, promotionFragment);
                     transaction.commit();

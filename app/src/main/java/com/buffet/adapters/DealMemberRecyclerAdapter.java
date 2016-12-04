@@ -59,9 +59,15 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
     @Override
     public void onBindViewHolder(final DealMemberRecyclerAdapter.ViewHolder holder, final int position) {
 
-//        holder.username.setText(members.get(position));
+        holder.username.setText(users.get(position).getName());
 
         if (status.equals("owner")) {
+            holder.memberStatus.setVisibility(View.VISIBLE);
+            if (dealMembers.get(position).getStatus() == 1) {
+                holder.memberStatus.setText("อนุมัติแล้ว");
+            } else {
+                holder.memberStatus.setText("รอการอนุมัติ");
+            }
             holder.acBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -100,8 +106,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                                     }else {
                                         System.out.println("Result : " + model.getResult()
                                                 + "\nMessage : " + model.getMessage());
-                                        //Do something
-                                    }
+                                        holder.memberStatus.setText("อนุมัติแล้ว");                                    }
                                 }
 
                                 @Override
@@ -237,6 +242,11 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
 
         } else {
             holder.memberStatus.setVisibility(View.VISIBLE);
+            if (dealMembers.get(position).getStatus() == 1) {
+                holder.memberStatus.setText("อนุมัติแล้ว");
+            } else {
+                holder.memberStatus.setText("รอการอนุมัติ");
+            }
             holder.deBtn.setVisibility(View.GONE);
             holder.kiBtn.setVisibility(View.GONE);
             holder.acBtn.setVisibility(View.GONE);

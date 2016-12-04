@@ -12,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.buffet.adapters.DealMemberRecyclerAdapter;
 import com.buffet.models.DealMember;
@@ -40,6 +43,8 @@ public class DealMemberActivity extends AppCompatActivity {
     NestedScrollView nestedScrollView;
     RecyclerView recyclerView;
     DealMemberRecyclerAdapter adapter;
+    ProgressBar progressBar;
+    TextView noeventText;
 
     String status;
     int deal_id;
@@ -72,6 +77,9 @@ public class DealMemberActivity extends AppCompatActivity {
         nestedScrollView = (NestedScrollView) findViewById(R.id.nest_scroll_view);
         nestedScrollView.setFillViewport(true);
 
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+        noeventText = (TextView) findViewById(R.id.noevent_text);
+
         recyclerView = (RecyclerView) findViewById(R.id.deal_member_list);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -96,8 +104,12 @@ public class DealMemberActivity extends AppCompatActivity {
                 ServerResponse model = response.body();
                 List<DealMember> dealMembers = new ArrayList<>();
                 List<User> users = new ArrayList<>();
+
+                progressBar.setVisibility(View.GONE);
+
                 if(model.getResult().equals("failure")){
                     System.out.println("Event IS NULL");
+                    noeventText.setVisibility(View.VISIBLE);
                 }else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());
@@ -113,6 +125,7 @@ public class DealMemberActivity extends AppCompatActivity {
                         dealMembers.add(current);
                         users.add(u);
                     }
+
 
                     if(getApplicationContext()!=null) {
                         adapter = new DealMemberRecyclerAdapter(getApplicationContext(), dealMembers, users, status);
