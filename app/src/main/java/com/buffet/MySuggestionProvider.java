@@ -17,13 +17,13 @@ public class MySuggestionProvider extends SearchRecentSuggestionsProvider {
         setupSuggestions(AUTHORITY, MODE);
     }
 
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if(selectionArgs != null && selectionArgs.length > 0 && selectionArgs[0].length() > 0){
-
-        }else{
-
-        }
-        return super.query(uri, projection, selection, selectionArgs, sortOrder);
-    }
+//    @Override
+//    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+//        if(selectionArgs != null && selectionArgs.length > 0 && selectionArgs[0].length() > 0){
+//
+//        }else{
+//
+//        }
+//        return super.query(uri, projection, selection, selectionArgs, sortOrder);
+//    }
 }

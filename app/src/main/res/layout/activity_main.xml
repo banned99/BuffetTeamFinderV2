@@ -32,23 +32,13 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/fragmentContainer"
-                    android:paddingBottom="52dp"
-                    />
+                    android:id="@+id/fragmentContainer" />
 
             </LinearLayout>
 
 
         </com.buffet.customs.CustomNestedScrollView>
 
-        <com.roughike.bottombar.BottomBar
-            android:id="@+id/bottomBar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_gravity="bottom"
-            app:bb_tabXmlResource="@xml/bottombar_tabs"
-            app:bb_inActiveTabAlpha="0.6"
-            />
     </android.support.design.widget.CoordinatorLayout>
     
     <android.support.design.widget.NavigationView
