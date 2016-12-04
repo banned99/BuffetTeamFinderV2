@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="widget_labelled_spinner_default">#6D6D6D</color>
-    <color name="widget_labelled_spinner_error">#FFDD2C00</color>
-    <declare-styleable name="FlippableView"><attr format="reference" name="viewFront"/><attr format="reference" name="viewBack"/></declare-styleable>
-    <declare-styleable name="LabelledSpinner"><attr format="string" name="labelText"/><attr format="color" name="widgetColor"/><attr format="reference" name="spinnerEntries"/><attr format="boolean" name="defaultErrorEnabled"/></declare-styleable>
-    <integer name="widget_flippableView_animDuration">120</integer>
-    <string name="widget_labelled_spinner_errorText">You must choose an item.</string>
-</resources>
