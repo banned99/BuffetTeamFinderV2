@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buffet.models.Branch;
 
@@ -24,11 +25,14 @@ import ggwp.caliver.banned.buffetteamfinderv2.R;
 public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRecyclerAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
+    String status;
+
     List<String> members = Collections.emptyList();
 
-    public DealMemberRecyclerAdapter(Context context, List<String> members) {
+    public DealMemberRecyclerAdapter(Context context, List<String> members, String status) {
         inflater = LayoutInflater.from(context);
         this.members = members;
+        this.status = status;
     }
 
     @Override
@@ -39,75 +43,85 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
     }
 
     @Override
-    public void onBindViewHolder(final DealMemberRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final DealMemberRecyclerAdapter.ViewHolder holder, final int position) {
 
         holder.username.setText(members.get(position));
 
-        holder.acBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Accept");
-                builder.setMessage("Do you want to accept this join request?");
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        if (status.equals("owner")) {
+            holder.acBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Accept");
+                    builder.setMessage("Do you want to accept this join request?");
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                builder.show();
-            }
-        });
+                        }
+                    });
+                    builder.show();
+                }
+            });
 
-        holder.deBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Decline");
-                builder.setMessage("Do you want to decline this join request?");
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            holder.deBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Decline");
+                    builder.setMessage("Do you want to decline this join request?");
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            members.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.show();
+                }
+            });
 
-                    }
-                });
-                builder.show();
-            }
-        });
+            holder.kiBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Kick");
+                    builder.setMessage("Do you want to kick this member?");
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            members.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.show();
+                }
+            });
 
-        holder.kiBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Kick");
-                builder.setMessage("Do you want to kick this member?");
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
-            }
-        });
+        } else {
+            holder.memberStatus.setVisibility(View.VISIBLE);
+            holder.deBtn.setVisibility(View.GONE);
+            holder.kiBtn.setVisibility(View.GONE);
+            holder.acBtn.setVisibility(View.GONE);
+        }
 
     }
 
@@ -118,13 +132,14 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView username;
+        TextView username, memberStatus;
         Button acBtn, deBtn, kiBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             username = (TextView) itemView.findViewById(R.id.member_username);
+            memberStatus = (TextView) itemView.findViewById(R.id.member_status);
             acBtn = (Button) itemView.findViewById(R.id.accept_button);
             deBtn = (Button) itemView.findViewById(R.id.decline_button);
             kiBtn = (Button) itemView.findViewById(R.id.kick_button);

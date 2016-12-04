@@ -30,11 +30,16 @@ public class DealMemberActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     DealMemberRecyclerAdapter adapter;
 
+    String status;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deal_member);
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_deal_member_root_layout);
+
+        status = getIntent().getExtras().getString("member_status");
+        System.out.println(status);
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -67,7 +72,7 @@ public class DealMemberActivity extends AppCompatActivity {
         dealMember.add("member 2");
         dealMember.add("member 3");
 
-        adapter = new DealMemberRecyclerAdapter(getApplicationContext(), dealMember);
+        adapter = new DealMemberRecyclerAdapter(getApplicationContext(), dealMember, status);
         recyclerView.setAdapter(adapter);
     }
 

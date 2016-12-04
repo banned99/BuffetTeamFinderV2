@@ -16,6 +16,7 @@ import com.buffet.activities.DealMemberActivity;
 import com.buffet.models.Branch;
 import com.buffet.models.Deal;
 import com.buffet.models.Promotion;
+import com.buffet.models.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,13 +33,15 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
     List<Deal> mydeals = Collections.emptyList();
     List<Branch> branchs = Collections.emptyList();
     List<Promotion> promotions = Collections.emptyList();
+    List<User> users = Collections.emptyList();
 
 
-    public MyCreateDealRecyclerAdapter(Context context, List<Deal> mydeals, List<Branch> branchs, List<Promotion> promotions) {
+    public MyCreateDealRecyclerAdapter(Context context, List<Deal> mydeals, List<Branch> branchs, List<Promotion> promotions, List<User> users) {
         inflater = LayoutInflater.from(context);
         this.mydeals = mydeals;
         this.branchs = branchs;
         this.promotions = promotions;
+        this.users = users;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
 
         holder.proname.setText(promotions.get(position).getProName());
         holder.branchname.setText(branchs.get(position).getBranchName());
-        holder.ownername.setText(Integer.toString(mydeals.get(position).getDealOwner()));
+        holder.ownername.setText(users.get(position).getName());
         holder.date.setText(mydeals.get(position).getDate());
         holder.time.setText(mydeals.get(position).getTime());
 
@@ -82,6 +85,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DealMemberActivity.class);
+                intent.putExtra("member_status", "owner");
                 v.getContext().startActivity(intent);
             }
         });
