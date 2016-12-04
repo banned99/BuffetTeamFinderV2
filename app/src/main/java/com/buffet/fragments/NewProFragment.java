@@ -75,19 +75,12 @@ public class NewProFragment extends Fragment {
 
         noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
 
-<<<<<<< HEAD
-        if (query == null) {
-            getPromotionData();
-        } else {
-            searchPromotion();
-=======
         if (MainActivity.query == null) {
             Toast.makeText(rootView.getContext(), MainActivity.query, Toast.LENGTH_SHORT).show();
-
             getPromotionData();
         } else {
             Toast.makeText(rootView.getContext(), MainActivity.query, Toast.LENGTH_SHORT).show();
->>>>>>> 7a26ee1d09a401344c954024a15b8f06870a8a10
+            searchPromotion();
         }
 
         return rootView;
@@ -139,7 +132,7 @@ public class NewProFragment extends Fragment {
         ServiceAction service = createService(ServiceAction.class);
         ServerRequest request = new ServerRequest();
         request.setOperation("searchpromotion");
-        request.setSearch(query);
+        request.setSearch(MainActivity.query);
         Call<ServerResponse> call = service.getSearchPromotion(request);
         call.enqueue(new Callback<ServerResponse>(){
             @Override
