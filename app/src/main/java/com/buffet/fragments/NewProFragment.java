@@ -81,6 +81,7 @@ public class NewProFragment extends Fragment {
         } else {
             Toast.makeText(rootView.getContext(), MainActivity.query, Toast.LENGTH_SHORT).show();
             searchPromotion();
+            MainActivity.query = null;
         }
 
         return rootView;
