@@ -81,7 +81,7 @@
             <ImageButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="#0000000"
+                android:background="#00000000"
                 android:id="@+id/leave_deal_button"
                 android:visibility="gone"
                 card_view:srcCompat="@android:drawable/presence_offline" />

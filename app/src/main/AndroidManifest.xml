@@ -61,8 +61,6 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.buffet.activities.RegisterActivity" />
         <activity android:name="com.buffet.activities.MyDealActivity" />
-<<<<<<< HEAD
-        <activity android:name="com.buffet.activities.DealMemberActivity"></activity>
 
         <!--
             GCM Receiver
@@ -95,7 +93,6 @@
             </intent-filter>
         </service>
 
-=======
         <activity android:name="com.buffet.activities.DealMemberActivity" />
         <activity android:name="com.buffet.activities.SearchActivity">
             <meta-data android:name="android.app.searchable"
@@ -104,7 +101,6 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
->>>>>>> 724474b9e0137aab5e96433a26cdbe9c272e5510
     </application>
 
 </manifest>
