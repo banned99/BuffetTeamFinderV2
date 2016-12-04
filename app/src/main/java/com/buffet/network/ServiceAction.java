@@ -19,4 +19,5 @@ public interface ServiceAction {
     @POST("deal.php") Call<ServerResponse> joinDeal(@Body ServerRequest request);
     @POST("deal.php") Call<ServerResponse> getDealJoined(@Body ServerRequest request);
     @POST("deal.php") Call<ServerResponse> getDealOwner(@Body ServerRequest request);
+    @POST("deal.php") Call<ServerResponse> getDealMember(@Body ServerRequest request);
 }

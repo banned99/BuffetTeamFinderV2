@@ -9,14 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.buffet.models.Branch;
+import com.buffet.models.Deal;
+import com.buffet.models.DealMember;
+import com.buffet.models.User;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.network.ServiceGenerator.createService;
 
 /**
  * Created by icespw on 12/4/2016 AD.
@@ -27,11 +37,13 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
     private LayoutInflater inflater;
     String status;
 
-    List<String> members = Collections.emptyList();
+    List<DealMember> dealMembers = Collections.emptyList();
+    List<User> users = Collections.emptyList();
 
-    public DealMemberRecyclerAdapter(Context context, List<String> members, String status) {
+    public DealMemberRecyclerAdapter(Context context, List<DealMember> dealMembers, List<User> users, String status) {
         inflater = LayoutInflater.from(context);
-        this.members = members;
+        this.dealMembers = dealMembers;
+        this.users = users;
         this.status = status;
     }
 
@@ -45,7 +57,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
     @Override
     public void onBindViewHolder(final DealMemberRecyclerAdapter.ViewHolder holder, final int position) {
 
-        holder.username.setText(members.get(position));
+//        holder.username.setText(members.get(position));
 
         if (status.equals("owner")) {
             holder.acBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +75,38 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            ServiceAction service = createService(ServiceAction.class);
+                            ServerRequest request = new ServerRequest();
+                            request.setOperation("setaccept");
+
+                            Deal d = new Deal();
+                            User u = new User();
+
+                            d.setDealId(dealMembers.get(position).getDealId());
+                            u.setMemberId(users.get(position).getMemberId());
+
+                            request.setUser(u);
+                            request.setDeal(d);
+
+                            Call<ServerResponse> call = service.getDealMember(request);
+                            call.enqueue(new Callback<ServerResponse>() {
+                                @Override
+                                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                                    ServerResponse model = response.body();
+                                    if(model.getResult().equals("failure")){
+                                        System.out.println("Event IS NULL");
+                                    }else {
+                                        System.out.println("Result : " + model.getResult()
+                                                + "\nMessage : " + model.getMessage());
+                                        //Do something
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ServerResponse> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
 
                         }
                     });
@@ -85,8 +129,40 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            members.remove(position);
-                            notifyDataSetChanged();
+                            ServiceAction service = createService(ServiceAction.class);
+                            ServerRequest request = new ServerRequest();
+                            request.setOperation("setdecline");
+
+                            Deal d = new Deal();
+                            User u = new User();
+
+                            d.setDealId(dealMembers.get(position).getDealId());
+                            u.setMemberId(users.get(position).getMemberId());
+
+                            request.setUser(u);
+                            request.setDeal(d);
+
+                            Call<ServerResponse> call = service.getDealMember(request);
+                            call.enqueue(new Callback<ServerResponse>() {
+                                @Override
+                                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                                    ServerResponse model = response.body();
+                                    if(model.getResult().equals("failure")){
+                                        System.out.println("Event IS NULL");
+                                    }else {
+                                        System.out.println("Result : " + model.getResult()
+                                                + "\nMessage : " + model.getMessage());
+                                        users.remove(position);
+                                        notifyDataSetChanged();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ServerResponse> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
+
                         }
                     });
                     builder.show();
@@ -108,8 +184,39 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            members.remove(position);
-                            notifyDataSetChanged();
+                            ServiceAction service = createService(ServiceAction.class);
+                            ServerRequest request = new ServerRequest();
+                            request.setOperation("setdecline");
+
+                            Deal d = new Deal();
+                            User u = new User();
+
+                            d.setDealId(dealMembers.get(position).getDealId());
+                            u.setMemberId(users.get(position).getMemberId());
+
+                            request.setUser(u);
+                            request.setDeal(d);
+
+                            Call<ServerResponse> call = service.getDealMember(request);
+                            call.enqueue(new Callback<ServerResponse>() {
+                                @Override
+                                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                                    ServerResponse model = response.body();
+                                    if(model.getResult().equals("failure")){
+                                        System.out.println("Event IS NULL");
+                                    }else {
+                                        System.out.println("Result : " + model.getResult()
+                                                + "\nMessage : " + model.getMessage());
+                                        users.remove(position);
+                                        notifyDataSetChanged();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ServerResponse> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
                         }
                     });
                     builder.show();
@@ -127,7 +234,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
 
     @Override
     public int getItemCount() {
-        return members.size();
+        return users.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

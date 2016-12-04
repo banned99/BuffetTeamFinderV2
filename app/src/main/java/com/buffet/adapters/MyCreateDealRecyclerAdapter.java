@@ -52,7 +52,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
     }
 
     @Override
-    public void onBindViewHolder(MyCreateDealRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MyCreateDealRecyclerAdapter.ViewHolder holder, final int position) {
 
         holder.proname.setText(promotions.get(position).getProName());
         holder.branchname.setText(branchs.get(position).getBranchName());
@@ -86,6 +86,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DealMemberActivity.class);
                 intent.putExtra("member_status", "owner");
+                intent.putExtra("deal_id", mydeals.get(position).getDealId());
                 v.getContext().startActivity(intent);
             }
         });

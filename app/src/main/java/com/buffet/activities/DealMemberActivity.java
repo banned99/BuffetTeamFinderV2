@@ -14,11 +14,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.buffet.adapters.DealMemberRecyclerAdapter;
+import com.buffet.models.DealMember;
+import com.buffet.models.Deal;
+import com.buffet.models.User;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.network.ServiceGenerator.createService;
 
 public class DealMemberActivity extends AppCompatActivity {
 
@@ -31,6 +42,7 @@ public class DealMemberActivity extends AppCompatActivity {
     DealMemberRecyclerAdapter adapter;
 
     String status;
+    int deal_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,7 @@ public class DealMemberActivity extends AppCompatActivity {
         rootLayout = (CoordinatorLayout) findViewById(R.id.activity_deal_member_root_layout);
 
         status = getIntent().getExtras().getString("member_status");
+        deal_id = getIntent().getExtras().getInt("deal_id");
         System.out.println(status);
 
         // Toolbar
@@ -67,13 +80,53 @@ public class DealMemberActivity extends AppCompatActivity {
     }
 
     private void getDealMember() {
-        List<String> dealMember = new ArrayList<>();
-        dealMember.add("member 1");
-        dealMember.add("member 2");
-        dealMember.add("member 3");
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("getdealmember");
 
-        adapter = new DealMemberRecyclerAdapter(getApplicationContext(), dealMember, status);
-        recyclerView.setAdapter(adapter);
+        Deal deals = new Deal();
+        deals.setDealId(deal_id);
+
+        request.setDeal(deals);
+
+        Call<ServerResponse> call = service.getDealMember(request);
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                ServerResponse model = response.body();
+                List<DealMember> dealMembers = new ArrayList<>();
+                List<User> users = new ArrayList<>();
+                if(model.getResult().equals("failure")){
+                    System.out.println("Event IS NULL");
+                }else {
+                    System.out.println("Result : " + model.getResult()
+                            + "\nMessage : " + model.getMessage());
+                    for (int i = 0; i< model.getListUser().size(); i++) {
+                        DealMember current = new DealMember();
+                        User u = new User();
+                        current.setDealId(model.getDealMember().get(i).getDealId());
+                        current.setMemberId(model.getDealMember().get(i).getMemberId());
+                        current.setStatus(model.getDealMember().get(i).getStatus());
+                        u.setMemberId(model.getListUser().get(i).getMemberId());
+                        u.setName(model.getListUser().get(i).getName());
+
+                        dealMembers.add(current);
+                        users.add(u);
+                    }
+
+                    if(getApplicationContext()!=null) {
+                        adapter = new DealMemberRecyclerAdapter(getApplicationContext(), dealMembers, users, status);
+                        recyclerView.setAdapter(adapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
     }
 
     @Override

@@ -54,7 +54,7 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
     }
 
     @Override
-    public void onBindViewHolder(MyJoinDealRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MyJoinDealRecyclerAdapter.ViewHolder holder, final int position) {
 
         holder.proname.setText(promotions.get(position).getProName());
         holder.branchname.setText(branchs.get(position).getBranchName());
@@ -89,6 +89,8 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DealMemberActivity.class);
                 intent.putExtra("member_status", "join");
+                intent.putExtra("deal_id", mydeals.get(position).getDealId());
+
                 v.getContext().startActivity(intent);
             }
         });
