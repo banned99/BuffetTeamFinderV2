@@ -9,7 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
+import com.buffet.activities.DealMemberActivity;
 import com.buffet.activities.MainActivity;
+import com.buffet.activities.SplashActivity;
+import com.buffet.adapters.DealMemberRecyclerAdapter;
+import com.buffet.models.DealMember;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import ggwp.caliver.banned.buffetteamfinderv2.R;
@@ -24,24 +28,29 @@ public class GCMPushReceiverService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         //Getting the message from the bundle
         String message = data.getString("message");
+        String title = data.getString("title");
         //Displaying a notiffication with the message
-        sendNotification(message);
+        sendNotification(title, message);
     }
 
     //This method is generating a notification and displaying the notification
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void sendNotification(String title, String message) {
+        Intent intent = new Intent(this, SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         int requestCode = 0;
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT);
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder noBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logocrop)
+                .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
+                .setVibrate(new long[] { 300, 300 })
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, noBuilder.build()); //0 = ID of notification
     }
+
 }
