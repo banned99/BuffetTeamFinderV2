@@ -13,6 +13,7 @@ public class ServerRequest {
     private String operation;
     private int pro_id;
     private int branch_id;
+    private String search;
     private User user;
     private Deal deal;
 
@@ -22,6 +23,10 @@ public class ServerRequest {
 
     public void setPromotionId(int pro_id){
         this.pro_id = pro_id;
+    }
+
+    public void setSearch(String search){
+        this.search = search;
     }
 
     public void setUser(User user) {

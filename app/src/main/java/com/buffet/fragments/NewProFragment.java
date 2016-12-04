@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.buffet.adapters.NewPromotionRecyclerAdapter;
 import com.buffet.models.Promotion;
+import com.buffet.network.ServerRequest;
 import com.buffet.network.ServerResponse;
 import com.buffet.network.ServiceAction;
 
@@ -75,10 +76,10 @@ public class NewProFragment extends Fragment {
 
         noeventText = (TextView) rootView.findViewById(R.id.noevent_text);
 
-        if (query.equals(null)) {
+        if (query == null) {
             getPromotionData();
         } else {
-
+            searchPromotion();
         }
 
         getPromotionData();
@@ -100,6 +101,51 @@ public class NewProFragment extends Fragment {
                 } else {
                     System.out.println("Result : " + model.getResult()
                                     + "\nMessage : " + model.getMessage());
+                    noeventText.setVisibility(View.INVISIBLE);
+                    for (int i = 0; i< model.getPromotion().size(); i++) {
+                        Promotion current = new Promotion();
+                        current.setProId(model.getPromotion().get(i).getProId());
+                        current.setImage(model.getPromotion().get(i).getImage());
+                        current.setProName(model.getPromotion().get(i).getProName());
+                        current.setPrice(model.getPromotion().get(i).getPrice());
+                        current.setDateStart(model.getPromotion().get(i).getDateStart());
+                        current.setExpire(model.getPromotion().get(i).getExpire());
+                        current.setMaxPerson(model.getPromotion().get(i).getMaxPerson());
+                        current.setCatId(model.getPromotion().get(i).getCatId());
+                        current.setCatName(model.getPromotion().get(i).getCatName());
+                        current.setDescription(model.getPromotion().get(i).getDescription());
+                        promotions.add(current);
+                    }
+                }
+                progressBar.setVisibility(View.INVISIBLE);
+                if(getActivity()!=null){
+                    adapter = new NewPromotionRecyclerAdapter(getActivity(), promotions);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+    public void searchPromotion(){
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("searchpromotion");
+        request.setSearch(query);
+        Call<ServerResponse> call = service.getSearchPromotion(request);
+        call.enqueue(new Callback<ServerResponse>(){
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response){
+                ServerResponse model = response.body();
+                List<Promotion> promotions = new ArrayList<>();
+                if(model.getResult().equals("failure")){
+                    System.out.println("PROMOTION IS NULL");
+                    noeventText.setVisibility(View.VISIBLE);
+                } else {
+                    System.out.println("Result : " + model.getResult()
+                            + "\nMessage : " + model.getMessage());
                     noeventText.setVisibility(View.INVISIBLE);
                     for (int i = 0; i< model.getPromotion().size(); i++) {
                         Promotion current = new Promotion();
