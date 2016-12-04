@@ -16,6 +16,7 @@ import com.buffet.activities.ChooseBranchActivity;
 import com.buffet.models.Branch;
 import com.buffet.models.Deal;
 import com.buffet.models.Promotion;
+import com.buffet.models.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,14 +33,14 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
     List<Deal> mydeals = Collections.emptyList();
     List<Branch> branchs = Collections.emptyList();
     List<Promotion> promotions = Collections.emptyList();
+    List<User> users = Collections.emptyList();
 
-
-    public MyJoinDealRecyclerAdapter(Context context, List<Deal> mydeals, List<Branch> branchs, List<Promotion> promotions) {
+    public MyJoinDealRecyclerAdapter(Context context, List<Deal> mydeals, List<Branch> branchs, List<Promotion> promotions, List<User> users) {
         inflater = LayoutInflater.from(context);
         this.mydeals = mydeals;
         this.branchs = branchs;
         this.promotions = promotions;
-
+        this.users = users;
     }
 
     @Override

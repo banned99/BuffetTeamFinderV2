@@ -82,6 +82,7 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.buffet.activities.RegisterActivity" />
         <activity android:name="com.buffet.activities.MyDealActivity" />
+        <activity android:name="com.buffet.activities.DealMemberActivity" />
         <activity
             android:name="com.google.android.gms.common.api.GoogleApiActivity"
             android:exported="false"
