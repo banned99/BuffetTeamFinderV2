@@ -5,7 +5,7 @@
         <item
             android:id="@+id/my_deal"
             android:icon="@mipmap/ic_launcher"
-            android:title="all events"/>
+            android:title="All events"/>
         <!--<item-->
             <!--android:id="@+id/favorite_deal"-->
             <!--android:icon="@mipmap/ic_launcher"-->
@@ -19,7 +19,7 @@
         <item
             android:id="@+id/logout"
             android:icon="@mipmap/ic_launcher"
-            android:title="log out"/>
+            android:title="Log out"/>
     </group>
 
 </menu>

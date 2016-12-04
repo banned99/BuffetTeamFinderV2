@@ -2,6 +2,7 @@ package com.buffet.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buffet.models.Deal;
 import com.buffet.models.DealMember;
@@ -116,7 +118,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
 
             holder.deBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                     builder.setTitle("Decline");
                     builder.setMessage("Do you want to decline this join request?");
@@ -154,6 +156,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                                                 + "\nMessage : " + model.getMessage());
                                         users.remove(position);
                                         notifyDataSetChanged();
+                                        Snackbar.make(v, "You've decline the request", Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -169,59 +172,68 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                 }
             });
 
-            holder.kiBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setTitle("Kick");
-                    builder.setMessage("Do you want to kick this member?");
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ServiceAction service = createService(ServiceAction.class);
-                            ServerRequest request = new ServerRequest();
-                            request.setOperation("setdecline");
+            if (dealMembers.get(position).getStatus() == 1) {
+                holder.acBtn.setVisibility(View.GONE);
+                holder.deBtn.setVisibility(View.GONE);
+                holder.kiBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                        builder.setTitle("Kick");
+                        builder.setMessage("Do you want to kick this member?");
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ServiceAction service = createService(ServiceAction.class);
+                                ServerRequest request = new ServerRequest();
+                                request.setOperation("setdecline");
 
-                            Deal d = new Deal();
-                            User u = new User();
+                                Deal d = new Deal();
+                                User u = new User();
 
-                            d.setDealId(dealMembers.get(position).getDealId());
-                            u.setMemberId(users.get(position).getMemberId());
+                                d.setDealId(dealMembers.get(position).getDealId());
+                                u.setMemberId(users.get(position).getMemberId());
 
-                            request.setUser(u);
-                            request.setDeal(d);
+                                request.setUser(u);
+                                request.setDeal(d);
 
-                            Call<ServerResponse> call = service.getDealMember(request);
-                            call.enqueue(new Callback<ServerResponse>() {
-                                @Override
-                                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                                    ServerResponse model = response.body();
-                                    if(model.getResult().equals("failure")){
-                                        System.out.println("Event IS NULL");
-                                    }else {
-                                        System.out.println("Result : " + model.getResult()
-                                                + "\nMessage : " + model.getMessage());
-                                        users.remove(position);
-                                        notifyDataSetChanged();
+                                Call<ServerResponse> call = service.getDealMember(request);
+                                call.enqueue(new Callback<ServerResponse>() {
+                                    @Override
+                                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                                        ServerResponse model = response.body();
+                                        if(model.getResult().equals("failure")){
+                                            System.out.println("Event IS NULL");
+                                        }else {
+                                            System.out.println("Result : " + model.getResult()
+                                                    + "\nMessage : " + model.getMessage());
+                                            users.remove(position);
+                                            notifyDataSetChanged();
+                                            Snackbar.make(v, "You've kick the member", Snackbar.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(Call<ServerResponse> call, Throwable t) {
-                                    t.printStackTrace();
-                                }
-                            });
-                        }
-                    });
-                    builder.show();
-                }
-            });
+                                    @Override
+                                    public void onFailure(Call<ServerResponse> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }
+                        });
+                        builder.show();
+                    }
+                });
+
+            } else {
+                holder.kiBtn.setVisibility(View.GONE);
+            }
+
 
         } else {
             holder.memberStatus.setVisibility(View.VISIBLE);

@@ -122,13 +122,13 @@ public class MainActivity extends AppCompatActivity {
 //                    transaction.commit();
 //                }
 
-                if (tabId == R.id.map_tab) {
-//                    ChangeStyleBottomBarLabel(2);
-                    MapFragment mapFragment = MapFragment.newInstance();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainer, mapFragment);
-                    transaction.commit();
-                }
+//                if (tabId == R.id.map_tab) {
+////                    ChangeStyleBottomBarLabel(2);
+//                    MapFragment mapFragment = MapFragment.newInstance();
+//                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.fragmentContainer, mapFragment);
+//                    transaction.commit();
+//                }
 
                 if (tabId == R.id.notification_tab) {
 //                    ChangeStyleBottomBarLabel(3);

@@ -109,6 +109,7 @@ public class JoinDealFragment extends Fragment {
                 if(model.getResult().equals("failure")){
                     System.out.println("Event IS NULL");
                     noeventText.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                 }else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());

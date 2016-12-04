@@ -8,14 +8,6 @@
         activeColor="#FFFFFF"
         barColorWhenSelected="@color/colorPrimary"
         />
-    <tab
-        id="@+id/map_tab"
-        icon="@drawable/ic_map"
-        title="Map"
-        inActiveColor="@color/colorPrimaryLight"
-        activeColor="#FFFFFF"
-        barColorWhenSelected="@color/colorPrimary"
-        />
 
     <tab
         id="@+id/notification_tab"
