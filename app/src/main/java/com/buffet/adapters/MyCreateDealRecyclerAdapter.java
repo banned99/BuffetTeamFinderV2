@@ -97,6 +97,8 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
                 Intent intent = new Intent(v.getContext(), DealMemberActivity.class);
                 intent.putExtra("member_status", "owner");
                 intent.putExtra("deal_id", mydeals.get(position).getDealId());
+                intent.putExtra("deal_owner", mydeals.get(position).getDealOwner());
+                intent.putExtra("user_name", users.get(position).getName());
                 v.getContext().startActivity(intent);
             }
         });

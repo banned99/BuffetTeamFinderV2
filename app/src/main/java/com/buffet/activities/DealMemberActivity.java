@@ -45,8 +45,8 @@ public class DealMemberActivity extends AppCompatActivity {
     ProgressBar progressBar;
     TextView noeventText;
 
-    String status;
-    int deal_id;
+    String status, member_name;
+    int deal_id, member_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,8 @@ public class DealMemberActivity extends AppCompatActivity {
 
         status = getIntent().getExtras().getString("member_status");
         deal_id = getIntent().getExtras().getInt("deal_id");
+        member_id = getIntent().getExtras().getInt("deal_owner");
+        member_name = getIntent().getExtras().getString("user_name");
 
         // Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -108,6 +110,13 @@ public class DealMemberActivity extends AppCompatActivity {
                 }else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());
+                    User owner = new User();
+                    owner.setName(member_name);
+                    owner.setMemberId(member_id);
+                    users.add(owner);
+                    DealMember member = new DealMember();
+                    member.setStatus(2);
+                    dealMembers.add(member);
                     for (int i = 0; i< model.getListUser().size(); i++) {
                         DealMember current = new DealMember();
                         User u = new User();
@@ -121,8 +130,8 @@ public class DealMemberActivity extends AppCompatActivity {
                         users.add(u);
                     }
 
-
                     if(getApplicationContext()!=null) {
+                        System.out.println("users size = " + users.size());
                         adapter = new DealMemberRecyclerAdapter(getApplicationContext(), dealMembers, users, status);
                         recyclerView.setAdapter(adapter);
                     }
