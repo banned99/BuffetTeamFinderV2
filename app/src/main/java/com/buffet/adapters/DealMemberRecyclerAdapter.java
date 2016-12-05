@@ -106,7 +106,11 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                                     }else {
                                         System.out.println("Result : " + model.getResult()
                                                 + "\nMessage : " + model.getMessage());
-                                        holder.memberStatus.setText("อนุมัติแล้ว");                                    }
+                                        holder.memberStatus.setText("อนุมัติแล้ว");
+                                        holder.deBtn.setVisibility(View.GONE);
+                                        holder.acBtn.setVisibility(View.GONE);
+                                        holder.kiBtn.setVisibility(View.VISIBLE);
+                                    }
                                 }
 
                                 @Override
@@ -197,7 +201,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                             public void onClick(DialogInterface dialog, int which) {
                                 ServiceAction service = createService(ServiceAction.class);
                                 ServerRequest request = new ServerRequest();
-                                request.setOperation("setdecline");
+                                request.setOperation("setkick");
 
                                 Deal d = new Deal();
                                 User u = new User();

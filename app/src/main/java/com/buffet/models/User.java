@@ -21,6 +21,9 @@ public class User {
     @SerializedName("gcm_token")
     @Expose
     private String gcmToken;
+    @SerializedName("image")
+    @Expose
+    private String imageUrl;
 
     public String getGcmToken() {
         return gcmToken;
@@ -28,6 +31,14 @@ public class User {
 
     public void setGcmToken(String gcmToken) {
         this.gcmToken = gcmToken;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getFbid() {

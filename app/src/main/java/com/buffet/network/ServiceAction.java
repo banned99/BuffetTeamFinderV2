@@ -1,11 +1,15 @@
 package com.buffet.network;
 
 import com.buffet.models.Promotion;
+import com.buffet.models.User;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * Created by Tastomy on 10/20/2016 AD.
@@ -18,6 +22,8 @@ public interface ServiceAction {
     @POST("deal.php") Call<ServerResponse> getDeal(@Body ServerRequest request);
     @POST("account.php") Call<ServerResponse> accountProcess(@Body ServerRequest request);
     @POST("account.php") Call<ServerResponse> updateGcmToken(@Body ServerRequest request);
+    @Multipart
+    @POST("account.php") Call<ServerResponse> editProfile(@Part MultipartBody.Part imageFile, @Part("request") String request);
     @POST("deal.php") Call<ServerResponse> joinDeal(@Body ServerRequest request);
     @POST("deal.php") Call<ServerResponse> getDealJoined(@Body ServerRequest request);
     @POST("deal.php") Call<ServerResponse> getDealOwner(@Body ServerRequest request);

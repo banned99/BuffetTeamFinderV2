@@ -261,6 +261,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Constants.NAME, model.getUser().getName());
                     editor.putString(Constants.EMAIL, model.getUser().getEmail());
                     editor.putString(Constants.TEL, model.getUser().getTel());
+                    editor.putString(Constants.IMAGE_URL, model.getUser().getImageUrl());
                     editor.putInt(Constants.MEMBER_ID, model.getUser().getMemberId());
                     editor.apply();
                     goToMain();
@@ -334,6 +335,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString(Constants.NAME, model.getUser().getName());
                         editor.putString(Constants.EMAIL, model.getUser().getEmail());
                         editor.putString(Constants.TEL, model.getUser().getTel());
+                        editor.putString(Constants.IMAGE_URL, model.getUser().getImageUrl());
                         editor.putInt(Constants.MEMBER_ID, model.getUser().getMemberId());
                         editor.apply();
                         System.out.println(Constants.IS_LOGGED_IN);

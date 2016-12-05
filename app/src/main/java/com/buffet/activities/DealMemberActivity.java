@@ -103,7 +103,7 @@ public class DealMemberActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
 
                 if(model.getResult().equals("failure")){
-                    System.out.println("Event IS NULL");
+                    System.out.println("Deal IS NULL");
                     noeventText.setVisibility(View.VISIBLE);
                 }else {
                     System.out.println("Result : " + model.getResult()

@@ -2,8 +2,13 @@ package com.buffet.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -21,16 +26,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.Manifest;
 
+import com.buffet.adapters.MyCreateDealRecyclerAdapter;
+import com.buffet.models.Branch;
 import com.buffet.models.Constants;
+import com.buffet.models.Deal;
+import com.buffet.models.Promotion;
+import com.buffet.models.User;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.buffet.activities.LoginActivity.pref;
+import static com.buffet.network.ServiceGenerator.createService;
+import static com.facebook.FacebookSdk.getApplicationContext;
+import static ggwp.caliver.banned.buffetteamfinderv2.R.id.imageView;
 
 
 public class ViewProfileActivity extends AppCompatActivity {
@@ -43,10 +70,10 @@ public class ViewProfileActivity extends AppCompatActivity {
     NavigationView navigationView;
     Button viewProfileButton, editPhotoButton, updateProfileButton;
     CircleImageView photo;
-    EditText username, email, tel;
+    EditText username, email;
 
     InputStream inputStream = null;
-
+    String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +137,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         username.setText(pref.getString(Constants.NAME, ""));
         email = (EditText) findViewById(R.id.edit_email);
         email.setText(pref.getString(Constants.EMAIL, ""));
-        tel = (EditText) findViewById(R.id.edit_tel);
-        tel.setText(pref.getString(Constants.TEL, ""));
+        email.setEnabled(false);
 
         editPhotoButton = (Button) findViewById(R.id.edit_photo);
         editPhotoButton.setOnClickListener(new View.OnClickListener() {
@@ -123,15 +149,47 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         photo = (CircleImageView) findViewById(R.id.user_photo);
 
+        Picasso.with(getApplicationContext()).load("http://api.tunacon.com/images/"+pref.getString(Constants.IMAGE_URL, "")).resize(1200, 650).into(photo);
+
+
         updateProfileButton = (Button) findViewById(R.id.edit_profile_button);
         updateProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = username.getText().toString();
                 String mail = email.getText().toString();
-                String tele = tel.getText().toString();
 
-                Toast.makeText(ViewProfileActivity.this, name+"\n"+mail+"\n"+tele, Toast.LENGTH_SHORT).show();
+                File file = new File(imagePath);
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                MultipartBody.Part imageFileBody = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+
+                ServiceAction service = createService(ServiceAction.class);
+                ServerRequest request = new ServerRequest();
+
+                Call<ServerResponse> call = service.editProfile(imageFileBody, "{'operation':'editProfile','user':{'member_id':'"+pref.getInt(Constants.MEMBER_ID,0)+"', 'name':'"+name+"'}}");
+                call.enqueue(new Callback<ServerResponse>() {
+                    @Override
+                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                        ServerResponse model = response.body();
+                        if(model.getResult().equals("failure")){
+                            System.out.println("Result : " + model.getResult()
+                                    + "\nMessage : " + model.getMessage());
+                        }else {
+                            System.out.println("Result : " + model.getResult()
+                                    + "\nMessage : " + model.getMessage());
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString(Constants.NAME, model.getUser().getName());
+                            editor.putString(Constants.IMAGE_URL, model.getUser().getImageUrl());
+                            editor.apply();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServerResponse> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+
             }
         });
 
@@ -141,7 +199,8 @@ public class ViewProfileActivity extends AppCompatActivity {
     private static final int PICK_PHOTO_FOR_AVATAR = 0;
 
     public void pickImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
     }
@@ -151,17 +210,27 @@ public class ViewProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
             if (data == null) {
-                //Display an error
+                Toast.makeText(getApplicationContext(),"Unable to pick image",Toast.LENGTH_LONG).show();
                 return;
             }
-            try {
-                inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
-            if (inputStream != null) {
-                photo.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+            Uri selectedImageUri = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imagePath = cursor.getString(columnIndex);
+
+                photo.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+
+                cursor.close();
+
+            } else {
+
+                Toast.makeText(getApplicationContext(),"Unable to load image",Toast.LENGTH_LONG).show();
             }
         }
     }

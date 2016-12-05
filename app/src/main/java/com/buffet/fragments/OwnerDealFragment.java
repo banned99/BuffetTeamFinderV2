@@ -111,7 +111,8 @@ public class OwnerDealFragment extends Fragment {
                 List<Promotion> promotions = new ArrayList<>();
                 List<User> users = new ArrayList<>();
                 if(model.getResult().equals("failure")){
-                    System.out.println("Event IS NULL");
+                    System.out.println("Result : " + model.getResult()
+                            + "\nMessage : " + model.getMessage());
                     noeventText.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                 }else {
