@@ -217,6 +217,8 @@ public class LoginActivity extends AppCompatActivity {
                 String name = profile.getString("name");
                 String email = profile.getString("email");
                 String fbid = profile.getString("id");
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString(Constants.FBID, fbid);
                 fbProcess(name, email, fbid);
                 getUserData(email);
             } catch (JSONException e) {
@@ -257,6 +259,7 @@ public class LoginActivity extends AppCompatActivity {
                         + "\nMessage : " + model.getMessage());
                 if (model.getResult().equals(Constants.SUCCESS)) {
                     SharedPreferences.Editor editor = pref.edit();
+                    editor.putInt(Constants.IS_FACEBOOK_LOGGED_IN, 0);
                     editor.putBoolean(Constants.IS_LOGGED_IN, true);
                     editor.putString(Constants.NAME, model.getUser().getName());
                     editor.putString(Constants.EMAIL, model.getUser().getEmail());
@@ -272,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginButton.setEnabled(true);
                     progress.setVisibility(View.INVISIBLE);
                     tv_register.setEnabled(true);
-                    Snackbar.make(getCurrentFocus(), "Wrong email or password", Snackbar.LENGTH_LONG).show();
+//                    Snackbar.make(get, "Wrong email or password", Snackbar.LENGTH_LONG).show();
                 }
 
             }
@@ -337,6 +340,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString(Constants.TEL, model.getUser().getTel());
                         editor.putString(Constants.IMAGE_URL, model.getUser().getImageUrl());
                         editor.putInt(Constants.MEMBER_ID, model.getUser().getMemberId());
+                        editor.putInt(Constants.IS_FACEBOOK_LOGGED_IN, 1);
                         editor.apply();
                         System.out.println(Constants.IS_LOGGED_IN);
                         goToMain();

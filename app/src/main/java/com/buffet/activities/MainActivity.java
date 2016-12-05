@@ -50,6 +50,10 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.maps.model.Circle;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     Button viewProfileButton;
     TextView viewProfileName;
     ImageView searchIcon;
+    CircleImageView naviProfileImg;
     //Creating a broadcast receiver for gcm registration
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
@@ -198,6 +203,26 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        View headerLayout = navigationView.getHeaderView(0);
+        naviProfileImg = (CircleImageView) headerLayout.findViewById(R.id.navigation_profile_image);
+        System.out.println("navi = " + naviProfileImg);
+
+        if (pref.getInt(Constants.IS_FACEBOOK_LOGGED_IN, 0) == 0) {
+            if (pref.getString(Constants.IMAGE_URL, null) != null){
+                Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
+            } else {
+                // facebook image
+                Picasso.with(this).load("https://graph.facebook.com/" + pref.getString(Constants.FBID, null) + "/picture?type=large").resize(1200, 650).into(naviProfileImg);
+            }
+        } else if (pref.getString(Constants.IMAGE_URL, null) != null) {
+            Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
+        }
+        else {
+            // default image
+            naviProfileImg.setImageResource(R.drawable.user_default_img);
+        }
+            System.out.println(pref.getString(Constants.IMAGE_URL, "FAIL"));
+
 
         viewProfileName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username_label);
         viewProfileName.setText(pref.getString(Constants.NAME,""));

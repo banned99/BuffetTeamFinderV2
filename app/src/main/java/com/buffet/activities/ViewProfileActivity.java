@@ -58,6 +58,7 @@ import static com.buffet.activities.LoginActivity.pref;
 import static com.buffet.network.ServiceGenerator.createService;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static ggwp.caliver.banned.buffetteamfinderv2.R.id.imageView;
+import static ggwp.caliver.banned.buffetteamfinderv2.R.id.wide;
 
 
 public class ViewProfileActivity extends AppCompatActivity {
@@ -155,7 +156,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         updateProfileButton = (Button) findViewById(R.id.edit_profile_button);
         updateProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 String name = username.getText().toString();
                 String mail = email.getText().toString();
 
@@ -164,24 +165,31 @@ public class ViewProfileActivity extends AppCompatActivity {
                 MultipartBody.Part imageFileBody = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
 
                 ServiceAction service = createService(ServiceAction.class);
-                ServerRequest request = new ServerRequest();
 
-                Call<ServerResponse> call = service.editProfile(imageFileBody, "{'operation':'editProfile','user':{'member_id':'"+pref.getInt(Constants.MEMBER_ID,0)+"', 'name':'"+name+"'}}");
+                Call<ServerResponse> call = service.editProfile(imageFileBody, pref.getInt(Constants.MEMBER_ID,0), name);
                 call.enqueue(new Callback<ServerResponse>() {
                     @Override
                     public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                         ServerResponse model = response.body();
+                        System.out.println("Result : " + model.getResult()
+                                + "\nMessage : " + model.getMessage());
                         if(model.getResult().equals("failure")){
-                            System.out.println("Result : " + model.getResult()
-                                    + "\nMessage : " + model.getMessage());
+
                         }else {
                             System.out.println("Result : " + model.getResult()
                                     + "\nMessage : " + model.getMessage());
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString(Constants.NAME, model.getUser().getName());
-                            editor.putString(Constants.IMAGE_URL, model.getUser().getImageUrl());
-                            editor.apply();
+                            for(int i=0; i<model.getListUser().size(); i++){
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString(Constants.NAME, model.getListUser().get(i).getName());
+                                editor.putString(Constants.IMAGE_URL, model.getListUser().get(i).getImageUrl());
+                                editor.apply();
+                                System.out.println("test:  "+model.getListUser().get(i).getImageUrl());
+                            }
+
+                            Snackbar.make(v, "Update Successful", Snackbar.LENGTH_LONG).show();
                         }
+
+
                     }
 
                     @Override

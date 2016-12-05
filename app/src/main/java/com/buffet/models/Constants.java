@@ -15,5 +15,7 @@ public class Constants {
     public static final String EMAIL = "email";
     public static final String TEL = "tel";
     public static final String MEMBER_ID = "member_id";
+    public static final String FBID = "fbid";
     public static final String IMAGE_URL = "image_url";
+    public static final String IS_FACEBOOK_LOGGED_IN = "isfacebook";
 }
