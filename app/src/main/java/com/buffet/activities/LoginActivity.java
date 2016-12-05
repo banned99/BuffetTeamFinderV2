@@ -219,6 +219,7 @@ public class LoginActivity extends AppCompatActivity {
                 String fbid = profile.getString("id");
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString(Constants.FBID, fbid);
+                editor.apply();
                 fbProcess(name, email, fbid);
                 getUserData(email);
             } catch (JSONException e) {
@@ -260,9 +261,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (model.getResult().equals(Constants.SUCCESS)) {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean(Constants.IS_LOGGED_IN, true);
-                    editor.putString(Constants.IS_FACEBOOK_LOGGED_IN, null);
                     editor.putString(Constants.NAME, model.getUser().getName());
                     editor.putString(Constants.EMAIL, model.getUser().getEmail());
+                    editor.putInt(Constants.IS_FACEBOOK_LOGGED_IN, 0);
                     editor.putString(Constants.TEL, model.getUser().getTel());
                     editor.putString(Constants.IMAGE_URL, model.getUser().getImageUrl());
                     editor.putInt(Constants.MEMBER_ID, model.getUser().getMemberId());
@@ -335,14 +336,13 @@ public class LoginActivity extends AppCompatActivity {
                     if (model.getResult().equals(Constants.SUCCESS)) {
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putBoolean(Constants.IS_LOGGED_IN, true);
+                        editor.putInt(Constants.IS_FACEBOOK_LOGGED_IN, 1);
                         editor.putString(Constants.NAME, model.getUser().getName());
                         editor.putString(Constants.EMAIL, model.getUser().getEmail());
                         editor.putString(Constants.TEL, model.getUser().getTel());
                         editor.putString(Constants.IMAGE_URL, model.getUser().getImageUrl());
                         editor.putInt(Constants.MEMBER_ID, model.getUser().getMemberId());
-                        editor.putString(Constants.IS_FACEBOOK_LOGGED_IN, "login");
                         editor.apply();
-                        System.out.println(Constants.IS_LOGGED_IN);
                         goToMain();
                     }
                 }
