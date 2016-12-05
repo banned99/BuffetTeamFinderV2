@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
 
@@ -37,6 +38,7 @@ import com.buffet.models.User;
 import com.buffet.network.ServerRequest;
 import com.buffet.network.ServerResponse;
 import com.buffet.network.ServiceAction;
+import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -68,10 +70,16 @@ public class ViewProfileActivity extends AppCompatActivity {
     CoordinatorLayout rootLayout;
     Toolbar toolbar;
     NestedScrollView nestedScrollView;
-    NavigationView navigationView;
-    Button viewProfileButton, editPhotoButton, updateProfileButton;
+    Button editPhotoButton, updateProfileButton;
     CircleImageView photo;
     EditText username, email;
+
+    NavigationView navigationView;
+    Button viewProfileButton;
+    TextView viewProfileName;
+    CircleImageView naviProfileImg;
+    TextView usernameLabel;
+
 
     InputStream inputStream = null;
     String imagePath;
@@ -117,14 +125,52 @@ public class ViewProfileActivity extends AppCompatActivity {
 //                        startActivity(navIntent);
 //                        break;
                     case R.id.logout:
+                        logout();
                         Snackbar.make(navigationView, "Log Out", Snackbar.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
             }
         });
+        View headerLayout = navigationView.getHeaderView(0);
+        naviProfileImg = (CircleImageView) headerLayout.findViewById(R.id.navigation_profile_image);
+        usernameLabel = (TextView) headerLayout.findViewById(R.id.username_label);
+        photo = (CircleImageView) findViewById(R.id.user_photo);
+        System.out.println("navi = " + naviProfileImg);
+
+        if (pref.getString(Constants.IS_FACEBOOK_LOGGED_IN, null) != null) {
+            if (pref.getString(Constants.IMAGE_URL, null) != null){
+                System.out.println("have Fb, have image");
+                Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
+                Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(photo);
+            } else {
+                // facebook image
+                System.out.println("have Fb, no image");
+
+                Picasso.with(this).load("https://graph.facebook.com/" + pref.getString(Constants.FBID, null) + "/picture?type=large").resize(1200, 650).into(naviProfileImg);
+                Picasso.with(this).load("https://graph.facebook.com/" + pref.getString(Constants.FBID, null) + "/picture?type=large").resize(1200, 650).into(photo);
+
+            }
+        } else if (pref.getString(Constants.IMAGE_URL, null) != null) {
+            System.out.println("no Fb, have image");
+
+            Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
+            Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(photo);
+
+        }
+        else {
+            // default image
+            naviProfileImg.setImageResource(R.drawable.user_default_img);
+            photo.setImageResource(R.drawable.user_default_img);
+        }
+        usernameLabel.setText(pref.getString(Constants.NAME, null));
+        System.out.println(pref.getString(Constants.IMAGE_URL, "FAIL"));
+
+
+        viewProfileName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username_label);
+        viewProfileName.setText(pref.getString(Constants.NAME,""));
         viewProfileButton = (Button) navigationView.getHeaderView(0).findViewById(R.id.view_profile_button);
-//
+
         viewProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,11 +194,6 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
-        photo = (CircleImageView) findViewById(R.id.user_photo);
-
-        Picasso.with(getApplicationContext()).load("http://api.tunacon.com/images/"+pref.getString(Constants.IMAGE_URL, "")).resize(1200, 650).into(photo);
-
-
         updateProfileButton = (Button) findViewById(R.id.edit_profile_button);
         updateProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,48 +201,80 @@ public class ViewProfileActivity extends AppCompatActivity {
                 String name = username.getText().toString();
                 String mail = email.getText().toString();
 
-                File file = new File(imagePath);
-                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                MultipartBody.Part imageFileBody = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+                if(imagePath==null){
+                    ServiceAction service = createService(ServiceAction.class);
+                    ServerRequest request = new ServerRequest();
+                    User users = new User();
+                    users.setMemberId(pref.getInt(Constants.MEMBER_ID,0));
+                    users.setName(name);
+                    request.setOperation("editProfile");
+                    request.setUser(users);
 
-                ServiceAction service = createService(ServiceAction.class);
+                    Call<ServerResponse> call = service.editProfileNoImage(request);
+                    call.enqueue(new Callback<ServerResponse>() {
+                        @Override
+                        public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                            ServerResponse model = response.body();
+                            if(model.getResult().equals("failure")){
+                                System.out.println("Result : " + model.getResult()
+                                        + "\nMessage : " + model.getMessage());
+                            }else {
+                                System.out.println("Result : " + model.getResult()
+                                        + "\nMessage : " + model.getMessage());
+                                for(int i=0; i<model.getListUser().size(); i++){
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString(Constants.NAME, model.getListUser().get(i).getName());
+                                    editor.putString(Constants.IMAGE_URL, model.getListUser().get(i).getImageUrl());
+                                    editor.apply();
+                                }
 
-                Call<ServerResponse> call = service.editProfile(imageFileBody, pref.getInt(Constants.MEMBER_ID,0), name);
-                call.enqueue(new Callback<ServerResponse>() {
-                    @Override
-                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                        ServerResponse model = response.body();
-                        System.out.println("Result : " + model.getResult()
-                                + "\nMessage : " + model.getMessage());
-                        if(model.getResult().equals("failure")){
-
-                        }else {
-                            System.out.println("Result : " + model.getResult()
-                                    + "\nMessage : " + model.getMessage());
-                            for(int i=0; i<model.getListUser().size(); i++){
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString(Constants.NAME, model.getListUser().get(i).getName());
-                                editor.putString(Constants.IMAGE_URL, model.getListUser().get(i).getImageUrl());
-                                editor.apply();
-                                System.out.println("test:  "+model.getListUser().get(i).getImageUrl());
+                                Snackbar.make(v, "Update Successful", Snackbar.LENGTH_LONG).show();
                             }
-
-                            Snackbar.make(v, "Update Successful", Snackbar.LENGTH_LONG).show();
                         }
 
+                        @Override
+                        public void onFailure(Call<ServerResponse> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }else{
+                    File file = new File(imagePath);
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    MultipartBody.Part imageFileBody = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
 
-                    }
+                    ServiceAction service = createService(ServiceAction.class);
 
-                    @Override
-                    public void onFailure(Call<ServerResponse> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
+                    Call<ServerResponse> call = service.editProfile(imageFileBody, pref.getInt(Constants.MEMBER_ID,0), name);
+                    call.enqueue(new Callback<ServerResponse>() {
+                        @Override
+                        public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                            ServerResponse model = response.body();
+                            if(model.getResult().equals("failure")){
+                                System.out.println("Result : " + model.getResult()
+                                        + "\nMessage : " + model.getMessage());
+                            }else {
+                                System.out.println("Result : " + model.getResult()
+                                        + "\nMessage : " + model.getMessage());
+                                for(int i=0; i<model.getListUser().size(); i++){
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString(Constants.NAME, model.getListUser().get(i).getName());
+                                    editor.putString(Constants.IMAGE_URL, model.getListUser().get(i).getImageUrl());
+                                    editor.apply();
+                                    System.out.println("test:  "+model.getListUser().get(i).getImageUrl());
+                                }
 
+                                Snackbar.make(v, "Update Successful", Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ServerResponse> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }
             }
         });
-
-
     }
 
     private static final int PICK_PHOTO_FOR_AVATAR = 0;
@@ -243,6 +316,32 @@ public class ViewProfileActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // update profile
+        if (pref.getString(Constants.IS_FACEBOOK_LOGGED_IN, null) != null) {
+            if (pref.getString(Constants.IMAGE_URL, null) != null){
+                System.out.println("have Fb, have image");
+                Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
+            } else {
+                // facebook image
+                System.out.println("have Fb, no image");
+
+                Picasso.with(this).load("https://graph.facebook.com/" + pref.getString(Constants.FBID, null) + "/picture?type=large").resize(1200, 650).into(naviProfileImg);
+            }
+        } else if (pref.getString(Constants.IMAGE_URL, null) != null) {
+            System.out.println("no Fb, have image");
+
+            Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
+        }
+        else {
+            // default image
+            naviProfileImg.setImageResource(R.drawable.user_default_img);
+        }
+        usernameLabel.setText(pref.getString(Constants.NAME, null));
+    }
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
@@ -301,6 +400,25 @@ public class ViewProfileActivity extends AppCompatActivity {
 //            bottomBar.selectTabAtPosition(0);
 //        } else super.onBackPressed();
 //    }
+
+    private void goToLogin(){
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(Constants.IS_LOGGED_IN,false);
+        editor.putString(Constants.EMAIL,"");
+        editor.putString(Constants.NAME,"");
+        editor.putString(Constants.TEL, "");
+        editor.putString(Constants.MEMBER_ID,"");
+        editor.apply();
+        LoginManager.getInstance().logOut();
+        goToLogin();
+        finish();
+    }
 
 }
 

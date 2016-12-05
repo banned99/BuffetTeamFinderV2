@@ -259,8 +259,8 @@ public class LoginActivity extends AppCompatActivity {
                         + "\nMessage : " + model.getMessage());
                 if (model.getResult().equals(Constants.SUCCESS)) {
                     SharedPreferences.Editor editor = pref.edit();
-                    editor.putInt(Constants.IS_FACEBOOK_LOGGED_IN, 0);
                     editor.putBoolean(Constants.IS_LOGGED_IN, true);
+                    editor.putString(Constants.IS_FACEBOOK_LOGGED_IN, null);
                     editor.putString(Constants.NAME, model.getUser().getName());
                     editor.putString(Constants.EMAIL, model.getUser().getEmail());
                     editor.putString(Constants.TEL, model.getUser().getTel());
@@ -340,7 +340,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString(Constants.TEL, model.getUser().getTel());
                         editor.putString(Constants.IMAGE_URL, model.getUser().getImageUrl());
                         editor.putInt(Constants.MEMBER_ID, model.getUser().getMemberId());
-                        editor.putInt(Constants.IS_FACEBOOK_LOGGED_IN, 1);
+                        editor.putString(Constants.IS_FACEBOOK_LOGGED_IN, "login");
                         editor.apply();
                         System.out.println(Constants.IS_LOGGED_IN);
                         goToMain();

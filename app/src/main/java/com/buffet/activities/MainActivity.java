@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     TextView viewProfileName;
     ImageView searchIcon;
     CircleImageView naviProfileImg;
+    TextView usernameLabel;
     //Creating a broadcast receiver for gcm registration
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
@@ -205,22 +206,29 @@ public class MainActivity extends AppCompatActivity {
         });
         View headerLayout = navigationView.getHeaderView(0);
         naviProfileImg = (CircleImageView) headerLayout.findViewById(R.id.navigation_profile_image);
+        usernameLabel = (TextView) headerLayout.findViewById(R.id.username_label);
         System.out.println("navi = " + naviProfileImg);
 
-        if (pref.getInt(Constants.IS_FACEBOOK_LOGGED_IN, 0) == 0) {
+        if (pref.getString(Constants.IS_FACEBOOK_LOGGED_IN, null) != null) {
             if (pref.getString(Constants.IMAGE_URL, null) != null){
+                System.out.println("have Fb, have image");
                 Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
             } else {
                 // facebook image
+                System.out.println("have Fb, no image");
+
                 Picasso.with(this).load("https://graph.facebook.com/" + pref.getString(Constants.FBID, null) + "/picture?type=large").resize(1200, 650).into(naviProfileImg);
             }
         } else if (pref.getString(Constants.IMAGE_URL, null) != null) {
+            System.out.println("no Fb, have image");
+
             Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
         }
         else {
             // default image
             naviProfileImg.setImageResource(R.drawable.user_default_img);
         }
+        usernameLabel.setText(pref.getString(Constants.NAME, null));
             System.out.println(pref.getString(Constants.IMAGE_URL, "FAIL"));
 
 
@@ -278,6 +286,28 @@ public class MainActivity extends AppCompatActivity {
                 new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCCESS));
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
+
+        // update profile
+        if (pref.getString(Constants.IS_FACEBOOK_LOGGED_IN, null) != null) {
+            if (pref.getString(Constants.IMAGE_URL, null) != null){
+                System.out.println("have Fb, have image");
+                Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
+            } else {
+                // facebook image
+                System.out.println("have Fb, no image");
+
+                Picasso.with(this).load("https://graph.facebook.com/" + pref.getString(Constants.FBID, null) + "/picture?type=large").resize(1200, 650).into(naviProfileImg);
+            }
+        } else if (pref.getString(Constants.IMAGE_URL, null) != null) {
+            System.out.println("no Fb, have image");
+
+            Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
+        }
+        else {
+            // default image
+            naviProfileImg.setImageResource(R.drawable.user_default_img);
+        }
+        usernameLabel.setText(pref.getString(Constants.NAME, null));
     }
 
     @Override
@@ -401,6 +431,7 @@ public class MainActivity extends AppCompatActivity {
         goToLogin();
         finish();
     }
+
 
     // When Tab is selected , label will show
 //    public void ChangeStyleBottomBarLabel(int index) {

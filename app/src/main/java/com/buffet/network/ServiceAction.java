@@ -24,6 +24,7 @@ public interface ServiceAction {
     @POST("account.php") Call<ServerResponse> updateGcmToken(@Body ServerRequest request);
     @Multipart
     @POST("account.php") Call<ServerResponse> editProfile(@Part MultipartBody.Part imageFile, @Part("member_id") int member_id, @Part("name") String name);
+    @POST("account.php") Call<ServerResponse> editProfileNoImage(@Body ServerRequest request);
     @POST("deal.php") Call<ServerResponse> joinDeal(@Body ServerRequest request);
     @POST("deal.php") Call<ServerResponse> getDealJoined(@Body ServerRequest request);
     @POST("deal.php") Call<ServerResponse> getDealOwner(@Body ServerRequest request);
