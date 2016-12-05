@@ -19,4 +19,5 @@ This can also be expensive and time consuming, but is best for high value or pre
     <string name="my_deal">My events</string>
     <string name="member">Members</string>
     <string name="search">Search</string>
+    <string name="map">Map</string>
 </resources>

@@ -16,14 +16,20 @@
         <include layout="@layout/toobar"/>
 
 
+        <com.buffet.customs.CustomNestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/deal_member_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:layout_weight="1"/>
+        </com.buffet.customs.CustomNestedScrollView>
 
-                <ProgressBar
+
+        <ProgressBar
                     style="@style/Base.Widget.AppCompat.ProgressBar"
                     android:id="@+id/progress"
                     android:layout_marginTop="10dp"

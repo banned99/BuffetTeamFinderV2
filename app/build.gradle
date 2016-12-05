@@ -46,5 +46,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.satsuware.lib:usefulviews:2.3.6'
     testCompile 'junit:junit:4.12'
+    compile 'com.google.android.gms:play-services-location:9.0.2'
 }
 apply plugin: 'com.google.gms.google-services'

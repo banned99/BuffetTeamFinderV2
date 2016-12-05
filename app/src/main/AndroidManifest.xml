@@ -8,10 +8,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <permission
         android:name="net.simplifiedcoding.androidgcm.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="net.simplifiedcoding.androidgcm.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -21,9 +28,7 @@
         android:noHistory="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.buffet.activities.MainActivity">
-
-        </activity>
+        <activity android:name="com.buffet.activities.MainActivity"></activity>
 
         <provider
             android:name="com.buffet.MySuggestionProvider"
@@ -62,45 +67,55 @@
         <activity android:name="com.buffet.activities.RegisterActivity" />
         <activity android:name="com.buffet.activities.MyDealActivity" />
 
-        <!--
-            GCM Receiver
-        -->
+        <!--             GCM Receiver -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                <category android:name="com.gnirt69.gcmexample"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.gnirt69.gcmexample" />
             </intent-filter>
         </receiver>
 
-        <!--
-            GCM Receiver Service
-        -->
-        <service android:name="com.buffet.network.GCMPushReceiverService" android:exported="false">
+        <!--             GCM Receiver Service -->
+        <service
+            android:name="com.buffet.network.GCMPushReceiverService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
 
-        <!--
-            GCM Registration Intent Service
-        -->
-        <service android:name="com.buffet.network.GCMRegistrationIntentService" android:exported="false">
+        <!--             GCM Registration Intent Service -->
+        <service
+            android:name="com.buffet.network.GCMRegistrationIntentService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
 
         <activity android:name="com.buffet.activities.DealMemberActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCAzi3p1wT_WlDZ03ewmS7-Dh6ncFyWVgg" />
+
         <activity android:name="com.buffet.activities.SearchActivity">
-            <meta-data android:name="android.app.searchable"
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
+        <activity android:name="com.buffet.activities.MapActivity"></activity>
     </application>
 
 </manifest>
