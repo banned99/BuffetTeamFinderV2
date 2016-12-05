@@ -123,7 +123,7 @@ public class DealMemberActivity extends AppCompatActivity {
         usernameLabel = (TextView) headerLayout.findViewById(R.id.username_label);
         System.out.println("navi = " + naviProfileImg);
 
-        if (pref.getString(Constants.IS_FACEBOOK_LOGGED_IN, null) != null) {
+        if (pref.getInt(Constants.IS_FACEBOOK_LOGGED_IN, 0) != 0) {
             if (pref.getString(Constants.IMAGE_URL, null) != null){
                 System.out.println("have Fb, have image");
                 Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
@@ -160,7 +160,7 @@ public class DealMemberActivity extends AppCompatActivity {
         });
 
         recyclerView = (RecyclerView) findViewById(R.id.deal_member_list);
-        recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
 
@@ -238,14 +238,14 @@ public class DealMemberActivity extends AppCompatActivity {
         super.onResume();
 
         // update profile
-        if (pref.getString(Constants.IS_FACEBOOK_LOGGED_IN, null) != null) {
+        if (pref.getInt(Constants.IS_FACEBOOK_LOGGED_IN, 0) != 0) {
             if (pref.getString(Constants.IMAGE_URL, null) != null){
                 System.out.println("have Fb, have image");
                 Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
             } else {
                 // facebook image
                 System.out.println("have Fb, no image");
-
+                System.out.println("FBID: " + pref.getString(Constants.FBID, null));
                 Picasso.with(this).load("https://graph.facebook.com/" + pref.getString(Constants.FBID, null) + "/picture?type=large").resize(1200, 650).into(naviProfileImg);
             }
         } else if (pref.getString(Constants.IMAGE_URL, null) != null) {
@@ -259,7 +259,6 @@ public class DealMemberActivity extends AppCompatActivity {
         }
         usernameLabel.setText(pref.getString(Constants.NAME, null));
     }
-
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);

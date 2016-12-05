@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.buffet.activities.ChatRoomActivity;
 import com.buffet.activities.ChooseBranchActivity;
 import com.buffet.activities.DealMemberActivity;
 import com.buffet.models.Branch;
@@ -125,6 +126,15 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
                     }
                 });
                 builder.show();
+            }
+        });
+
+        holder.chatbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), ChatRoomActivity.class);
+                i.putExtra("deal_id", mydeals.get(position).getDealId());
+                v.getContext().startActivity(i);
             }
         });
     }

@@ -3,6 +3,7 @@ package com.buffet.dialogs;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         TimePickerFragment.MINUTE = minute;
         String minutee = String.format("%1$02d", minute);
         CreateDealDialog.TIME.setText(""+HOUR+":"+minutee);
+        CreateDealDialog.TIME.setTextColor(Color.BLACK);
+
 //        Toast.makeText(view.getContext().getApplicationContext(), "Hour: " + hourOfDay + "\nminute: " +minutee, Toast.LENGTH_LONG).show();
 
     }

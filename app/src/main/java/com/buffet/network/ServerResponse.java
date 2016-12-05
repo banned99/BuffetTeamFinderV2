@@ -3,6 +3,7 @@ package com.buffet.network;
 import com.buffet.models.Branch;
 import com.buffet.models.DealMember;
 import com.buffet.models.Deal;
+import com.buffet.models.Message;
 import com.buffet.models.Promotion;
 import com.buffet.models.User;
 
@@ -21,6 +22,7 @@ public class ServerResponse {
     private List<Branch> branch;
     private List<Deal> deal;
     private List<DealMember> dealMember;
+    private List<Message> messages;
 
     public String getResult() {
         return result;
@@ -45,5 +47,8 @@ public class ServerResponse {
     }
     public List<User> getListUser() {
         return (List<User>)userobj;
+    }
+    public List<Message> getMessages() {
+        return (List<Message>)messages;
     }
 }

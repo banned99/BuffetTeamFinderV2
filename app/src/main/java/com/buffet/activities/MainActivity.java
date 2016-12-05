@@ -72,10 +72,11 @@ public class MainActivity extends AppCompatActivity {
     CustomNestedScrollView nestedScrollView;
     NavigationView navigationView;
     Button viewProfileButton;
-    TextView viewProfileName;
-    ImageView searchIcon;
     CircleImageView naviProfileImg;
+    TextView viewProfileName;
     TextView usernameLabel;
+
+    ImageView searchIcon;
     //Creating a broadcast receiver for gcm registration
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
