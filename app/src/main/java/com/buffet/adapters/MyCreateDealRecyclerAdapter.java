@@ -79,7 +79,7 @@ public class MyCreateDealRecyclerAdapter extends RecyclerView.Adapter<MyCreateDe
 
         for (int i = 1; i<= current_person; i++) {
             img_black = new ImageView(inflater.getContext());
-            img_black.setImageResource(R.drawable.person);
+            img_black.setImageResource(R.drawable.person_pink);
             img_black.setLayoutParams(new ViewGroup.LayoutParams(40,40));
             holder.linearLayout.addView(img_black);
         }
