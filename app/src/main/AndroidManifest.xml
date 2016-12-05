@@ -100,12 +100,6 @@
 
         <activity android:name="com.buffet.activities.DealMemberActivity" />
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCAzi3p1wT_WlDZ03ewmS7-Dh6ncFyWVgg" />
 
         <activity android:name="com.buffet.activities.SearchActivity">
             <meta-data

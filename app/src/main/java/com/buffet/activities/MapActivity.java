@@ -1,6 +1,7 @@
 package com.buffet.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -15,8 +16,18 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import com.buffet.adapters.MyCreateDealRecyclerAdapter;
+import com.buffet.models.Branch;
+import com.buffet.models.Constants;
+import com.buffet.models.Deal;
+import com.buffet.models.Promotion;
+import com.buffet.models.User;
+import com.buffet.network.ServerRequest;
+import com.buffet.network.ServerResponse;
+import com.buffet.network.ServiceAction;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationAvailability;
@@ -31,7 +42,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ggwp.caliver.banned.buffetteamfinderv2.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.buffet.activities.LoginActivity.pref;
+import static com.buffet.network.ServiceGenerator.createService;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MapActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
@@ -45,6 +66,7 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
     private TextView textView;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+    GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +100,8 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(13.5435, 100.36535)));
 
     }
 
@@ -125,27 +149,7 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
     }
 
 
-    @Override
-    public void onLocationChanged(Location location) {
-        // Do something when got new current location
 
-        mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
-        LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-        GoogleMap mMap = ((SupportMapFragment)getSupportFragmentManager()
-                .findFragmentById(R.id.map)).getMap();
-
-
-        mCurrLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation));
-
-
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
-//        textView.setText("Latitude : " + location.getLatitude() + "\n" +
-//                "Longitude : " + location.getLongitude());
-    }
 
 
     @Override
@@ -161,6 +165,11 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+//        LatLng testLocation = new LatLng(13.72155, 100.77643);
+//
+//        mMap.addMarker(new MarkerOptions().position(testLocation));
 
     }
 
@@ -198,6 +207,8 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
                 return super.onOptionsItemSelected(item);
         }
 
+
+
 //        if (drawerToggle.onOptionsItemSelected(item))
 //            return true;
 //
@@ -215,6 +226,92 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
 //
 //        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        // Do something when got new current location
+
+        mLastLocation = location;
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker.remove();
+        }
+        LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        GoogleMap mMap = ((SupportMapFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.map)).getMap();
+
+
+        mCurrLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation));
+
+
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+//        textView.setText("Latitude : " + location.getLatitude() + "\n" +
+//                "Longitude : " + location.getLongitude());
+    }
+
+//    @Override
+//    public void onLocationChanged(Location location) {
+//        // Do something when got new current location
+//
+//
+//        if (mCurrLocationMarker != null) {
+//            mCurrLocationMarker.remove();
+//        }
+//        LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+//        ServiceAction service = createService(ServiceAction.class);
+//        ServerRequest request = new ServerRequest();
+//        request.setOperation("updateuUserLocation");
+//        User users = new User();
+//        users.setMemberId(pref.getInt(Constants.MEMBER_ID, 0));
+//        users.setLatitude(location.getLatitude());
+//        users.setLongitude(location.getLongitude());
+//
+//        request.setUser(users);
+//        Call<ServerResponse> call = service.getDealOwner(request);
+//        call.enqueue(new Callback<ServerResponse>() {
+//            @Override
+//            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+//                ServerResponse model = response.body();
+//                if(model.getResult().equals("failure")){
+//                    System.out.println("Result : " + model.getResult()
+//                            + "\nMessage : " + model.getMessage());
+//                }else {
+//                    System.out.println("Result : " + model.getResult()
+//                            + "\nMessage : " + model.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ServerResponse> call, Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
+//        mCurrLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation));
+//
+//
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+//
+//        System.out.println("Testtttt");
+//
+//        Thread welcomeThread = new Thread() {
+//
+//            @Override
+//            public void run() {
+//                try {
+//                    super.run();
+//                    while (true) {
+//                        sleep(2500); //Delay of 2.5 seconds
+//                        System.out.println("thread test");
+//                    }
+//
+//                } catch (Exception e) {
+//
+//                }
+//            }
+//        };
+//        welcomeThread.start();
+//
+//    }
 
 
     // When pressed back button, switch to promotion tab

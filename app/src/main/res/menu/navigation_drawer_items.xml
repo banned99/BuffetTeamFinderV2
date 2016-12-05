@@ -4,7 +4,7 @@
     <group android:checkableBehavior="all">
         <item
             android:id="@+id/my_deal"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/calendar"
             android:title="All events"/>
         <!--<item-->
             <!--android:id="@+id/favorite_deal"-->
@@ -18,7 +18,7 @@
 
         <item
             android:id="@+id/logout"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/logout2"
             android:title="Log out"/>
     </group>
 

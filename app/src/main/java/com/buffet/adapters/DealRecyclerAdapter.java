@@ -77,15 +77,15 @@ public class DealRecyclerAdapter extends RecyclerView.Adapter<DealRecyclerAdapte
 
         for (int i = 1; i<= current_person; i++) {
             img_black = new ImageView(inflater.getContext());
-            img_black.setImageResource(R.drawable.person);
-            img_black.setLayoutParams(new ViewGroup.LayoutParams(40,40));
+//            img_black.setImageResource();
+            img_black.setLayoutParams(new ViewGroup.LayoutParams(60,60));
             holder.linearLayout.addView(img_black);
         }
 
         for (int i = 1; i<= ChooseBranchActivity.promotion_max_person - current_person; i++) {
             img_gray = new ImageView(inflater.getContext());
             img_gray.setImageResource(R.drawable.person_gray);
-            img_gray.setLayoutParams(new ViewGroup.LayoutParams(40,40));
+            img_gray.setLayoutParams(new ViewGroup.LayoutParams(60,60));
             holder.linearLayout.addView(img_gray);
         }
 
