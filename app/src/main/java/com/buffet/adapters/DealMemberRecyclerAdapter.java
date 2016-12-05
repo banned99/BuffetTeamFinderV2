@@ -61,12 +61,19 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
 
         holder.username.setText(users.get(position).getName());
 
+
+
         if (status.equals("owner")) {
             holder.memberStatus.setVisibility(View.VISIBLE);
             if (dealMembers.get(position).getStatus() == 1) {
                 holder.memberStatus.setText("อนุมัติแล้ว");
-            } else {
+            } else if (dealMembers.get(position).getStatus() == 0){
                 holder.memberStatus.setText("รอการอนุมัติ");
+            } else {
+                holder.memberStatus.setText("เจ้าของอีเว้น");
+                holder.acBtn.setVisibility(View.GONE);
+                holder.deBtn.setVisibility(View.GONE);
+                holder.kiBtn.setVisibility(View.GONE);
             }
             holder.acBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -244,8 +251,10 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
             holder.memberStatus.setVisibility(View.VISIBLE);
             if (dealMembers.get(position).getStatus() == 1) {
                 holder.memberStatus.setText("อนุมัติแล้ว");
-            } else {
+            } else if (dealMembers.get(position).getStatus() == 0){
                 holder.memberStatus.setText("รอการอนุมัติ");
+            } else {
+                holder.memberStatus.setText("เจ้าของอีเว้น");
             }
             holder.deBtn.setVisibility(View.GONE);
             holder.kiBtn.setVisibility(View.GONE);

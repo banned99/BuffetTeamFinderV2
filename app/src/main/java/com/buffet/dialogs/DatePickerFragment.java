@@ -43,7 +43,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         DatePickerFragment.DAY = dayOfMonth;
         DatePickerFragment.MONTH = month;
         DatePickerFragment.YEAR = year;
-        CreateDealDialog.DATE.setText(""+year+"-"+month+"-"+dayOfMonth);
+
+        CreateDealDialog.DATE.setText(""+year+"-"+(month + 1)+"-"+dayOfMonth);
 //        CreateDealDialog.TIME.setText(""+HOUR+":"+MINUTE);
 //        Toast.makeText(view.getContext().getApplicationContext(), "Hour: " + hourOfDay + "\nminute: " +minute, Toast.LENGTH_LONG).show();
 
