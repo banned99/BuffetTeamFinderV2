@@ -1,6 +1,7 @@
 package com.buffet.dialogs;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.icu.text.DateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -45,6 +46,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         DatePickerFragment.YEAR = year;
 
         CreateDealDialog.DATE.setText(""+year+"-"+(month + 1)+"-"+dayOfMonth);
+        CreateDealDialog.DATE.setTextColor(Color.BLACK);
 //        CreateDealDialog.TIME.setText(""+HOUR+":"+MINUTE);
 //        Toast.makeText(view.getContext().getApplicationContext(), "Hour: " + hourOfDay + "\nminute: " +minute, Toast.LENGTH_LONG).show();
 

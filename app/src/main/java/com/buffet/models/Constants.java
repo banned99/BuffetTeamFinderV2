@@ -18,4 +18,6 @@ public class Constants {
     public static final String FBID = "fbid";
     public static final String IMAGE_URL = "image_url";
     public static final String IS_FACEBOOK_LOGGED_IN = "isfacebook";
+    public static final String PUSH_NOTIFICATION = "pushnotification";
+    public static final int NOTIFICATION_ID = 235;
 }

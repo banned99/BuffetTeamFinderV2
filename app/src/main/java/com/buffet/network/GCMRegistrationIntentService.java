@@ -18,6 +18,7 @@ public class GCMRegistrationIntentService extends IntentService {
     //Constants for success and errors
     public static final String REGISTRATION_SUCCESS = "RegistrationSuccess";
     public static final String REGISTRATION_ERROR = "RegistrationError";
+    public static final String REGISTRATION_TOKEN_SENT = "RegistrationTokenSent";
 
     //Class constructor
     public GCMRegistrationIntentService() {

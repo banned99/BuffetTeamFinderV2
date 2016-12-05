@@ -274,7 +274,7 @@ public class ChooseBranchActivity extends AppCompatActivity implements CreateDea
             } else {
                 // facebook image
                 System.out.println("have Fb, no image");
-
+                System.out.println("FBID: " + pref.getString(Constants.FBID, null));
                 Picasso.with(this).load("https://graph.facebook.com/" + pref.getString(Constants.FBID, null) + "/picture?type=large").resize(1200, 650).into(naviProfileImg);
             }
         } else if (pref.getString(Constants.IMAGE_URL, null) != null) {

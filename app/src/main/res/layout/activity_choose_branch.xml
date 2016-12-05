@@ -164,7 +164,7 @@
             android:layout_marginRight="20dp"
             app:borderWidth="0dp"
             app:fabSize="normal"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:srcCompat="@drawable/plus_symbol" />
 
 
     </android.support.design.widget.CoordinatorLayout>

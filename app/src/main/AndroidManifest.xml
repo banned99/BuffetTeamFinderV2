@@ -111,6 +111,11 @@
             </intent-filter>
         </activity>
         <activity android:name="com.buffet.activities.MapActivity"></activity>
+        <activity android:name="com.buffet.activities.ChatRoomActivity"></activity>
+
+
     </application>
+
+
 
 </manifest>
