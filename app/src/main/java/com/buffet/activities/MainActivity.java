@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.buffet.MySuggestionProvider;
 import com.buffet.customs.CustomNestedScrollView;
 import com.buffet.fragments.MapFragment;
+import com.buffet.fragments.NewProFragment;
 import com.buffet.fragments.NotiFragment;
 import com.buffet.fragments.PromotionFragment;
 import com.buffet.fragments.SearchFragment;
@@ -174,11 +175,10 @@ public class MainActivity extends AppCompatActivity {
         nestedScrollView = (CustomNestedScrollView) findViewById(R.id.nest_scroll_view);
         nestedScrollView.setFillViewport(true);
 
-        PromotionFragment promotionFragment = PromotionFragment.newInstance();
+        NewProFragment newProFragment = NewProFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, promotionFragment);
+        transaction.replace(R.id.fragmentContainer, newProFragment);
         transaction.commit();
-
 
 
         // Navigation Drawer

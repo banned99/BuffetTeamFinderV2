@@ -127,15 +127,25 @@ public class JoinDealFragment extends Fragment {
                         b.setBranchName(model.getBranch().get(i).getBranchName());
                         p.setProName(model.getPromotion().get(i).getProName());
                         p.setMaxPerson(model.getPromotion().get(i).getMaxPerson());
+
                         u.setName(model.getListUser().get(i).getName());
 
-                        deals.add(current);
-                        branchs.add(b);
-                        promotions.add(p);
-                        users.add(u);
+                        System.out.println(current.getDealOwner() +"    "+pref.getInt(Constants.MEMBER_ID, 0));
+                        if (current.getDealOwner() != pref.getInt(Constants.MEMBER_ID, 0)){
+                            deals.add(current);
+                            branchs.add(b);
+                            promotions.add(p);
+                            users.add(u);
+                        }
+
                     }
                     progressBar.setVisibility(View.INVISIBLE);
-                    noeventText.setVisibility(View.INVISIBLE);
+
+                    if (deals.size() == 0) {
+                        noeventText.setVisibility(View.VISIBLE);
+                    } else {
+                        noeventText.setVisibility(View.INVISIBLE);
+                    }
                     if(getApplicationContext()!=null) {
                         joinAdapter = new MyJoinDealRecyclerAdapter(getApplicationContext(), deals, branchs, promotions, users);
                         joinDealRecyclerView.setAdapter(joinAdapter);

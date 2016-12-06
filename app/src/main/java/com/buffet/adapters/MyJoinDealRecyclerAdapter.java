@@ -76,14 +76,14 @@ public class MyJoinDealRecyclerAdapter extends RecyclerView.Adapter<MyJoinDealRe
         for (int i = 1; i<= current_person; i++) {
             img_black = new ImageView(inflater.getContext());
             img_black.setImageResource(R.drawable.person_pink);
-            img_black.setLayoutParams(new ViewGroup.LayoutParams(40,40));
+            img_black.setLayoutParams(new ViewGroup.LayoutParams(60,60));
             holder.linearLayout.addView(img_black);
         }
 
         for (int i = 1; i<= max_person - current_person; i++) {
             img_gray = new ImageView(inflater.getContext());
             img_gray.setImageResource(R.drawable.person_gray);
-            img_gray.setLayoutParams(new ViewGroup.LayoutParams(40,40));
+            img_gray.setLayoutParams(new ViewGroup.LayoutParams(60,60));
             holder.linearLayout.addView(img_gray);
         }
 

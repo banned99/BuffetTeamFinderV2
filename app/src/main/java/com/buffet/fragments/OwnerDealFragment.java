@@ -22,6 +22,7 @@ import com.buffet.models.User;
 import com.buffet.network.ServerRequest;
 import com.buffet.network.ServerResponse;
 import com.buffet.network.ServiceAction;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;

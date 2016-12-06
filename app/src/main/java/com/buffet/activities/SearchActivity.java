@@ -141,7 +141,7 @@ public class SearchActivity extends AppCompatActivity {
         usernameLabel = (TextView) headerLayout.findViewById(R.id.username_label);
         System.out.println("navi = " + naviProfileImg);
 
-        if (pref.getString(Constants.IS_FACEBOOK_LOGGED_IN, null) != null) {
+        if (pref.getInt(Constants.IS_FACEBOOK_LOGGED_IN, 0) != 0) {
             if (pref.getString(Constants.IMAGE_URL, null) != null){
                 System.out.println("have Fb, have image");
                 Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);
@@ -306,7 +306,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onResume();
 
         // update profile
-        if (pref.getString(Constants.IS_FACEBOOK_LOGGED_IN, null) != null) {
+        if (pref.getInt(Constants.IS_FACEBOOK_LOGGED_IN, 0) != 0) {
             if (pref.getString(Constants.IMAGE_URL, null) != null){
                 System.out.println("have Fb, have image");
                 Picasso.with(this).load("http://api.tunacon.com/uploads/" + pref.getString(Constants.IMAGE_URL, "FAIL")).resize(1200, 650).into(naviProfileImg);

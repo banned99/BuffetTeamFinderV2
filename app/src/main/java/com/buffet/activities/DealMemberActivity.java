@@ -195,13 +195,6 @@ public class DealMemberActivity extends AppCompatActivity {
                 }else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());
-                    User owner = new User();
-                    owner.setName(member_name);
-                    owner.setMemberId(member_id);
-                    users.add(owner);
-                    DealMember member = new DealMember();
-                    member.setStatus(2);
-                    dealMembers.add(member);
                     for (int i = 0; i< model.getListUser().size(); i++) {
                         DealMember current = new DealMember();
                         User u = new User();
@@ -210,6 +203,8 @@ public class DealMemberActivity extends AppCompatActivity {
                         current.setStatus(model.getDealMember().get(i).getStatus());
                         u.setMemberId(model.getListUser().get(i).getMemberId());
                         u.setName(model.getListUser().get(i).getName());
+                        u.setFbid(model.getListUser().get(i).getFbid());
+                        u.setImageUrl(model.getListUser().get(i).getImageUrl());
 
                         dealMembers.add(current);
                         users.add(u);

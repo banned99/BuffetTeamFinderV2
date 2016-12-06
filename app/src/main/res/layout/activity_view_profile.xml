@@ -60,7 +60,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:id="@+id/profile_zone"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -112,19 +112,32 @@
                 <LinearLayout
                     android:id="@+id/button_zone"
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:layout_gravity="end|bottom">
 
+                    <ProgressBar
+                        style="@style/Base.Widget.AppCompat.ProgressBar"
+                        android:id="@+id/progress"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:indeterminate="true"
+                        android:visibility="invisible"
+                        android:layout_weight="1"/>
                     <Button
                         android:id="@+id/edit_profile_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
                         android:layout_gravity="end|bottom"
-                        android:text="Save"/>
+                        android:text="Save"
+                        android:background="@color/colorPrimary"
+                        android:textColor="#fff"/>
                 </LinearLayout>
+
             </LinearLayout>
 
 

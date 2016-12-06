@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.buffet.activities.MapActivity;
 import com.buffet.fragments.PromotionFragment;
+import com.buffet.models.Constants;
 import com.buffet.models.Deal;
 import com.buffet.models.DealMember;
 import com.buffet.models.User;
@@ -37,16 +38,19 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import ggwp.caliver.banned.buffetteamfinderv2.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.buffet.activities.LoginActivity.pref;
 import static com.buffet.network.ServiceGenerator.createService;
 
 /**
@@ -60,8 +64,6 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
 
     List<DealMember> dealMembers = Collections.emptyList();
     List<User> users = Collections.emptyList();
-
-    FragmentManager fragmentManager;
 
     public DealMemberRecyclerAdapter(Context context, List<DealMember> dealMembers, List<User> users, String status){
         inflater = LayoutInflater.from(context);
@@ -81,8 +83,25 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
     public void onBindViewHolder(final DealMemberRecyclerAdapter.ViewHolder holder, final int position) {
 
         holder.username.setText(users.get(position).getName());
+        if (users.get(position).getFbid() != null) {
+            if (users.get(position).getImageUrl() != null){
+                System.out.println("have Fb, have image");
+                Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/uploads/" + users.get(position).getImageUrl()).resize(1200, 650).into(holder.userPic);
+            } else {
+                // facebook image
+                System.out.println("have Fb, no image");
 
+                Picasso.with(holder.itemView.getContext()).load("https://graph.facebook.com/" + users.get(position).getFbid() + "/picture?type=large").resize(1200, 650).into(holder.userPic);
+            }
+        } else if (users.get(position).getImageUrl() != null) {
+            System.out.println("no Fb, have image");
 
+            Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/uploads/" + users.get(position).getImageUrl()).resize(1200, 650).into(holder.userPic);
+        }
+        else {
+            // default image
+            holder.userPic.setImageResource(R.drawable.user_default_img);
+        }
 
         if (status.equals("owner")) {
             holder.memberStatus.setVisibility(View.VISIBLE);
@@ -98,7 +117,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
             }
             holder.acBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                     builder.setTitle("Accept");
                     builder.setMessage("Do you want to accept this join request?");
@@ -138,6 +157,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
                                         holder.deBtn.setVisibility(View.GONE);
                                         holder.acBtn.setVisibility(View.GONE);
                                         holder.kiBtn.setVisibility(View.VISIBLE);
+                                        Snackbar.make(v, "You have accepted !!", Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -287,17 +307,6 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
         }
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MapActivity.class);
-                i.putExtra("user_id", users.get(position).getMemberId());
-                i.putExtra("user_name", users.get(position).getName());
-                v.getContext().startActivity(i);
-
-            }
-        });
-
 
     }
 
@@ -312,8 +321,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
 
         TextView username, memberStatus;
         Button acBtn, deBtn, kiBtn;
-        FrameLayout mapContainer;
-
+        CircleImageView userPic;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -323,7 +331,7 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
             acBtn = (Button) itemView.findViewById(R.id.accept_button);
             deBtn = (Button) itemView.findViewById(R.id.decline_button);
             kiBtn = (Button) itemView.findViewById(R.id.kick_button);
-
+            userPic = (CircleImageView) itemView.findViewById(R.id.user_pic);
         }
     }
 }

@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
@@ -79,6 +80,8 @@ public class ViewProfileActivity extends AppCompatActivity {
     TextView viewProfileName;
     CircleImageView naviProfileImg;
     TextView usernameLabel;
+
+    ProgressBar progressBar;
 
 
     InputStream inputStream = null;
@@ -194,12 +197,18 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+
         updateProfileButton = (Button) findViewById(R.id.edit_profile_button);
         updateProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 String name = username.getText().toString();
                 String mail = email.getText().toString();
+
+                username.setEnabled(false);
+                progressBar.setVisibility(View.VISIBLE);
+                updateProfileButton.setVisibility(View.GONE);
 
                 if(imagePath==null){
                     ServiceAction service = createService(ServiceAction.class);
@@ -227,6 +236,10 @@ public class ViewProfileActivity extends AppCompatActivity {
                                     editor.putString(Constants.IMAGE_URL, model.getListUser().get(i).getImageUrl());
                                     editor.apply();
                                 }
+                                progressBar.setVisibility(View.INVISIBLE);
+                                updateProfileButton.setVisibility(View.VISIBLE);
+                                username.setEnabled(true);
+
 
                                 Snackbar.make(v, "Update Successful", Snackbar.LENGTH_LONG).show();
                             }

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,55 +69,12 @@ public class PromotionFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_promotion, container, false);
 
-////         Tab
-        tabLayout = (TabLayout) rootView.findViewById(R.id.tabLayout);
+////
 
-        newPro = tabLayout.newTab();
-        categories = tabLayout.newTab();
-
-        tabLayout.addTab(categories);
-        tabLayout.addTab(newPro);
-
-        // ViewPager
-        viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        adapter = new PromotionViewPagerAdapter(getChildFragmentManager());
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager, false);
-
-        newPro.setText("new");
-        categories.setText("category");
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-//                Change Icon
-//                switch (position) {
-//                    case 0: {
-//                        homeTab.setIcon(R.drawable.home_tab_white);
-//                        profileTab.setIcon(R.drawable.profile_tab);
-//                        break;
-//                    }
-//                    case 1: {
-//                        profileTab.setIcon(R.drawable.profile_tab_white);
-//                        homeTab.setIcon(R.drawable.home_tab);
-//                        break;
-//                    }
-//                }
-//
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
+        NewProFragment newProFragment = NewProFragment.newInstance();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.viewpager, newProFragment);
+        transaction.commit();
         return rootView;
     }
 
