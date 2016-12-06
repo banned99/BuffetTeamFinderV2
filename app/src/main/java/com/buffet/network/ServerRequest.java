@@ -2,8 +2,11 @@ package com.buffet.network;
 
 import com.buffet.models.Branch;
 import com.buffet.models.Deal;
+import com.buffet.models.Message;
 import com.buffet.models.Promotion;
 import com.buffet.models.User;
+
+import java.util.List;
 
 /**
  * Created by Tastomy on 10/20/2016 AD.
@@ -16,6 +19,8 @@ public class ServerRequest {
     private String search;
     private User user;
     private Deal deal;
+    private Message message;
+
 
     public void setOperation(String operation) {
         this.operation = operation;
@@ -39,5 +44,8 @@ public class ServerRequest {
         this.branch_id = branch_id;
     }
 
+    public void setMessage(Message message){
+        this.message = message;
+    }
 
 }
