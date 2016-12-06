@@ -20,4 +20,5 @@ This can also be expensive and time consuming, but is best for high value or pre
     <string name="member">Members</string>
     <string name="search">Search</string>
     <string name="map">Map</string>
+    <string name="chat">Chat</string>
 </resources>

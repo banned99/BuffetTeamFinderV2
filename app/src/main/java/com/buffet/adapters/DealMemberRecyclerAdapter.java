@@ -83,25 +83,29 @@ public class DealMemberRecyclerAdapter extends RecyclerView.Adapter<DealMemberRe
     public void onBindViewHolder(final DealMemberRecyclerAdapter.ViewHolder holder, final int position) {
 
         holder.username.setText(users.get(position).getName());
-        if (users.get(position).getFbid() != null) {
-            if (users.get(position).getImageUrl() != null){
-                System.out.println("have Fb, have image");
-                Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/uploads/" + users.get(position).getImageUrl()).resize(1200, 650).into(holder.userPic);
-            } else {
-                // facebook image
-                System.out.println("have Fb, no image");
+//        if (users.get(position).getFbid() != null) {
+//            if (users.get(position).getImageUrl() != null){
+//                System.out.println("have Fb, have image");
+//                Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/uploads/" + users.get(position).getImageUrl()).resize(1200, 650).into(holder.userPic);
+//            } else {
+//                // facebook image
+//                System.out.println("have Fb, no image");
+//
+//                Picasso.with(holder.itemView.getContext()).load("https://graph.facebook.com/" + users.get(position).getFbid() + "/picture?type=large").resize(1200, 650).into(holder.userPic);
+//            }
+//        } else if (users.get(position).getImageUrl() != null) {
+//            System.out.println("no Fb, have image");
+//            System.out.println(users.get(position).getImageUrl() != null);
+//            Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/uploads/" + users.get(position).getImageUrl()).resize(1200, 650).into(holder.userPic);
+//        }
+//        else {
+//            // default image
+//            System.out.println("no Fb, no image");
+//            holder.userPic.setImageResource(R.drawable.user_default_img);
+//        }
 
-                Picasso.with(holder.itemView.getContext()).load("https://graph.facebook.com/" + users.get(position).getFbid() + "/picture?type=large").resize(1200, 650).into(holder.userPic);
-            }
-        } else if (users.get(position).getImageUrl() != null) {
-            System.out.println("no Fb, have image");
+                    Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/uploads/" + users.get(position).getImageUrl()).resize(1200, 650).into(holder.userPic);
 
-            Picasso.with(holder.itemView.getContext()).load("http://api.tunacon.com/uploads/" + users.get(position).getImageUrl()).resize(1200, 650).into(holder.userPic);
-        }
-        else {
-            // default image
-            holder.userPic.setImageResource(R.drawable.user_default_img);
-        }
 
         if (status.equals("owner")) {
             holder.memberStatus.setVisibility(View.VISIBLE);

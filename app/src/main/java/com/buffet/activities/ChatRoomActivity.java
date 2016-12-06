@@ -5,8 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,6 +65,10 @@ import static com.buffet.network.ServiceGenerator.createService;
 
 
 public class ChatRoomActivity extends AppCompatActivity implements View.OnClickListener {
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle drawerToggle;
+    CoordinatorLayout rootLayout;
+    Toolbar toolbar;
 
     //Broadcast receiver to receive broadcasts
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -88,6 +96,23 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+
+        rootLayout = (CoordinatorLayout) findViewById(R.id.activity_choose_branch_root_layout);
+
+        // Toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_chat);
+        drawerToggle = new ActionBarDrawerToggle(ChatRoomActivity.this, drawerLayout, R.string.chat, R.string.chat);
+        drawerToggle.setDrawerIndicatorEnabled(false);
+        drawerToggle.setHomeAsUpIndicator(R.drawable.back_button);
+        drawerLayout.addDrawerListener(drawerToggle);
+        getSupportActionBar().setTitle(R.string.chat);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         deal_id = getIntent().getExtras().getInt("deal_id");
 
@@ -335,5 +360,61 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
         if (v == buttonSend)
             sendMessage();
     }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+//        if (drawerToggle.onOptionsItemSelected(item))
+//            return true;
+
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+
+
+
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+    }
+
+    // When pressed back button, switch to promotion tab
+//    @Override
+//    public void onBackPressed() {
+//        if (bottomBar.getCurrentTabPosition() != 0) {
+//            bottomBar.selectTabAtPosition(0);
+//        } else super.onBackPressed();
+//    }
 
 }
