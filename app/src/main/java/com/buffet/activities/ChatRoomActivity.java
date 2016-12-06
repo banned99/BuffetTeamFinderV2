@@ -33,6 +33,7 @@ import com.buffet.models.Constants;
 import com.buffet.models.Deal;
 import com.buffet.models.Message;
 import com.buffet.models.Promotion;
+import com.buffet.models.User;
 import com.buffet.network.GCMRegistrationIntentService;
 import com.buffet.network.ServerRequest;
 import com.buffet.network.ServerResponse;
@@ -176,7 +177,7 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                 ServerResponse model = response.body();
                 ArrayList<Message> messages = new ArrayList<>();
                 if(model.getResult().equals("failure")){
-                    System.out.println("PROMOTION IS NULL");
+                    System.out.println("MESSAGE IS NULL");
                 } else {
                     System.out.println("Result : " + model.getResult()
                             + "\nMessage : " + model.getMessage());
@@ -193,7 +194,6 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                     recyclerView.setAdapter(adapter);
                     scrollToBottom();
                 }
-
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
@@ -223,41 +223,71 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
         Message m = new Message(userId, message, name);
         messages.add(m);
         adapter.notifyDataSetChanged();
-
         scrollToBottom();
-
         editTextMessage.setText("");
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "send",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        ServiceAction service = createService(ServiceAction.class);
+        ServerRequest request = new ServerRequest();
+        request.setOperation("sendMessage");
+        Deal d = new Deal();
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+        d.setDealId(deal_id);
+        request.setDeal(d);
+        request.setMessage(m);
 
-                    }
-                }) {
+        Call<ServerResponse> call = service.getMsg(request);
+        call.enqueue(new Callback<ServerResponse>(){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", String.valueOf(pref.getInt(Constants.MEMBER_ID, 0)));
-                params.put("message", message);
-                params.put("name", pref.getString(Constants.NAME, null));
-                return params;
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response){
+                ServerResponse model = response.body();
+                ArrayList<Message> messages = new ArrayList<>();
+                if(model.getResult().equals("failure")){
+                    System.out.println("MESSAGE IS NULL");
+                } else {
+                    System.out.println("Result : " + model.getResult()
+                            + "\nMessage : " + model.getMessage());
+
+                    adapter = new ThreadAdapter(ChatRoomActivity.this, messages, pref.getInt(Constants.MEMBER_ID, 0));
+                    recyclerView.setAdapter(adapter);
+                    scrollToBottom();
+                }
             }
-        };
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
-        //Disabling retry to prevent duplicate messages
-        int socketTimeout = 0;
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, "send",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("id", String.valueOf(pref.getInt(Constants.MEMBER_ID, 0)));
+//                params.put("message", message);
+//                params.put("name", pref.getString(Constants.NAME, null));
+//                return params;
+//            }
+//        };
 
-        stringRequest.setRetryPolicy(policy);
+//        //Disabling retry to prevent duplicate messages
+//        int socketTimeout = 0;
+//        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+//
+//        stringRequest.setRetryPolicy(policy);
 //        AppController.getInstance().addToRequestQueue(stringRequest);
     }
 

@@ -1,34 +1,57 @@
 package com.buffet.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Belal on 5/29/2016.
  */
 public class Message {
-    private int usersId;
+    @SerializedName("member_id")
+    @Expose
+    private int memberId;
     private String message;
-    private String sentAt;
+    @SerializedName("create_time")
+    @Expose
+    private String createTime;
     private String name;
 
-    public Message(int usersId, String message, String name) {
-        this.usersId = usersId;
+    public Message(int memberId, String message, String name) {
+        this.memberId = memberId;
         this.message = message;
         this.name = name;
     }
 
 
     public int getUsersId() {
-        return usersId;
+        return memberId;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public String getSentAt() {
-        return sentAt;
+    public String getcreateTime() {
+        return createTime;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setUsersId() {
+        this.memberId = memberId;
+    }
+
+    public void setMessage() {
+        this.message = message;
+    }
+
+    public void setcreateTime() {
+        this.createTime = createTime;
+    }
+
+    public void setName() {
+        this.name = name;
     }
 }

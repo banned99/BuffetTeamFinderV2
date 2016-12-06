@@ -75,7 +75,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
         //Adding messages to the views
         Message message = messages.get(position);
         holder.textViewMessage.setText(message.getMessage());
-        holder.textViewTime.setText(message.getName()+", "+message.getSentAt());
+        holder.textViewTime.setText(message.getName()+", "+message.getcreateTime());
     }
 
 
